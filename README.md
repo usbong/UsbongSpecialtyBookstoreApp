@@ -1,5 +1,5 @@
 # Usbong Specialty Bookstore
-<B>How it works:</B>
+<B>How it works:</B></br>
 1) You enter the details of the book or the books that you want to request.</br>
 2) We collate all these requests from everyone.</br>
 3) We then order them together online.</br>
