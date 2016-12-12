@@ -1,10 +1,10 @@
 # Usbong Specialty Bookstore
-How it works:
-1) You enter the details of the book or the books that you want to request.
-2) We collate all these requests from everyone.
-3) We then order them together online.
-4) We notify you once the shipment has arrived. 
-5) You pick up your book or books at a convenient place.
+<B>How it works:</B>
+1) You enter the details of the book or the books that you want to request.</br>
+2) We collate all these requests from everyone.</br>
+3) We then order them together online.</br>
+4) We notify you once the shipment has arrived.</br> 
+5) You pick up your book or books at a convenient place.</br>
 
 # Official FB page
 https://www.facebook.com/usbongbookstore
