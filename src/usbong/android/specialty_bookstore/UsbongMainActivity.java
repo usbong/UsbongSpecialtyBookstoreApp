@@ -47,7 +47,9 @@ import android.widget.ListView;
  */
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
-	private Button startButton;
+	private Button sellButton;
+	private Button requestButton;
+	
 	private static UsbongMainActivity instance;
 				
 	public static String timeStamp;
@@ -110,130 +112,36 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     }
     
     public void initMainMenuScreen()
-    {    		
-/*    	
-    	//added for Vincent, added by Mike, 4 Oct. 2015
-		AlertDialog.Builder prompt = new AlertDialog.Builder(UsbongMainActivity.this);
-		prompt.setTitle("Disclaimer");
-		prompt.setMessage("This software is meant for alpha tesing only. By using this software, you agree that you are 'Vincent Licitri', and that you will not reproduce and distribute copies of this work or derivative works thereof in any medium, with or without modifications, and for commercial or non-commercial purposes, without the prior written permission of Usbong Social Systems, Inc.");
-		prompt.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    {    	
+    	//added by Mike, 20160119
+    	sellButton = (Button)findViewById(R.id.sell_button);
+		sellButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		prompt.show();
-*/    	
-    	startButton = (Button)findViewById(R.id.start_button);
-
-		startButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {			
-/*				
+			public void onClick(View v) {		
 				reset(); //generate new timestamp
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-*/
-/*				
-				myActivityInstance.runOnUiThread(new Runnable() {
-				    public void run() {
-						if (myProgressDialog==null) {
-							myProgressDialog = ProgressDialog.show(myActivityInstance, "Loading...",
-									  "This takes only a short while.", true);								
-						}
-						else {
-							if (!myProgressDialog.isShowing()) {
-								myProgressDialog.show();								
-							}
-						}														
-				    }
-				});
-*/				
-/*
-				//Reference: http://stackoverflow.com/questions/6343166/android-os-networkonmainthreadexception;
-				//last accessed: 9 Jan. 2014; answer by Dr.Luiji
-				Thread thread = new Thread(new Runnable(){
-				    @Override
-				    public void run() {							    								    	
-						try {							
-							if (myProgressDialog==null) {
-								myProgressDialog = ProgressDialog.show(myActivityInstance, "Loading...",
-										  "This takes only a short while.", true);								
-							}
-							else {
-								if (!myProgressDialog.isShowing()) {
-									myProgressDialog.show();								
-								}
-							}														
-						} catch (Exception e) {
-//								myProgressDialog.dismiss();
-					            e.printStackTrace();
-						}
-				    }
-				});
-				thread.start(); 											
-*/				
-/*				
-				Looper.prepare();
-				new CustomTask().execute((Void[])null);
-*/				
-/*				
-				myProgressDialog = ProgressDialog.show(myActivityInstance, "Loading...",
-						  "This takes only a short while.", true);								
-*/
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_sell"); 								
 				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
 			}
     	});
-/*		
-    	coverImage = (ImageView)findViewById(R.id.cover_img);
-    	Drawable d = getResources().getDrawable(getResources().getIdentifier("cover", "drawable", "usbong.android.kuto.alpha"));
-    	coverImage.setImageDrawable(d);		        		        	
-*/    	
+    	
+    	requestButton = (Button)findViewById(R.id.request_button);
+		requestButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {		
+				reset(); //generate new timestamp
+				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_request"); 								
+				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
+			}
+    	});
     }
     
-/*
-    private class CustomTask extends AsyncTask<Void, Void, Void> {
-
-        protected Void doInBackground(Void... param) {
-            //Do some work
-			if (myProgressDialog==null) {
-				myProgressDialog = ProgressDialog.show(myActivityInstance, "Loading...",
-						  "This takes only a short while.", true);								
-			}
-			else {
-				if (!myProgressDialog.isShowing()) {
-					myProgressDialog.show();								
-				}
-			}														
-            return null;
-        }
-
-        protected void onPostExecute(Void param) {
-            //Print Toast or open dialog
-        }
-    }
-*/    
     public void reset() {
     	UsbongUtils.generateDateTimeStamp(); //create a new timestamp for this "New Entry"
     }
-/*
-    private void showStatusDialog(String status)
-	{
-		AlertDialog.Builder prompt = new AlertDialog.Builder(UsbongMainActivity.this);
-		prompt.setTitle("Notification");
-		prompt.setMessage(status);
-		prompt.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
-			}
-		});
-		prompt.show();
-	}
-*/	
 
     //added by Mike, 29 July 2015
     //Reference: http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android;

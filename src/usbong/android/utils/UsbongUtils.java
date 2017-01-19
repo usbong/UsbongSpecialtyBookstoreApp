@@ -115,7 +115,7 @@ public class UsbongUtils {
 
 	public final static String API_KEY = "AIzaSyB5mM_lk_bbdT5nUWQTO6S5FyZ9IgaxqXc"; //added by Mike, 20151120
 
-	public static String DEFAULT_UTREE_TO_LOAD="usbong_specialty_bookstore"; //updated by Mike, 20160418
+	public static String DEFAULT_UTREE_TO_LOAD=UsbongConstants.TREE_TYPE_REQUEST;//"usbong_specialty_bookstore"; //updated by Mike, 20160418
 	public static String BASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/usbong_specialty_bookstore/";
 	public static String USBONG_TREES_FILE_PATH = BASE_FILE_PATH + "usbong_trees/"; //will be changed later in UsbongDecisionTreeEngineActivity.java
 		
@@ -1106,6 +1106,10 @@ public class UsbongUtils {
     	return null;
 	}
 
+	public static String getmyTreeFileName() {
+		return myTreeFileName;
+	}	
+	
 	public static void setmyTreeFileName(String myTree) {
 		myTreeFileName = myTree;
 	}
@@ -1510,206 +1514,340 @@ public class UsbongUtils {
 	    	String currLineString;        	
 			currLineString=br.readLine();
 			System.out.println(">>>>>>>>>> currLineString: "+currLineString);
-			
-			//process currLineString
-			//added by Mike, 20161212
-			StringTokenizer myBookRequestStringTokenizer = new StringTokenizer(currLineString, ";");
-			StringBuffer myRequestSummary = new StringBuffer("-Book Request Summary-\n");
-//			String temp = myBookRequestStringTokenizer.nextToken();
 
+			StringBuffer mySummary = new StringBuffer("default"); //change this later
 			ArrayList itemsInSummary = new ArrayList();
 			
-			while (myBookRequestStringTokenizer.hasMoreTokens()) {
-				itemsInSummary.add(myBookRequestStringTokenizer.nextToken()); 
+			switch (getmyTreeFileName()) {
+				//-----------------------------------------------------
+				case UsbongConstants.TREE_TYPE_SELL:
+				//-----------------------------------------------------
+					//process currLineString
+					//added by Mike, 20161212
+					StringTokenizer myBookSellStringTokenizer = new StringTokenizer(currLineString, ";");
+					mySummary.replace(0, "default".length(), "-Book Sell Summary-\n");
+	//				String temp = myBookRequestStringTokenizer.nextToken();
+						
+					while (myBookSellStringTokenizer.hasMoreTokens()) {
+						itemsInSummary.add(myBookSellStringTokenizer.nextToken()); 
+					}
+	
+					//get Book Title
+					mySummary.append("Book Title: " + itemsInSummary.get(1).toString().replace("A,","")+"\n");
+					//get Author
+					mySummary.append("Author: " + itemsInSummary.get(5).toString().replace("A,","") + ", " + itemsInSummary.get(4).toString().replace("A,","")+"\n");
+					//get Publisher
+					mySummary.append("Publisher: " + itemsInSummary.get(6).toString().replace("A,","")+"\n");
+					if (Integer.parseInt(itemsInSummary.get(7).toString())==0) { 
+						//Language: English
+						mySummary.append("Language: English\n");
+						
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(8).toString())==0) {					
+							mySummary.append("Format: Hardcover\n");
+						}
+						else {
+							mySummary.append("Format: Paperback\n");					
+						}
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(9).toString())==0) {					
+							mySummary.append("Book Type: Used\n");
+						}
+						else {
+							mySummary.append("Book Type: New\n");					
+						}
+						
+						//get ISBN-10 (optional)
+						mySummary.append("ISBN-10 (optional): " + itemsInSummary.get(10).toString().replace("A,","")+"\n");
+	
+						//get ISBN-13 (optional)
+						mySummary.append("ISBN-13 (optional): " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
+	
+						//get Number of copies
+						mySummary.append("Number of copies: " + itemsInSummary.get(12).toString().replace("A,","")+"\n");
+	
+						//get Total selling price in Philippine pesos for all copies
+						mySummary.append("Price (Philippine Peso): " + itemsInSummary.get(13).toString().replace("A,","")+"\n");
+	
+						if (itemsInSummary.get(14).toString().equals("0")) {
+							//Willing to travel to Marikina?
+							mySummary.append("Willing to travel to Marikina? Yes.\n");					
+
+							mySummary.append("Comments: \n"+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
+						}
+						else {
+							mySummary.append("Willing to travel to Marikina? No.\n");										
+							mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
+
+							mySummary.append("Comments: \n"+ itemsInSummary.get(16).toString().replace("A,","") +"\n");														
+						}
+					}
+					else {
+						//get Language
+						mySummary.append("Language: " + itemsInSummary.get(8).toString().replace("A,","")+"\n");
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(9).toString())==0) {
+							mySummary.append("Format: Hardcover\n");
+						}
+						else {
+							mySummary.append("Format: Paperback\n");					
+						}
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(10).toString())==0) {					
+							mySummary.append("Book Type: Used\n");
+						}
+						else {
+							mySummary.append("Book Type: New\n");					
+						}
+	
+						//get ISBN-10 (optional)
+						mySummary.append("ISBN-10 (optional): " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
+	
+						//get ISBN-13 (optional)
+						mySummary.append("ISBN-13 (optional): " + itemsInSummary.get(12).toString().replace("A,","")+"\n");
+	
+						//get Number of copies
+						mySummary.append("Number of copies: " + itemsInSummary.get(13).toString().replace("A,","")+"\n");
+	
+						//get Total selling price in Philippine pesos for all copies
+						mySummary.append("Price (Philippine Peso): " + itemsInSummary.get(14).toString().replace("A,","")+"\n");
+	
+						if (itemsInSummary.get(15).toString().equals("0")) {
+							//Willing to travel to Marikina?
+							mySummary.append("Willing to travel to Marikina? Yes.\n");		
+							
+							mySummary.append("Comments: \n"+ itemsInSummary.get(16).toString().replace("A,","") +"\n");														
+						}
+						else {
+							mySummary.append("Willing to travel to Marikina? No.\n");										
+							mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(16).toString().replace("A,","") +"\n");														
+
+							mySummary.append("Comments: \n"+ itemsInSummary.get(17).toString().replace("A,","") +"\n");														
+						}						
+					}			
+					mySummary.append("-End of Summary-");																		
+					break;
+				//-----------------------------------------------------
+				case UsbongConstants.TREE_TYPE_REQUEST:
+				//-----------------------------------------------------
+					//process currLineString
+					//added by Mike, 20161212
+					StringTokenizer myBookRequestStringTokenizer = new StringTokenizer(currLineString, ";");
+					mySummary.replace(0, "default".length(), "-Book Request Summary-\n");
+
+//				String temp = myBookRequestStringTokenizer.nextToken();
+						
+					while (myBookRequestStringTokenizer.hasMoreTokens()) {
+						itemsInSummary.add(myBookRequestStringTokenizer.nextToken()); 
+					}
+		/*
+					for (int i=0; i<itemsInSummary.size(); i++) {
+						Log.d(">>>>>>> item in Summary", ""+itemsInSummary.get(i));
+					}			
+		*/
+					//get Book Title
+					mySummary.append("Book Title: " + itemsInSummary.get(1).toString().replace("A,","")+"\n");
+					//get Author
+					mySummary.append("Author: " + itemsInSummary.get(4).toString().replace("A,","") + ", " + itemsInSummary.get(3).toString().replace("A,","")+"\n");
+					//get Publisher
+					mySummary.append("Publisher: " + itemsInSummary.get(5).toString().replace("A,","")+"\n");
+					if (Integer.parseInt(itemsInSummary.get(6).toString())==0) { 
+						//Language: English
+						mySummary.append("Language: English\n");
+						
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(7).toString())==0) {					
+							mySummary.append("Format: Hardcover\n");
+						}
+						else {
+							mySummary.append("Format: Paperback\n");					
+						}
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(8).toString())==0) {					
+							mySummary.append("Book Type: Used\n");
+						}
+						else {
+							mySummary.append("Book Type: New\n");					
+						}
+						
+						//get ISBN-10 (optional)
+						mySummary.append("ISBN-10 (optional): " + itemsInSummary.get(9).toString().replace("A,","")+"\n");
+	
+						//get ISBN-13 (optional)
+						mySummary.append("ISBN-13 (optional): " + itemsInSummary.get(10).toString().replace("A,","")+"\n");
+	
+						//get Number of copies
+						mySummary.append("Number of copies: " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
+	
+						//get Total budget
+						switch(Integer.parseInt(itemsInSummary.get(12).toString())) {
+							case 0:
+								mySummary.append("Total budget: less than 50 pesos\n");
+								break;
+							case 1:
+								mySummary.append("Total budget: less than 100 pesos\n");
+								break;
+							case 2:
+								mySummary.append("Total budget: less than 150 pesos\n");
+								break;
+							case 3:
+								mySummary.append("Total budget: less than 200 pesos\n");
+								break;
+							case 4:
+								mySummary.append("Total budget: less than 300 pesos\n");
+								break;
+							case 5:
+								mySummary.append("Total budget: less than 400 pesos\n");
+								break;
+							case 6:
+								mySummary.append("Total budget: less than 500 pesos\n");
+								break;
+							case 7:
+								mySummary.append("Total budget: less than 1000 pesos\n");
+								break;
+							case 8:
+								mySummary.append("Total budget: less than 2000 pesos\n");
+								break;
+							case 9:
+								mySummary.append("Total budget: less than 3000 pesos\n");
+								break;
+							case 10:
+								mySummary.append("Total budget: less than 5000 pesos\n");
+								break;
+							case 11:
+								mySummary.append("Total budget: less than 7500 pesos\n");
+								break;
+							case 12:
+								mySummary.append("Total budget: less than 10000 pesos\n");
+								break;
+							case 13:
+								mySummary.append("Total budget: more than 10000 pesos\n");
+								break;
+						}
+	
+						if (itemsInSummary.get(13).toString().equals("0")) {
+							//Willing to travel to Marikina?
+							mySummary.append("Willing to travel to Marikina? Yes.\n");					
+							
+							mySummary.append("Comments: \n"+ itemsInSummary.get(14).toString().replace("A,","") +"\n");														
+						}
+						else {
+							mySummary.append("Willing to travel to Marikina? No.\n");										
+							mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(14).toString().replace("A,","") +"\n");														
+
+							mySummary.append("Comments: \n"+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
+						}						
+					}
+					else {
+						//get Language
+						mySummary.append("Language: " + itemsInSummary.get(7).toString().replace("A,","")+"\n");
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(8).toString())==0) {
+							mySummary.append("Format: Hardcover\n");
+						}
+						else {
+							mySummary.append("Format: Paperback\n");					
+						}
+	
+						//get Format
+						if (Integer.parseInt(itemsInSummary.get(9).toString())==0) {					
+							mySummary.append("Book Type: Used\n");
+						}
+						else {
+							mySummary.append("Book Type: New\n");					
+						}
+	
+						//get ISBN-10 (optional)
+						mySummary.append("ISBN-10 (optional): " + itemsInSummary.get(10).toString().replace("A,","")+"\n");
+	
+						//get ISBN-13 (optional)
+						mySummary.append("ISBN-13 (optional): " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
+	
+						//get Number of copies
+						mySummary.append("Number of copies: " + itemsInSummary.get(12).toString().replace("A,","")+"\n");
+	
+						//get Total budget
+						switch(Integer.parseInt(itemsInSummary.get(13).toString())) {
+							case 0:
+								mySummary.append("Total budget: less than 50 pesos\n");
+								break;
+							case 1:
+								mySummary.append("Total budget: less than 100 pesos\n");
+								break;
+							case 2:
+								mySummary.append("Total budget: less than 150 pesos\n");
+								break;
+							case 3:
+								mySummary.append("Total budget: less than 200 pesos\n");
+								break;
+							case 4:
+								mySummary.append("Total budget: less than 300 pesos\n");
+								break;
+							case 5:
+								mySummary.append("Total budget: less than 400 pesos\n");
+								break;
+							case 6:
+								mySummary.append("Total budget: less than 500 pesos\n");
+								break;
+							case 7:
+								mySummary.append("Total budget: less than 1000 pesos\n");
+								break;
+							case 8:
+								mySummary.append("Total budget: less than 2000 pesos\n");
+								break;
+							case 9:
+								mySummary.append("Total budget: less than 3000 pesos\n");
+								break;
+							case 10:
+								mySummary.append("Total budget: less than 5000 pesos\n");
+								break;
+							case 11:
+								mySummary.append("Total budget: less than 7500 pesos\n");
+								break;
+							case 12:
+								mySummary.append("Total budget: less than 10000 pesos\n");
+								break;
+							case 13:
+								mySummary.append("Total budget: more than 10000 pesos\n");
+								break;
+						}
+	
+						if (itemsInSummary.get(14).toString().equals("0")) {
+							//Willing to travel to Marikina?
+							mySummary.append("Willing to travel to Marikina? Yes.\n");	
+							
+							mySummary.append("Comments: \n"+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
+						}
+						else {
+							mySummary.append("Willing to travel to Marikina? No.\n");										
+							mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
+
+							mySummary.append("Comments: \n"+ itemsInSummary.get(16).toString().replace("A,","") +"\n");														
+						}						
+					}			
+					mySummary.append("-End of Summary-");																		
+					break;
 			}
-/*
-			for (int i=0; i<itemsInSummary.size(); i++) {
-				Log.d(">>>>>>> item in Summary", ""+itemsInSummary.get(i));
-			}			
-*/
-			//get Book Title
-			myRequestSummary.append("Book Title: " + itemsInSummary.get(1).toString().replace("A,","")+"\n");
-			//get Author
-			myRequestSummary.append("Author: " + itemsInSummary.get(4).toString().replace("A,","") + ", " + itemsInSummary.get(3).toString().replace("A,","")+"\n");
-			//get Publisher
-			myRequestSummary.append("Publisher: " + itemsInSummary.get(5).toString().replace("A,","")+"\n");
-			if (Integer.parseInt(itemsInSummary.get(6).toString())==0) { 
-				//Language: English
-				myRequestSummary.append("Language: English\n");
-				
-				//get Format
-				if (Integer.parseInt(itemsInSummary.get(7).toString())==0) {					
-					myRequestSummary.append("Format: Hardcover\n");
-				}
-				else {
-					myRequestSummary.append("Format: Paperback\n");					
-				}
 
-				//get Format
-				if (Integer.parseInt(itemsInSummary.get(8).toString())==0) {					
-					myRequestSummary.append("Book Type: Used\n");
-				}
-				else {
-					myRequestSummary.append("Book Type: New\n");					
-				}
-				
-				//get ISBN-10 (optional)
-				myRequestSummary.append("ISBN-10 (optional): " + itemsInSummary.get(9).toString().replace("A,","")+"\n");
-
-				//get ISBN-13 (optional)
-				myRequestSummary.append("ISBN-13 (optional): " + itemsInSummary.get(10).toString().replace("A,","")+"\n");
-
-				//get Number of copies
-				myRequestSummary.append("Number of copies: " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
-
-				//get Total budget
-				switch(Integer.parseInt(itemsInSummary.get(12).toString())) {
-					case 0:
-						myRequestSummary.append("Total budget: less than 50 pesos\n");
-						break;
-					case 1:
-						myRequestSummary.append("Total budget: less than 100 pesos\n");
-						break;
-					case 2:
-						myRequestSummary.append("Total budget: less than 150 pesos\n");
-						break;
-					case 3:
-						myRequestSummary.append("Total budget: less than 200 pesos\n");
-						break;
-					case 4:
-						myRequestSummary.append("Total budget: less than 300 pesos\n");
-						break;
-					case 5:
-						myRequestSummary.append("Total budget: less than 400 pesos\n");
-						break;
-					case 6:
-						myRequestSummary.append("Total budget: less than 500 pesos\n");
-						break;
-					case 7:
-						myRequestSummary.append("Total budget: less than 1000 pesos\n");
-						break;
-					case 8:
-						myRequestSummary.append("Total budget: less than 2000 pesos\n");
-						break;
-					case 9:
-						myRequestSummary.append("Total budget: less than 3000 pesos\n");
-						break;
-					case 10:
-						myRequestSummary.append("Total budget: less than 5000 pesos\n");
-						break;
-					case 11:
-						myRequestSummary.append("Total budget: less than 7500 pesos\n");
-						break;
-					case 12:
-						myRequestSummary.append("Total budget: less than 10000 pesos\n");
-						break;
-					case 13:
-						myRequestSummary.append("Total budget: more than 10000 pesos\n");
-						break;
-				}
-
-				if (itemsInSummary.get(13).toString().equals("0")) {
-					//Willing to travel to Marikina?
-					myRequestSummary.append("Willing to travel to Marikina? Yes.\n");					
-				}
-				else {
-					myRequestSummary.append("Willing to travel to Marikina? No.\n");										
-					myRequestSummary.append("Preferred pick-up point: "+ itemsInSummary.get(14).toString().replace("A,","") +"\n");														
-				}
-			}
-			else {
-				//get Language
-				myRequestSummary.append("Language: " + itemsInSummary.get(7).toString().replace("A,","")+"\n");
-
-				//get Format
-				if (Integer.parseInt(itemsInSummary.get(8).toString())==0) {
-					myRequestSummary.append("Format: Hardcover\n");
-				}
-				else {
-					myRequestSummary.append("Format: Paperback\n");					
-				}
-
-				//get Format
-				if (Integer.parseInt(itemsInSummary.get(9).toString())==0) {					
-					myRequestSummary.append("Book Type: Used\n");
-				}
-				else {
-					myRequestSummary.append("Book Type: New\n");					
-				}
-
-				//get ISBN-10 (optional)
-				myRequestSummary.append("ISBN-10 (optional): " + itemsInSummary.get(10).toString().replace("A,","")+"\n");
-
-				//get ISBN-13 (optional)
-				myRequestSummary.append("ISBN-13 (optional): " + itemsInSummary.get(11).toString().replace("A,","")+"\n");
-
-				//get Number of copies
-				myRequestSummary.append("Number of copies: " + itemsInSummary.get(12).toString().replace("A,","")+"\n");
-
-				//get Total budget
-				switch(Integer.parseInt(itemsInSummary.get(13).toString())) {
-					case 0:
-						myRequestSummary.append("Total budget: less than 50 pesos\n");
-						break;
-					case 1:
-						myRequestSummary.append("Total budget: less than 100 pesos\n");
-						break;
-					case 2:
-						myRequestSummary.append("Total budget: less than 150 pesos\n");
-						break;
-					case 3:
-						myRequestSummary.append("Total budget: less than 200 pesos\n");
-						break;
-					case 4:
-						myRequestSummary.append("Total budget: less than 300 pesos\n");
-						break;
-					case 5:
-						myRequestSummary.append("Total budget: less than 400 pesos\n");
-						break;
-					case 6:
-						myRequestSummary.append("Total budget: less than 500 pesos\n");
-						break;
-					case 7:
-						myRequestSummary.append("Total budget: less than 1000 pesos\n");
-						break;
-					case 8:
-						myRequestSummary.append("Total budget: less than 2000 pesos\n");
-						break;
-					case 9:
-						myRequestSummary.append("Total budget: less than 3000 pesos\n");
-						break;
-					case 10:
-						myRequestSummary.append("Total budget: less than 5000 pesos\n");
-						break;
-					case 11:
-						myRequestSummary.append("Total budget: less than 7500 pesos\n");
-						break;
-					case 12:
-						myRequestSummary.append("Total budget: less than 10000 pesos\n");
-						break;
-					case 13:
-						myRequestSummary.append("Total budget: more than 10000 pesos\n");
-						break;
-				}
-
-				if (itemsInSummary.get(14).toString().equals("0")) {
-					//Willing to travel to Marikina?
-					myRequestSummary.append("Willing to travel to Marikina? Yes.\n");					
-				}
-				else {
-					myRequestSummary.append("Willing to travel to Marikina? No.\n");										
-					myRequestSummary.append("Preferred pick-up point: "+ itemsInSummary.get(15).toString().replace("A,","") +"\n");														
-				}
-			}			
-
-			myRequestSummary.append("-End of Summary-");														
 
 			//Reference: http://blog.iangclifton.com/2010/05/17/sending-html-email-with-android-intent/
 			//last acccessed: 17 Jan. 2012
 			sendToCloudBasedServiceIntent.setType("text/plain");
-			
-			sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Usbong Specialty Bookstore: Book Request");
-			sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_TEXT, myRequestSummary.toString()); //body
+
+			switch (getmyTreeFileName()) {
+				case UsbongConstants.TREE_TYPE_SELL:
+					sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Usbong Specialty Bookstore: Book Sell");
+					break;
+				case UsbongConstants.TREE_TYPE_REQUEST:
+					sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Usbong Specialty Bookstore: Book Request");
+					break;				
+			}
+			sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_TEXT, mySummary.toString()); //body
 			sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"support@usbong.ph"});//"masarapmabuhay@gmail.com"); 	
 			
 			

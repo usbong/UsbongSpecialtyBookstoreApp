@@ -3,6 +3,8 @@
     <string name="hello_world">Hello World, UsbongActivity!</string>
     <string name="app_name">Usbong Specialty Bookstore</string>
     <string name="start">Start</string>
+    <string name="sell">Sell</string>
+    <string name="request">Request</string>
     <string name="cover_img">Cover Image</string>
     <string name="usbong_logo">Usbong Logo</string>        
     <string name="logo">Logo</string>    

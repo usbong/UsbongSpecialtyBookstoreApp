@@ -42,6 +42,7 @@ public class CameraActivity extends Activity
         mPreview = new CameraPreview(this, myPictureName);//(this, currentWord, timeStamp);
 //        setDisplayOrientation(90);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         setContentView(mPreview);
     }
     // ----------------------------------------------------------------------

@@ -44,7 +44,6 @@ import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongScreenProcessor;
 import usbong.android.utils.UsbongUtils;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -357,7 +356,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
  
     		//create the usbong_demo_tree and store it in sdcard/usbong/usbong_trees
 //    		UsbongUtils.storeAssetsFileIntoSDCard(this,"usbong_demo_tree.xml");
-    		UsbongUtils.storeAssetsFileIntoSDCard(this,UsbongUtils.DEFAULT_UTREE_TO_LOAD+".utree");
+/*    		UsbongUtils.storeAssetsFileIntoSDCard(this,UsbongUtils.DEFAULT_UTREE_TO_LOAD+".utree");
+ */
+  			//edited by Mike, 20160119
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_SELL+".utree");
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_REQUEST+".utree");  			
     	}
     	catch(IOException ioe) {
     		ioe.printStackTrace();
@@ -460,7 +463,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		 */
 				//added by Mike, 30 April 2015
 				isInTreeLoader=false;		
-				myTree = UsbongUtils.DEFAULT_UTREE_TO_LOAD; //edited by Mike, 20160418
+				
+				//added by Mike, 20160119
+				if(getIntent().getStringExtra("utreeToLoad") != null) {
+		        	myTree=getIntent().getStringExtra("utreeToLoad"); 
+		        }
+				else {
+					myTree = UsbongUtils.DEFAULT_UTREE_TO_LOAD; //edited by Mike, 20160418
+				}
 
 				UsbongUtils.clearTempFolder();
 //				isr=null; //set inputStreamReader to null; i.e. new tree
@@ -3000,7 +3010,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         	if(myBitmap != null)
         	{
         		myImageView.setImageBitmap(myBitmap);
-        	}
+/*        		myImageView.setRotation(90);//added by Mike, rotate counter-clockwise once        	
+*/
+ 			}
+ 
         	//Read more: http://www.brighthub.com/mobile/google-android/articles/64048.aspx#ixzz0yXLCazcU                	  
         }
         else

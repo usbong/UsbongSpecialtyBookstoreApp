@@ -26,9 +26,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import usbong.android.utils.UsbongUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -36,10 +36,10 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
-//import android.hardware.Camera.CameraInfo; //android api 9
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -49,6 +49,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+//import android.hardware.Camera.CameraInfo; //android api 9
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
 	private static final String TAG = "UsbongCameraPreview";
@@ -296,6 +297,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
 				    StoreByteImage(mContext, _data, 50,
 							"ImageName");		
+				    
 				    //removed by Mike, Sept. 21, 2013
 //					UsbongDecisionTreeEngineActivity.setCurrScreen(UsbongDecisionTreeEngineActivity.PHOTO_CAPTURE_SCREEN);				
 					((Activity) getContext()).finish();
@@ -348,8 +350,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 				BufferedOutputStream bos = new BufferedOutputStream(
 						fileOutputStream);
 
-				myImage.compress(CompressFormat.JPEG, quality, bos);
+				//added by Mike, 20160119
+	        	Matrix matrix = new Matrix();
+	            matrix.postRotate(90);
+	            Bitmap myBitmapRotated = Bitmap.createBitmap(myImage, 0, 0, myImage.getWidth(), myImage.getHeight(), matrix, true);
 
+	            myBitmapRotated.compress(CompressFormat.JPEG, quality, bos);
+
+/*	            //commented out by Mike, 20160119
+				myImage.compress(CompressFormat.JPEG, quality, bos);
+*/				
 				bos.flush();
 				bos.close();
 

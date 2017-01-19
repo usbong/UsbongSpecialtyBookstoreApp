@@ -13,7 +13,9 @@
 			    style="@style/UsbongPhotoCaptureButton"	    	
 			    android:text="Take Photo" />
 			<ImageView android:id="@+id/CameraImage"
-				style="@style/UsbongCameraImageView"/>
+				style="@style/UsbongCameraImageView"
+				android:layout_marginTop="28dp"
+				android:contentDescription="book photo"/>
 		</LinearLayout>
 	</ScrollView>	    	    
 	<LinearLayout
