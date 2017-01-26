@@ -47,6 +47,7 @@ import android.widget.ListView;
  */
 public class UsbongMainActivity extends AppCompatActivity/*Activity*/ 
 {	
+	private Button buyButton;
 	private Button sellButton;
 	private Button requestButton;
 	
@@ -113,6 +114,19 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     
     public void initMainMenuScreen()
     {    	
+    	//added by Mike, 20160126
+    	buyButton = (Button)findViewById(R.id.buy_button);
+    	buyButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {		
+				reset(); //generate new timestamp
+				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_buy"); 								
+				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
+			}
+    	});
+    	
     	//added by Mike, 20160119
     	sellButton = (Button)findViewById(R.id.sell_button);
 		sellButton.setOnClickListener(new OnClickListener() {

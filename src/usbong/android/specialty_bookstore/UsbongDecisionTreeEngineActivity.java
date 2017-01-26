@@ -361,6 +361,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			//edited by Mike, 20160119
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_SELL+".utree");
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_REQUEST+".utree");  			
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_BUY+".utree"); //added by Mike, 20160126  			
+  			
+  			//added by Mike, 20160126
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, "bookList.txt");  			
     	}
     	catch(IOException ioe) {
     		ioe.printStackTrace();

@@ -11,13 +11,17 @@
 			android:contentDescription="@string/cover_img" /> 		    
 	</LinearLayout>	
 	<LinearLayout
-		style="@style/UsbongDefaultBackNextButtonLayout">	
-		<Button android:id="@+id/sell_button"
-		    style="@style/UsbongDefaultBackNextButton"
+		style="@style/UsbongDefaultBuySellRequestButtonLayout">	
+		<Button android:id="@+id/buy_button"
+		    style="@style/UsbongDefaultBuySellRequestButton"
+			android:text="@string/buy" 
+			android:background="@drawable/button_yellow"/>		    
+	    <Button android:id="@+id/sell_button"
+		    style="@style/UsbongDefaultBuySellRequestButton"
 			android:text="@string/sell" 
 			android:background="@drawable/button_yellow"/>	
 		<Button android:id="@+id/request_button"
-		    style="@style/UsbongDefaultBackNextButton"
+		    style="@style/UsbongDefaultBuySellRequestButton"
 			android:text="@string/request" 
 			android:background="@drawable/button_yellow"/>	
 	</LinearLayout>

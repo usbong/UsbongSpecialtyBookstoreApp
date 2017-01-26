@@ -10,6 +10,7 @@ public class UsbongConstants {
     //TREE types
 	public static final String TREE_TYPE_SELL = "usbong_specialty_bookstore_sell";
 	public static final String TREE_TYPE_REQUEST = "usbong_specialty_bookstore_request";
+	public static final String TREE_TYPE_BUY = "usbong_specialty_bookstore_buy";
     
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
