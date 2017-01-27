@@ -364,7 +364,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_BUY+".utree"); //added by Mike, 20160126  			
   			
   			//added by Mike, 20160126
-  			UsbongUtils.storeAssetsFileIntoSDCard(this, "bookList.txt");  			
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEM_LIST+".txt");  
     	}
     	catch(IOException ioe) {
     		ioe.printStackTrace();
@@ -480,7 +480,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //				isr=null; //set inputStreamReader to null; i.e. new tree
 /*		        initParser();	
 */		        
-				
+					
 //		        myProgressDialog.dismiss();
 /*		        
 		        //added by Mike, 29 Sept. 2015
@@ -516,7 +516,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		            Runnable myRunnable = new Runnable() {
 		            	@Override
 		            	public void run() {
-						    initParser();
+		    				//added by Mike, 20160126
+		    				if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+		    					initTreeLoader();
+		    				}
+		    				else {
+							    initParser();		    					
+		    				}
+		    				
 						    if (instance.myProgressDialog != null) {
 						        instance.myProgressDialog.dismiss();
 						    }				            		
@@ -571,9 +578,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		setContentView(R.layout.tree_list_interface);				
 
 		isInTreeLoader=true;
-		
-		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);
-		
+
+//		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);
+		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST+".txt");
+/*			
 		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
 		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
@@ -603,6 +611,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				}
 			}).show();	        		        	
 		  }		
+*/		  
 	}
     
 	@Override

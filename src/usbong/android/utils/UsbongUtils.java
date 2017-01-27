@@ -118,6 +118,9 @@ public class UsbongUtils {
 	public static String DEFAULT_UTREE_TO_LOAD=UsbongConstants.TREE_TYPE_REQUEST;//"usbong_specialty_bookstore"; //updated by Mike, 20160418
 	public static String BASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/usbong_specialty_bookstore/";
 	public static String USBONG_TREES_FILE_PATH = BASE_FILE_PATH + "usbong_trees/"; //will be changed later in UsbongDecisionTreeEngineActivity.java
+
+	//added by Mike, 20160126
+//	public static String USBONG_ITEM_ARRAY_FILE_PATH = USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST; 
 		
 	//added by Mike, 20160511
 	public final static String myPackageName="usbong.android.specialty_bookstore";
@@ -1293,6 +1296,47 @@ public class UsbongUtils {
 		return (ArrayList<String>) ret;
 	}
 
+	//added by Mike, 20160126
+	public static ArrayList<String> getItemArrayList(String filePath)
+	{
+		List<String> ret = new ArrayList<String>();
+		
+		try 
+		{  	
+			File file = new File(filePath);
+			if(!file.exists())
+			{
+				System.out.println(">>>>>> File " + filePath + " doesn't exist. Creating file.");
+				//file.createNewFile();
+				file.mkdirs();
+			}
+
+	        InputStream in = null;
+	        InputStreamReader reader;
+	        try {
+	          in = new BufferedInputStream(new FileInputStream(file));
+	        }  
+	        catch(Exception e) {
+	    	  e.printStackTrace();
+	        }
+	        reader = new InputStreamReader(in,"UTF-8"); 
+				        
+			BufferedReader br = new BufferedReader(reader);    		
+	    	String currLineString;        	
+	        
+        	while((currLineString=br.readLine())!=null)
+        	{ 		
+        		Log.d(">>>>currLineString", currLineString+"");
+	    	}
+    	}
+    	catch(Exception e) {
+    		System.out.println("ERROR in reading FILE.");
+    		e.printStackTrace();
+    	}
+		
+		return (ArrayList<String>) ret;
+	}
+	
 	public static ArrayList<String> getAvailableTranslationsArrayList(String treeFile)
 	{
 		List<String> ret = new ArrayList<String>();
