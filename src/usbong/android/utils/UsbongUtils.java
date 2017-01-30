@@ -1324,9 +1324,32 @@ public class UsbongUtils {
 			BufferedReader br = new BufferedReader(reader);    		
 	    	String currLineString;        	
 	        
+	    	boolean isNewEntry=true;
+	    	
         	while((currLineString=br.readLine())!=null)
         	{ 		
         		Log.d(">>>>currLineString", currLineString+"");
+        		
+        		if (currLineString.equals("--")) {
+        			isNewEntry=true;
+        			currLineString=br.readLine();
+        		}
+        		
+        		if (isNewEntry) {
+//        			String entry=currLineString.replace("Title: ", "");
+        			StringBuffer entry = new StringBuffer(currLineString);
+        			currLineString=br.readLine();
+//        			entry.concat(currLineString.replace("\nAuthor: ", ""));
+        			entry.append("\n"+currLineString);
+        			currLineString=br.readLine();
+//        			entry.concat(currLineString.replace("\nPrice: ", ""));
+        			entry.append("\n"+currLineString);
+        			currLineString=br.readLine();
+//        			entry.concat(currLineString.replace("\nLanguage: ", ""));        			
+        			entry.append("\n"+currLineString);        			
+        			ret.add(entry.toString());
+        			isNewEntry=false;
+        		}
 	    	}
     	}
     	catch(Exception e) {

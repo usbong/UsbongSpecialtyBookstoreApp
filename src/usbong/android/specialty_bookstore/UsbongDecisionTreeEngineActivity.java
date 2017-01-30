@@ -49,8 +49,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -581,7 +583,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 
 //		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);
 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST+".txt");
-/*			
+			
 		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
 		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
@@ -610,8 +612,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 					startActivity(toUsbongMainActivityIntent);
 				}
 			}).show();	        		        	
-		  }		
-*/		  
+		  }				  
 	}
     
 	@Override
@@ -3233,6 +3234,38 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             				initParser(o.toString());
             			}
                 	});
+                	
+                	//added by Mike, 20170130
+                	try {
+                		// set the image here
+                		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+                        Resources myRes = instance.getResources();
+                        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(o.toString().substring(0, o.toString().indexOf("\nAuthor:")).replace("Title: ","").replace("'","").replace(":","")+".jpg"), null); //edited by Mike, 20170130
+
+//        			    myDrawableImage = myRes.getAssets().open(o.toString()+"_icon.png").;// .getDrawable(myRes.getIdentifier(o.toString()+"_icon.png", "drawable", UsbongUtils.myPackageName));
+                		ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+                		image.setImageDrawable(myDrawableImage);	
+                		
+                		image.setOnClickListener(new OnClickListener() {
+                			@Override
+                			public void onClick(View v) {
+/*                				
+                				isInTreeLoader=false;		
+                				myTree = o.toString(); //edited by Mike, 20161110
+                				UsbongUtils.clearTempFolder();
+
+                				//added by Mike, 29 Sept. 2015
+                				myProgressDialog = ProgressDialog.show(instance, "Loading...",
+                						  "This takes only a short while.", true, false);				  
+                				new MyBackgroundTask().execute();        
+//                				initParser(o.toString());  
+ */
+                			}
+                    	});
+                	}
+                	catch(Exception e) {
+                		e.printStackTrace();
+                	}
 /*                	
                 	Button selectButton = (Button)v.findViewById(R.id.select_tree_button);
                 	selectButton.setOnClickListener(new OnClickListener() {
