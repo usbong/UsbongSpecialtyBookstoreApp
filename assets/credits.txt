@@ -1,6 +1,6 @@
 --Usbong Specialty Bookstore--
-ver: 1.0.3
-date: 20160126
+ver: 1.0.4
+date: 20160131
 
 Usbong Social Systems, Inc.
 
@@ -24,4 +24,4 @@ Contact:
 Website: www.usbong.ph
 Email: support@usbong.ph
 
-Copyright 2016. All rights reserved.
+Copyright 2016-2017. All rights reserved.
