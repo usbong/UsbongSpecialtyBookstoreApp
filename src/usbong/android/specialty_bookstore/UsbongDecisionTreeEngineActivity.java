@@ -63,6 +63,7 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -3218,7 +3219,16 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 final String o = items.get(position);
                 if (o != null) {
                 	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                	dataCurrentTextView.setText(o.toString());
+                	//added by Mike, 20170131
+                	String s = o.toString()
+                			.replace("Title:", "<b>Title:</b>")
+        					.replace("\nAuthor:", "\n<b>Author:</b>")
+        					.replace("\nPrice:", "\n<b>Price:</b>")
+        					.replace("\nLanguage:", "\n<b>Language:</b>")
+        					.replace("\n", "<br>");
+
+                	dataCurrentTextView.setText(Html.fromHtml(s));
+//                	dataCurrentTextView.setText(o.toString());
                 	dataCurrentTextView.setOnClickListener(new OnClickListener() {
             			@Override
             			public void onClick(View v) {
@@ -3231,7 +3241,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //            				isr=null; //set inputStreamReader to null; i.e. new tree
             		        initParser();
 */            		        
-            				initParser(o.toString());
+//            				initParser(o.toString());
+            				initParser(UsbongConstants.TREE_TYPE_BUY);           				
             			}
                 	});
                 	
