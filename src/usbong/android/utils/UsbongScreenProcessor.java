@@ -736,8 +736,8 @@ public class UsbongScreenProcessor
 			udtea.setContentView(R.layout.image_display_screen);
 			udtea.initBackNextButtons();
 			ImageView myImageDisplayScreenImageView = (ImageView)udtea.findViewById(R.id.special_imageview);
-			//		        if (!UsbongUtils.setImageDisplay(myImageDisplayScreenImageView, myTree+".utree/res/" +UsbongUtils.getResName(udtea.currUsbongNode))) {
-			if (!UsbongUtils.setImageDisplay(myImageDisplayScreenImageView, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			//		        if (!UsbongUtils.setImageDisplay(myImageDisplayScreenImageView, myTree+".utree/res/" +UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
+			if (!UsbongUtils.setImageDisplay(udtea, myImageDisplayScreenImageView, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
@@ -747,7 +747,7 @@ public class UsbongScreenProcessor
 			udtea.setContentView(R.layout.clickable_image_display_screen);
 			udtea.initBackNextButtons();
 			ImageButton myClickableImageDisplayScreenImageButton = (ImageButton)udtea.findViewById(R.id.clickable_image_display_imagebutton);
-			if (!UsbongUtils.setClickableImageDisplay(myClickableImageDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			if (!UsbongUtils.setClickableImageDisplay(myClickableImageDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
@@ -780,7 +780,7 @@ public class UsbongScreenProcessor
 			TextView myTextClickableImageDisplayTextView = (TextView)udtea.findViewById(R.id.text_clickable_image_display_textview);
 			myTextClickableImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextClickableImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			ImageButton myTextClickableImageDisplayScreenImageButton = (ImageButton)udtea.findViewById(R.id.clickable_image_display_imagebutton);
-			if (!UsbongUtils.setClickableImageDisplay(myTextClickableImageDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			if (!UsbongUtils.setClickableImageDisplay(myTextClickableImageDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
@@ -813,7 +813,7 @@ public class UsbongScreenProcessor
 			TextView myClickableImageTextDisplayTextView = (TextView)udtea.findViewById(R.id.clickable_image_text_display_textview);
 			myClickableImageTextDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myClickableImageTextDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			ImageButton myClickableImageTextDisplayScreenImageButton = (ImageButton)udtea.findViewById(R.id.clickable_image_display_imagebutton);
-			if (!UsbongUtils.setClickableImageDisplay(myClickableImageTextDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			if (!UsbongUtils.setClickableImageDisplay(myClickableImageTextDisplayScreenImageButton, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
@@ -844,7 +844,7 @@ public class UsbongScreenProcessor
 			udtea.setContentView(R.layout.video_from_file_screen);
 			udtea.initBackNextButtons();
 			VideoView myVideoFromFileScreenVideoView = (VideoView)udtea.findViewById(R.id.video_from_file_videoview);
-			myVideoFromFileScreenVideoView.setVideoPath(UsbongUtils.getPathOfVideoFile(udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode)));
+			myVideoFromFileScreenVideoView.setVideoPath(UsbongUtils.getPathOfVideoFile(udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode)));
 			//added by Mike, Sept. 9, 2013
 			myVideoFromFileScreenVideoView.setMediaController(new MediaController(((Activity)udtea)));
 			myVideoFromFileScreenVideoView.start();
@@ -854,7 +854,7 @@ public class UsbongScreenProcessor
 			TextView myVideoFromFileWithTextTextView = (TextView)udtea.findViewById(R.id.video_from_file_with_text_textview);
 			myVideoFromFileWithTextTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myVideoFromFileWithTextTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			VideoView myVideoFromFileWithTextScreenVideoView = (VideoView)udtea.findViewById(R.id.video_from_file_with_text_videoview);
-			myVideoFromFileWithTextScreenVideoView.setVideoPath(UsbongUtils.getPathOfVideoFile(udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode)));
+			myVideoFromFileWithTextScreenVideoView.setVideoPath(UsbongUtils.getPathOfVideoFile(udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode)));
 			myVideoFromFileWithTextScreenVideoView.setMediaController(new MediaController(((Activity)udtea)));
 			myVideoFromFileWithTextScreenVideoView.start();
 		} else if (udtea.currScreen == UsbongConstants.TEXT_IMAGE_DISPLAY_SCREEN) {
@@ -863,8 +863,8 @@ public class UsbongScreenProcessor
 			TextView myTextImageDisplayTextView = (TextView)udtea.findViewById(R.id.text_image_display_textview);
 			myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			ImageView myTextImageDisplayImageView = (ImageView)udtea.findViewById(R.id.image_display_imageview);
-			//		        if (!UsbongUtils.setImageDisplay(myTextImageDisplayImageView, myTree+".utree/res/" +UsbongUtils.getResName(udtea.currUsbongNode))) {
-			if (!UsbongUtils.setImageDisplay(myTextImageDisplayImageView, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			//		        if (!UsbongUtils.setImageDisplay(myTextImageDisplayImageView, myTree+".utree/res/" +UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
+			if (!UsbongUtils.setImageDisplay(udtea, myTextImageDisplayImageView, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
@@ -877,7 +877,7 @@ public class UsbongScreenProcessor
 			myImageTextDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myImageTextDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			ImageView myImageTextDisplayImageView = (ImageView)udtea.findViewById(R.id.image_display_imageview);
 
-			if (!UsbongUtils.setImageDisplay(myImageTextDisplayImageView, udtea.myTree, UsbongUtils.getResName(udtea.currUsbongNode))) {
+			if (!UsbongUtils.setImageDisplay(udtea, myImageTextDisplayImageView, udtea.myTree, UsbongUtils.getResName(udtea, udtea.currUsbongNode))) {
 			//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 //			        Resources myRes = getResources();
 			    myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));

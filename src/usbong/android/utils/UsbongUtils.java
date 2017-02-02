@@ -71,9 +71,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -257,6 +259,40 @@ public class UsbongUtils {
 		if ((a.currScreen>=UsbongConstants.TEXT_DISPLAY_SCREEN) && (a.currScreen<=UsbongConstants.CLASSIFICATION_SCREEN)) {
 			return true;
 		}
+		return false;
+	}
+	
+	//added by Mike, 20170202
+	public static boolean isAScreenThatRetrievesFiles(UsbongDecisionTreeEngineActivity a) {
+		//this would cover:
+		//		public static final int TEXT_DISPLAY_SCREEN=9;	
+		//		public static final int IMAGE_DISPLAY_SCREEN=10;
+		//		public static final int TEXT_IMAGE_DISPLAY_SCREEN=11;
+		//		public static final int IMAGE_TEXT_DISPLAY_SCREEN=12;
+		//		public static final int VIDEO_FROM_FILE_SCREEN=17;	
+		//		public static final int VIDEO_FROM_FILE_WITH_TEXT_SCREEN=18;	
+		//		public static final int CLICKABLE_IMAGE_DISPLAY_SCREEN=24;
+		//		public static final int TEXT_CLICKABLE_IMAGE_DISPLAY_SCREEN=25;
+		//		public static final int CLICKABLE_IMAGE_TEXT_DISPLAY_SCREEN=26;
+		//		public static final int YOUTUBE_VIDEO_SCREEN=32;	
+		//		public static final int YOUTUBE_VIDEO_WITH_TEXT_SCREEN=33;	
+		
+		if ((a.currScreen>=UsbongConstants.TEXT_DISPLAY_SCREEN) && (a.currScreen<=UsbongConstants.IMAGE_TEXT_DISPLAY_SCREEN)) {
+			return true;
+		}
+		
+		if ((a.currScreen>=UsbongConstants.VIDEO_FROM_FILE_SCREEN) && (a.currScreen<=UsbongConstants.VIDEO_FROM_FILE_WITH_TEXT_SCREEN)) {
+			return true;
+		}
+
+		if ((a.currScreen>=UsbongConstants.CLICKABLE_IMAGE_DISPLAY_SCREEN) && (a.currScreen<=UsbongConstants.CLICKABLE_IMAGE_TEXT_DISPLAY_SCREEN)) {
+			return true;
+		}
+
+		if ((a.currScreen>=UsbongConstants.YOUTUBE_VIDEO_SCREEN) && (a.currScreen<=UsbongConstants.YOUTUBE_VIDEO_WITH_TEXT_SCREEN)) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -888,11 +924,23 @@ public class UsbongUtils {
     	
     	StringTokenizer st = new StringTokenizer(currUsbongNode, "~");
 		String myStringToken = st.nextToken();
+		
+		//added by Mike, 20170202
+		//shift to the next ~ once
+		if (isAScreenThatRetrievesFiles((UsbongDecisionTreeEngineActivity)a)) {
+			myStringToken = st.nextToken();
+		}
+
 		while (st.hasMoreTokens()) {
 			if (myStringToken.contains("@")) {
 				Log.d(">>>>>>","inside myStringToken.contains('@')");
 				String[] s = myStringToken.split("=");
 
+				//edited by Mike, 20170202
+				if (s.length<2) {
+					break;
+				}
+					
 				Log.d("s[0]: ",s[0]);
 				Log.d("s[1]: ",s[1]);
 
@@ -922,11 +970,15 @@ public class UsbongUtils {
     //becomes "frame_13"
     //"frame_13" is the name of the image resource, currently located in res/drawable
     //it should always come after the first ~
-    public static String getResName(String currUsbongNode) {
+    public static String getResName(Activity a, String currUsbongNode) {
 		StringTokenizer st = new StringTokenizer(currUsbongNode, "~");
 		String myStringToken = st.nextToken();
 		myStringToken = st.nextToken(); 
-		return myStringToken;
+//		return myStringToken;
+		
+		//added by Mike, 20170202
+    	return processLoadTagsInString(a, 
+    			replaceAllCurlyBracesWithGreaterThanLessThanSign(myStringToken));		
     }
 
     //This methods gets the name of the YouTube ID
@@ -2129,7 +2181,7 @@ public class UsbongUtils {
     }
     
     //supports .png, .jpg and .jpeg
-    public static boolean setImageDisplay(ImageView myImageView, String myTree, String resFileName) {
+    public static boolean setImageDisplay(Activity a, ImageView myImageView, String myTree, String resFileName) {
     	/*
     	File file = new File(path);
     	if (!file.exists()) {
@@ -2159,11 +2211,32 @@ public class UsbongUtils {
         		myImageView.setImageBitmap(myBitmap);
         	}
         	else {
-        		return false;
+                return false;
         	}
         	//Read more: http://www.brighthub.com/mobile/google-android/articles/64048.aspx#ixzz0yXLCazcU                	  
         	return true; //success!
         }
+        else {
+    		//added by Mike, 20170202
+    		//check if it's in the assets folder
+    		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+            Resources myRes = ((UsbongDecisionTreeEngineActivity)a).getResources();
+            
+            try {
+                Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(resFileName), null); //edited by Mike, 20170202                	
+                if (myDrawableImage !=null) {
+            		myImageView.setImageDrawable(myDrawableImage);	                	
+                }
+                else {
+            		return false;                	
+                }        	
+                return true;
+            }
+            catch (Exception e) {
+            	e.printStackTrace();
+            }
+        }
+        
         return false; //not successful!
     }
 
@@ -2188,7 +2261,6 @@ public class UsbongUtils {
         }
         return false; //not successful!
     }
-
     
     //supports .png and .jpg
     public static boolean setBackgroundImage(View myLayout, String myTree, String resFileName) {

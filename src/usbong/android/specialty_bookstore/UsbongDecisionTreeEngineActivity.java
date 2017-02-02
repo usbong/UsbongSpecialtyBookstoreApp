@@ -3254,12 +3254,20 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 		// set the image here
                 		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
                         Resources myRes = instance.getResources();
+                        String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
+                        		.replace("Title: ","")
+                        		.replace("Åf","")
+                        		.replace("'","")
+                        		.replace(":","")+".jpg"; //edited by Mike, 20170202
+                        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
+                    	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160202
+/*
                         Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
                         		.replace("Title: ","")
                         		.replace("Åf","")
                         		.replace("'","")
                         		.replace(":","")+".jpg"), null); //edited by Mike, 20170130
-
+*/                        		
 //        			    myDrawableImage = myRes.getAssets().open(o.toString()+"_icon.png").;// .getDrawable(myRes.getIdentifier(o.toString()+"_icon.png", "drawable", UsbongUtils.myPackageName));
                 		ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
                 		image.setImageDrawable(myDrawableImage);	
@@ -3278,6 +3286,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 				new MyBackgroundTask().execute();        
 //                				initParser(o.toString());  
  */
+                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				
                 			}
                     	});
                 	}

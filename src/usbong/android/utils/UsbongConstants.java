@@ -14,6 +14,7 @@ public class UsbongConstants {
 
 	public static final String ITEM_LIST = "books_list";
 	public static final String ITEM_VARIABLE_NAME = "item_details";
+	public static final String ITEM_IMAGE_NAME = "item_image";
 		
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
