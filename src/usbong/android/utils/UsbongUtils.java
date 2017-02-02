@@ -2365,7 +2365,7 @@ public class UsbongUtils {
 			    v = m. group(1);
 			    Log.d(">>>> v",v);
 				try {
-					myText=myText.replaceAll("<@"+v+">", ((UsbongDecisionTreeEngineActivity)a).getVariableFromMyUsbongVariableMemory("@"+v));
+					myText=myText.replaceAll("<@"+v+">", ((UsbongDecisionTreeEngineActivity)a).getVariableFromMyUsbongVariableMemory(v));//"@"+v));
 				}
 				catch(Exception e) {
 					e.printStackTrace();

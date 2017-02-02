@@ -13,7 +13,8 @@ public class UsbongConstants {
 	public static final String TREE_TYPE_BUY = "usbong_specialty_bookstore_buy";
 
 	public static final String ITEM_LIST = "books_list";
-	
+	public static final String ITEM_VARIABLE_NAME = "item_details";
+		
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	

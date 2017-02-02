@@ -3227,6 +3227,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         					.replace("\nLanguage:", "\n<b>Language:</b>")
         					.replace("\n", "<br>");
 
+                	//added by Mike, 20170202
+                	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+                	
                 	dataCurrentTextView.setText(Html.fromHtml(s));
 //                	dataCurrentTextView.setText(o.toString());
                 	dataCurrentTextView.setOnClickListener(new OnClickListener() {
@@ -3241,7 +3244,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //            				isr=null; //set inputStreamReader to null; i.e. new tree
             		        initParser();
 */            		        
-//            				initParser(o.toString());
+//            				initParser(o.toString());            			
             				initParser(UsbongConstants.TREE_TYPE_BUY);           				
             			}
                 	});
