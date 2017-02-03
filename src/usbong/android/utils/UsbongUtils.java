@@ -1646,27 +1646,30 @@ public class UsbongUtils {
 				StringTokenizer myBookBuyStringTokenizer = new StringTokenizer(currLineString, ";");
 				mySummary.replace(0, "default".length(), "-Book Buy Summary-\n");
 //				String temp = myBookRequestStringTokenizer.nextToken();
-					
+									
 				while (myBookBuyStringTokenizer.hasMoreTokens()) {
 					itemsInSummary.add(myBookBuyStringTokenizer.nextToken()); 
 				}
 
-				//get Buyer's Name
-				mySummary.append("Buyer's Name: " + itemsInSummary.get(2).toString().replace("A,","") + ", " + itemsInSummary.get(1).toString().replace("A,","")+"\n");
-				//get Buyer's Contact Number
-				mySummary.append("Buyer's Contact Number: " + itemsInSummary.get(3).toString().replace("A,","")+"\n");
+				//book details
+				mySummary.append(UsbongDecisionTreeEngineActivity.getInstance().getVariableFromMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME).replace("<b>", "").replace("</b>","").replace("<br>", "\n")+"\n--\n");
 				
-				if (itemsInSummary.get(4).toString().equals("0")) {
+				//get Buyer's Name
+				mySummary.append("Buyer's Name: " + itemsInSummary.get(3).toString().replace("A,","") + ", " + itemsInSummary.get(2).toString().replace("A,","")+"\n");
+				//get Buyer's Contact Number
+				mySummary.append("Buyer's Contact Number: " + itemsInSummary.get(4).toString().replace("A,","")+"\n");
+				
+				if (itemsInSummary.get(5).toString().equals("0")) {
 					//Willing to travel to Marikina?
 					mySummary.append("Willing to travel to Marikina? Yes.\n");					
 
-					mySummary.append("Comments: \n"+ itemsInSummary.get(5).toString().replace("A,","") +"\n");														
+					mySummary.append("Comments: \n"+ itemsInSummary.get(6).toString().replace("A,","") +"\n");														
 				}
 				else {
 					mySummary.append("Willing to travel to Marikina? No.\n");										
-					mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(5).toString().replace("A,","") +"\n");														
+					mySummary.append("Preferred pick-up point: "+ itemsInSummary.get(6).toString().replace("A,","") +"\n");														
 
-					mySummary.append("Comments: \n"+ itemsInSummary.get(6).toString().replace("A,","") +"\n");														
+					mySummary.append("Comments: \n"+ itemsInSummary.get(7).toString().replace("A,","") +"\n");														
 				}
 				mySummary.append("-End of Summary-");																		
 				break;
