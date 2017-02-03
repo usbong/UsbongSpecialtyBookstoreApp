@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -586,6 +587,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST+".txt");
 			
 		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+		mCustomAdapter.sort(); //edited by Mike, 20170203
+/*
 		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
 		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
 		mCustomAdapter.sort(new Comparator<String>() {
@@ -593,7 +596,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        return arg0.compareTo(arg1);
 		    }
 		});
-		
+*/		
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
@@ -3206,7 +3209,20 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		
 		public CustomDataAdapter(Context context, int textViewResourceId, ArrayList<String> items) {
             super(context, textViewResourceId, items);
-            this.items = items;
+            this.items = items;            
+		}
+		
+		//added by Mike, 20170203
+		public void sort() {
+//			Collections.sort(items);
+			
+			//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
+			//last accessed: 2 Jan. 2014; answer by Alex Lockwood
+			Collections.sort(items, new Comparator<String>() {
+			    public int compare(String arg0, String arg1) {
+			        return arg0.compareTo(arg1);
+			    }
+			});			
 		}
 		
 		@Override
@@ -3218,91 +3234,53 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 }
                 final String o = items.get(position);
                 if (o != null) {
-                	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                	//added by Mike, 20170131
-                	String s = o.toString()
-                			.replace("Title:", "<b>Title:</b>")
-        					.replace("\nAuthor:", "\n<b>Author:</b>")
-        					.replace("\nPrice:", "\n<b>Price:</b>")
-        					.replace("\nLanguage:", "\n<b>Language:</b>")
-        					.replace("\n", "<br>");
+                	try {       
+                    	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
+                    	//added by Mike, 20170131
+                    	final String s = o.toString()
+                    			.replace("Title:", "<b>Title:</b>")
+            					.replace("\nAuthor:", "\n<b>Author:</b>")
+            					.replace("\nPrice:", "\n<b>Price:</b>")
+            					.replace("\nLanguage:", "\n<b>Language:</b>")
+            					.replace("\n", "<br>");
 
-                	//added by Mike, 20170202
-                	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
-                	
-                	dataCurrentTextView.setText(Html.fromHtml(s));
-//                	dataCurrentTextView.setText(o.toString());
-                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
-            			@Override
-            			public void onClick(View v) {
-/*//commented out by Mike, 24 May 2015            				
-            				isInTreeLoader=false;
-            				
-            				myTree = o.toString();
-  
-            				UsbongUtils.clearTempFolder();
-//            				isr=null; //set inputStreamReader to null; i.e. new tree
-            		        initParser();
-*/            		        
-//            				initParser(o.toString());            			
-            				initParser(UsbongConstants.TREE_TYPE_BUY);           				
-            			}
-                	});
-                	
-                	//added by Mike, 20170130
-                	try {
-                		// set the image here
-                		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
-                        Resources myRes = instance.getResources();
-                        String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-                        		.replace("Title: ","")
-                        		.replace("Åf","")
-                        		.replace("'","")
-                        		.replace(":","")+".jpg"; //edited by Mike, 20170202
-                        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
-                    	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160202
-/*
-                        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-                        		.replace("Title: ","")
-                        		.replace("Åf","")
-                        		.replace("'","")
-                        		.replace(":","")+".jpg"), null); //edited by Mike, 20170130
-*/                        		
-//        			    myDrawableImage = myRes.getAssets().open(o.toString()+"_icon.png").;// .getDrawable(myRes.getIdentifier(o.toString()+"_icon.png", "drawable", UsbongUtils.myPackageName));
-                		ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
-                		image.setImageDrawable(myDrawableImage);	
-                		
+	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+	                    Resources myRes = instance.getResources();
+	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
+	                    		.replace("Title: ","")
+	                    		.replace("Åf","")
+	                    		.replace("'","")
+	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
+	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
+		            	
+	                	dataCurrentTextView.setText(Html.fromHtml(s));
+//	                	dataCurrentTextView.setText(o.toString());
+	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
+	            			@Override
+	            			public void onClick(View v) {
+	            				//added by Mike, 20170203
+	                        	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
+	                    		image.setImageDrawable(myDrawableImage);	
+	                        	initParser(UsbongConstants.TREE_TYPE_BUY);           				
+	            			}
+	                	});
+                		image.setImageDrawable(myDrawableImage);		                		
                 		image.setOnClickListener(new OnClickListener() {
                 			@Override
                 			public void onClick(View v) {
-/*                				
-                				isInTreeLoader=false;		
-                				myTree = o.toString(); //edited by Mike, 20161110
-                				UsbongUtils.clearTempFolder();
-
-                				//added by Mike, 29 Sept. 2015
-                				myProgressDialog = ProgressDialog.show(instance, "Loading...",
-                						  "This takes only a short while.", true, false);				  
-                				new MyBackgroundTask().execute();        
-//                				initParser(o.toString());  
- */
-                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				
+                				//added by Mike, 20170203
+                            	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
+                				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
+                        		image.setImageDrawable(myDrawableImage);	
+                				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				                	
                 			}
-                    	});
+                		});
                 	}
-                	catch(Exception e) {
-                		e.printStackTrace();
-                	}
-/*                	
-                	Button selectButton = (Button)v.findViewById(R.id.select_tree_button);
-                	selectButton.setOnClickListener(new OnClickListener() {
-            			@Override
-            			public void onClick(View v) {
-            				myTree = o.toString();
-            		        initParser();
-            			}
-                	});
-*/                	
+	            	catch(Exception e) {
+	            		e.printStackTrace();
+	            	}
                 }
                 return v;
         }
