@@ -3250,7 +3250,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	                    		.replace("Title: ","")
 	                    		.replace("Åf","")
 	                    		.replace("'","")
-	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+	                    		.replace(":","")+"_2.jpg"; //edited by Mike, 20170202
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
@@ -3266,7 +3266,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	                        	initParser(UsbongConstants.TREE_TYPE_BUY);           				
 	            			}
 	                	});
-                		image.setImageDrawable(myDrawableImage);		                		
+                		image.setImageDrawable(myDrawableImage);                		
+/*
+                		//added by Mike, 20170203
+                		//make the image icon in the list smaller
+                		image.setAdjustViewBounds(true);
+                		image.setMaxHeight(100);
+                		image.setMaxWidth(100);                		
+*/                		
                 		image.setOnClickListener(new OnClickListener() {
                 			@Override
                 			public void onClick(View v) {
