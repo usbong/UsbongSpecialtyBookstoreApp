@@ -1994,6 +1994,9 @@ public class UsbongUtils {
 			sendToCloudBasedServiceIntent.setType("text/plain");
 
 			switch (getmyTreeFileName()) {
+				case UsbongConstants.TREE_TYPE_BUY:
+					sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Usbong Specialty Bookstore: Book Buy");
+					break;
 				case UsbongConstants.TREE_TYPE_SELL:
 					sendToCloudBasedServiceIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Usbong Specialty Bookstore: Book Sell");
 					break;
