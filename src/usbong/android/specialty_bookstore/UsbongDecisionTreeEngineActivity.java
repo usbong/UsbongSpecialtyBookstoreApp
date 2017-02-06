@@ -1001,7 +1001,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				}).show();
 				return true;
 			case android.R.id.home: //added by Mike, 22 Sept. 2015
-	        	processReturnToMainMenuActivity();
+				processReturnToMainMenuActivity();
 		        return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -1468,7 +1468,23 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     //added by Mike, Feb. 2, 2013
     @Override
 	public void onBackPressed() {
-    	processReturnToMainMenuActivity();    
+		//edited by Mike, 20160417
+		if ((mTts!=null) && (mTts.isSpeaking())) {
+			mTts.stop();
+		}
+		//edited by Mike, 20160417
+		if ((myMediaPlayer!=null) && (myMediaPlayer.isPlaying())) {
+			myMediaPlayer.stop();
+		}
+
+		//added by Mike, 20170206
+		if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+	    	initTreeLoader(); //added by Mike, 20170206   
+	    	return;
+		}
+		else {
+			processReturnToMainMenuActivity();    
+		}
     }
     
     @Override
@@ -2175,10 +2191,16 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             	currUsbongNode=(String)usbongNodeContainer.elementAt(usbongNodeContainerCounter);
             }
             else { 
-            	processReturnToMainMenuActivity();
-/*                	initParser();
-                	return;
-*/
+        		//added by Mike, 20170206
+        		if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+        	    	initTreeLoader(); //added by Mike, 20170206   
+        	    	return;
+        		}
+        		else {
+        			processReturnToMainMenuActivity();    
+        		}
+
+//            	processReturnToMainMenuActivity();
             }
         	initParser();
     }
