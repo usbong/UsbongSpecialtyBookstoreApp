@@ -65,6 +65,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -223,6 +224,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     public static ArrayList<Integer> selectedSettingsItems;
     public static boolean[] selectedSettingsItemsInBoolean;
     private AlertDialog inAppSettingsDialog;
+    private AlertDialog inAppAccountSettingsDialog;
     
     //added by Mike, 20160415
     private boolean isAutoLoopedTree;
@@ -998,6 +1000,61 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 					}
+				}).show();
+				return true;
+			case(R.id.account):
+				final EditText firstName = new EditText(this);
+				firstName.setHint("First Name");
+				final EditText surName = new EditText(this);
+				surName.setHint("Surname");
+				final EditText contactNumber = new EditText(this);
+				contactNumber.setHint("Contact Number");
+				final EditText shippingAddress = new EditText(this);
+				shippingAddress.setHint("Shipping Address");
+				shippingAddress.setMinLines(5);
+				
+				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				
+			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+		        //; last accessed: 20150609
+		        //answer by Elenasys
+		        //added by Mike, 20150207
+		        SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+		        if (prefs!=null) {
+		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
+		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
+		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
+		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
+		        }
+				
+				LinearLayout ll=new LinearLayout(this);
+				ll.setOrientation(LinearLayout.VERTICAL);
+				ll.addView(firstName);
+				ll.addView(surName);
+				ll.addView(contactNumber);
+				ll.addView(shippingAddress);				
+
+				new AlertDialog.Builder(this).setTitle("My Account")
+				.setView(ll)
+				.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog, int id) {
+				        //ACTION
+				    }
+				})
+				.setPositiveButton("Save & Exit",  new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog, int id) {
+				        //ACTION
+				        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+				        //; last accessed: 20150609
+				        //answer by Elenasys
+				        //added by Mike, 20170207
+				        SharedPreferences.Editor editor = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE).edit();
+				        editor.putString("firstName", firstName.getText().toString());
+				        editor.putString("surname", surName.getText().toString());
+				        editor.putString("contactNumber", contactNumber.getText().toString());
+				        editor.putString("shippingAddress", shippingAddress.getText().toString());
+				        editor.commit();				    	
+				    }
 				}).show();
 				return true;
 			case android.R.id.home: //added by Mike, 22 Sept. 2015
