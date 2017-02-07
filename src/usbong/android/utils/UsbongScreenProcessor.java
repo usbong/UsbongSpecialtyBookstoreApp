@@ -26,6 +26,7 @@ import usbong.android.utils.FedorMyLocation.LocationResult;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -118,8 +119,7 @@ public class UsbongScreenProcessor
     			else {
     				myStringToken="";
     			}	    			
-    		}
-	    	
+    		}	    	
 		if (udtea.currScreen == UsbongConstants.MULTIPLE_RADIO_BUTTONS_SCREEN) {
 			udtea.setContentView(R.layout.multiple_radio_buttons_screen);
 			udtea.initBackNextButtons();
@@ -342,7 +342,31 @@ public class UsbongScreenProcessor
 			TextView myTextFieldScreenTextView = (TextView)udtea.findViewById(R.id.textfield_textview);
 			myTextFieldScreenTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextFieldScreenTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			EditText myTextFieldScreenEditText = (EditText)udtea.findViewById(R.id.textfield_edittext);
-			myTextFieldScreenEditText.setText(myStringToken);
+//			myTextFieldScreenEditText.setText(myStringToken);
+
+			//edited by Mike, 20170207
+		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+	        //; last accessed: 20150609
+	        //answer by Elenasys
+	        //added by Mike, 20150207
+	        SharedPreferences prefs = ((Activity)udtea).getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, Activity.MODE_PRIVATE);
+	        if (prefs!=null) {
+				if (myTextFieldScreenTextView.getText().toString().contains("First Name")) {
+					myTextFieldScreenEditText.setText(prefs.getString("firstName", "")); //"" is the default value.
+				}
+				else if (myTextFieldScreenTextView.getText().toString().contains("Surname")) {
+					myTextFieldScreenEditText.setText(prefs.getString("surname", "")); //"" is the default value.
+				}/*//do this in TEXTFIELD_NUMERICAL
+				else if (myTextFieldScreenTextView.getText().toString().contains("Contact Number")) {
+					myTextFieldScreenEditText.setText(prefs.getString("contactNumber", "")); //"" is the default value.
+				}*/
+				else if (myTextFieldScreenTextView.getText().toString().contains("Shipping Address")) {
+					myTextFieldScreenEditText.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
+				}			
+	        }
+	        else {
+				myTextFieldScreenEditText.setText(myStringToken);
+	        }
 		} else if (udtea.currScreen == UsbongConstants.TEXTFIELD_WITH_ANSWER_SCREEN) {
 			udtea.setContentView(R.layout.textfield_screen);
 			udtea.initBackNextButtons();
@@ -407,7 +431,22 @@ public class UsbongScreenProcessor
 			myTextFieldNumericalScreenTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextFieldNumericalScreenTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
 			EditText myTextFieldNumericalScreenEditText = (EditText)udtea.findViewById(R.id.textfield_edittext);
 			myTextFieldNumericalScreenEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-			myTextFieldNumericalScreenEditText.setText(myStringToken);
+//			myTextFieldNumericalScreenEditText.setText(myStringToken);
+			
+			//edited by Mike, 20170207
+		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+	        //; last accessed: 20150609
+	        //answer by Elenasys
+	        //added by Mike, 20150207
+	        SharedPreferences prefs = ((Activity)udtea).getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, Activity.MODE_PRIVATE);
+	        if (prefs!=null) {
+	        	if (myTextFieldNumericalScreenTextView.getText().toString().contains("Contact Number")) {
+	        		myTextFieldNumericalScreenEditText.setText(prefs.getString("contactNumber", "")); //"" is the default value.
+				}
+	        }
+	        else {
+	        	myTextFieldNumericalScreenEditText.setText(myStringToken);
+	        }
 		} else if (udtea.currScreen == UsbongConstants.CLASSIFICATION_SCREEN) {
 			udtea.setContentView(R.layout.classification_screen);
 			udtea.initBackNextButtons();

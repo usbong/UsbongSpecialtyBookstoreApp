@@ -44,6 +44,7 @@ import usbong.android.utils.PurchaseLanguageBundleListAdapter;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongScreenProcessor;
 import usbong.android.utils.UsbongUtils;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -312,7 +313,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
           currLanguageBeingUsed=UsbongUtils.getLanguageID(UsbongUtils.getCurrLanguage());
 		  //UsbongUtils.setCurrLanguage(UsbongUtils.getLanguageBasedOnID(currLanguageBeingUsed)); //updated by Mike, 20160612
       	}
-        
+                
 /* 		//commented out by Mike, 20160618
  * 		//why? the index numbers used by currSelectedItemForSetLanguage does not always match with currLanguageBeingUsed
  *        //added by Mike, 20160608
@@ -448,7 +449,25 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         
         myUsbongScreenProcessor = new UsbongScreenProcessor(UsbongDecisionTreeEngineActivity.getInstance());
         myUsbongVariableMemory = new HashMap<String, String>();
-
+/*
+	    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+        //; last accessed: 20150609
+        //answer by Elenasys
+        //added by Mike, 20150207
+        prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+        if (prefs!=null) {
+	      setVariableOntoMyUsbongVariableMemory("firstName", prefs.getString("firstName", ""));//"" is the default value.
+	      setVariableOntoMyUsbongVariableMemory("surname", prefs.getString("surname", ""));//"" is the default value.
+	      setVariableOntoMyUsbongVariableMemory("contactNumber", prefs.getString("contactNumber", ""));//"" is the default value.
+	      setVariableOntoMyUsbongVariableMemory("shippingAddress", prefs.getString("shippingAddress", ""));//"" is the default value.
+        }
+        else {
+          setVariableOntoMyUsbongVariableMemory("firstName", "");//"" is the default value.
+          setVariableOntoMyUsbongVariableMemory("surname", "");//"" is the default value.
+          setVariableOntoMyUsbongVariableMemory("contactNumber", "");//"" is the default value.
+          setVariableOntoMyUsbongVariableMemory("shippingAddress", "");//"" is the default value.        	
+        }        
+*/        
         //added by Mike, March 26, 2014
 		try {
 			Log.d(">>>>", ""+UsbongUtils.STORE_OUTPUT);
@@ -2736,6 +2755,28 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //				        		}
 	    			}
 					else {
+						//added by Mike, 20170207
+						TextView myTextFieldScreenTextView = (TextView)this.findViewById(R.id.textfield_textview);
+
+				        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+				        //; last accessed: 20150609
+				        //answer by Elenasys
+				        //added by Mike, 20170207
+				        SharedPreferences.Editor editor = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE).edit();
+						if (myTextFieldScreenTextView.getText().toString().contains("First Name")) {
+						    editor.putString("firstName", myTextFieldScreenEditText.getText().toString());
+						}
+						else if (myTextFieldScreenTextView.getText().toString().contains("Surname")) {
+					        editor.putString("surname", myTextFieldScreenEditText.getText().toString());
+						}
+						else if (myTextFieldScreenTextView.getText().toString().contains("Contact Number")) {
+					        editor.putString("contactNumber", myTextFieldScreenEditText.getText().toString());
+						}
+						else if (myTextFieldScreenTextView.getText().toString().contains("Shipping Address")) {
+					        editor.putString("shippingAddress", myTextFieldScreenEditText.getText().toString());
+						}
+						editor.commit();				    	
+												
 //								usbongAnswerContainer.addElement("A,"+myTextFieldScreenEditText.getText()+";");							
 			    		UsbongUtils.addElementToContainer(usbongAnswerContainer, "A,"+myTextFieldScreenEditText.getText()+";", usbongAnswerContainerCounter);
 						usbongAnswerContainerCounter++;
