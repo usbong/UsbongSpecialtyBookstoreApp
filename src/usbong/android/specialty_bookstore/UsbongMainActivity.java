@@ -125,7 +125,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				reset(); //generate new timestamp
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_buy"); 								
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_BUY); 								
 				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
 			}
     	});
@@ -138,7 +138,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				reset(); //generate new timestamp
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_sell"); 								
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_SELL); 								
 				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
 			}
     	});
@@ -150,7 +150,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				reset(); //generate new timestamp
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(UsbongMainActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
 				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad","usbong_specialty_bookstore_request"); 								
+				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_REQUEST); 								
 				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
 			}
     	});
