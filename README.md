@@ -1,5 +1,5 @@
 # Usbong Specialty Bookstore
-The "Usbong Specialty Bookstore" app helps you do three things.<br>
+The "Usbong Specialty Bookstore" app helps you do three things.<br><br>
 <b>I) Request for physical books, whether used or new, at a price range you specify.</b><br>
 How it works:<br>
 1) You enter the details of the book or the books that you want to request.<br>
