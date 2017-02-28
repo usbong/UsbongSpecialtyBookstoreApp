@@ -2,6 +2,7 @@
 <resources>
     <string name="hello_world">Hello World, UsbongActivity!</string>
     <string name="app_name">Usbong Specialty Bookstore</string>
+    <string name="brand_motto">Uplifting Human Lives&#160;&#160;&#160;</string>    
     <string name="start">Start</string>
     <string name="sell">Sell</string>
     <string name="request">Request</string>
@@ -217,4 +218,6 @@
     <string name="buy">buy</string>        
     <string name="price">price</string>        
     <string name="name">name</string>    
+    
+    <string name="confirm">Confirm</string>            
 </resources>

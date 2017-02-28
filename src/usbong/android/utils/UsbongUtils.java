@@ -117,7 +117,7 @@ public class UsbongUtils {
 
 	public final static String API_KEY = "AIzaSyB5mM_lk_bbdT5nUWQTO6S5FyZ9IgaxqXc"; //added by Mike, 20151120
 
-	public static String DEFAULT_UTREE_TO_LOAD=UsbongConstants.TREE_TYPE_REQUEST;//"usbong_specialty_bookstore"; //updated by Mike, 20160418
+	public static String DEFAULT_UTREE_TO_LOAD=UsbongConstants.TREE_TYPE_BUY;//"usbong_specialty_bookstore"; //updated by Mike, 20160418
 	public static String BASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/usbong_specialty_bookstore/";
 	public static String USBONG_TREES_FILE_PATH = BASE_FILE_PATH + "usbong_trees/"; //will be changed later in UsbongDecisionTreeEngineActivity.java
 

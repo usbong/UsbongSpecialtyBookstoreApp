@@ -65,6 +65,7 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
@@ -102,6 +103,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //	private static boolean USE_ENG_ONLY=true; //uses English only	
 //	private static boolean UsbongUtils.IS_IN_DEBUG_MODE=false;
 	
+	//edited by Mike, 20170225
+	private static int currPreference=UsbongConstants.defaultPreference; 	
+	private static int currModeOfPayment=UsbongConstants.defaultModeOfPayment; 
+
 	public int currLanguageBeingUsed;
 	
 	public int currScreen=UsbongConstants.TEXTFIELD_SCREEN;
@@ -239,6 +244,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	private static AlertDialog mySetLanguageAlertDialog;
 
 	private ArrayAdapter<String> arrayAdapter; //added by Mike, 20160507
+		
+	//added by Mike, 20170216
+	private BuyActivity myBuyActivity;
 	
 //	@SuppressLint("InlinedApi")
     @Override
@@ -248,6 +256,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);        
                 
         instance=this;
+        
+        myBuyActivity = new BuyActivity();
         
         //added by Mike, 20160511
         if (UsbongUtils.hasUnlockedAllLanguages) {
@@ -269,8 +279,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         UsbongUtils.myAssetManager = getAssets();
         
         //added by Mike, 22 Sept. 2015
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);        
-        getSupportActionBar().setTitle("Title Screen");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);        
+//        getSupportActionBar().setTitle("Title Screen");
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name)); //edited by Mike, 20170214
         
         currUsbongNode=""; //added by Mike, 20160417
         isAutoLoopedTree=false; //added by Mike, 20160417
@@ -371,7 +382,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_BUY+".utree"); //added by Mike, 20160126  			
   			
   			//added by Mike, 20160126
-  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEM_LIST+".txt");  
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST+".txt");  
     	}
     	catch(IOException ioe) {
     		ioe.printStackTrace();
@@ -540,7 +551,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		            Handler mainHandler = new Handler(getInstance().getBaseContext().getMainLooper());
 		            Runnable myRunnable = new Runnable() {
 		            	@Override
-		            	public void run() {
+		            	public void run() {		            		
 		    				//added by Mike, 20160126
 		    				if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
 		    					initTreeLoader();
@@ -598,14 +609,29 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         
     }
     
+    //added by Mike, 20170213
+    public void resetContainers() {
+    	decisionTrackerContainer.clear();
+    	usbongAnswerContainer.clear();
+    	usbongNodeContainer.clear();
+    	classificationContainer.clear();
+    	radioButtonsContainer.clear();
+    	checkBoxesContainer.clear();
+    	
+    	usbongAnswerContainerCounter=0;
+    	usbongNodeContainerCounter=-1; //begin with -1
+    }
+    
 	public void initTreeLoader()
 	{
 		setContentView(R.layout.tree_list_interface);				
 
 		isInTreeLoader=true;
+		
+		resetContainers();//added by Mike, 20170213
 
 //		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);
-		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEM_LIST+".txt");
+		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEMS_LIST+".txt");
 			
 		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		mCustomAdapter.sort(); //edited by Mike, 20170203
@@ -631,10 +657,13 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-		    		finish();    
+					//UsbongDecisionTreeEngineActivity is already the Main Menu
+/*
+					finish();    
 					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
 					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 					startActivity(toUsbongMainActivityIntent);
+*/					
 				}
 			}).show();	        		        	
 		  }				  
@@ -831,6 +860,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		StringBuffer sb = new StringBuffer();
 		switch(item.getItemId())
 		{
+/*		
 			case(R.id.set_language):	
 				initSetLanguage();
 				//refresh the menu options
@@ -937,13 +967,6 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 									else if (i==UsbongConstants.AUTO_PLAY) {
 							    		out.println("IS_IN_AUTO_PLAY_MODE=ON");
 							    		UsbongUtils.IS_IN_AUTO_PLAY_MODE=true;						
-	/*						    		
-							    		//if auto_play is ON, auto_narrate is also ON
-							    		//however, it is possible to have auto_play OFF,
-							    		//while auto_narrate is ON
-							    		out.println("IS_IN_AUTO_NARRATE_MODE=ON");
-							    		UsbongUtils.IS_IN_AUTO_NARRATE_MODE=true;
-	*/						    									
 									}	
 									else if (i==UsbongConstants.AUTO_LOOP) {
 							    		out.println("IS_IN_AUTO_LOOP_MODE=ON");
@@ -994,24 +1017,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				    }
 				}).create();
 				inAppSettingsDialog.show();
-	/*			
-			    	new AlertDialog.Builder(UsbongDecisionTreeEngineActivity.this).setTitle("Settings")
-					.setMessage("Automatic voice-over narration:")
-//					.setView(requiredFieldAlertStringTextView)
-			    	.setPositiveButton("Turn On", new DialogInterface.OnClickListener() {					
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							UsbongUtils.isInAutoVoiceOverNarration=true;
-						}
-			    	})
-				    .setNegativeButton("Turn Off", new DialogInterface.OnClickListener() {					
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							UsbongUtils.isInAutoVoiceOverNarration=false;
-						}
-					}).show();
-	*/				
 				return true;
+*/				
 			case(R.id.about):
 		    	new AlertDialog.Builder(UsbongDecisionTreeEngineActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(UsbongDecisionTreeEngineActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found
@@ -1028,12 +1035,40 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				surName.setHint("Surname");
 				final EditText contactNumber = new EditText(this);
 				contactNumber.setHint("Contact Number");
+				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				
+				//added by Mike, 20170223
+				final RadioGroup preference = new RadioGroup(this);
+				preference.setOrientation(RadioGroup.HORIZONTAL);
+				
+				RadioButton meetup = new AppCompatRadioButton(this);
+				meetup.setText("Meet-up");
+				preference.addView(meetup);
+								
+				RadioButton shipping = new AppCompatRadioButton(this);
+				shipping.setText("Shipping");
+				preference.addView(shipping);				
+				
 				final EditText shippingAddress = new EditText(this);
 				shippingAddress.setHint("Shipping Address");
 				shippingAddress.setMinLines(5);
+
+				//added by Mike, 20170223
+				final RadioGroup modeOfPayment = new RadioGroup(this);
+				modeOfPayment.setOrientation(RadioGroup.VERTICAL);
 				
-				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-				
+				RadioButton cashUponMeetup = new AppCompatRadioButton(this);
+				cashUponMeetup.setText("Cash upon meet-up");
+				modeOfPayment.addView(cashUponMeetup);
+									
+				RadioButton bankDeposit = new AppCompatRadioButton(this);
+				bankDeposit.setText("Bank Deposit");
+				modeOfPayment.addView(bankDeposit);
+
+				RadioButton peraPadala = new AppCompatRadioButton(this);
+				peraPadala.setText("Pera Padala");
+				modeOfPayment.addView(peraPadala);
+
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
 		        //answer by Elenasys
@@ -1043,7 +1078,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
 		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
 		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
+
+		          //added by Mike, 20170223
+		          ((RadioButton)preference.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
+				  		          
 		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
+		          
+			      //added by Mike, 20170223				  
+		          ((RadioButton)modeOfPayment.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 		        }
 				
 				LinearLayout ll=new LinearLayout(this);
@@ -1051,7 +1093,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				ll.addView(firstName);
 				ll.addView(surName);
 				ll.addView(contactNumber);
+				ll.addView(preference);
 				ll.addView(shippingAddress);				
+				ll.addView(modeOfPayment);
 
 				new AlertDialog.Builder(this).setTitle("My Account")
 				.setView(ll)
@@ -1071,13 +1115,30 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				        editor.putString("firstName", firstName.getText().toString());
 				        editor.putString("surname", surName.getText().toString());
 				        editor.putString("contactNumber", contactNumber.getText().toString());
+
+				        for (int i=0; i< preference.getChildCount(); i++) {
+				        	if (((RadioButton)preference.getChildAt(i)).isChecked()) {
+				        		currPreference=i;
+				        	}
+				        }
+				        editor.putInt("preference", currPreference); //added by Mike, 20170223				        
+				        
 				        editor.putString("shippingAddress", shippingAddress.getText().toString());
-				        editor.commit();				    	
+
+				        for (int i=0; i< modeOfPayment.getChildCount(); i++) {
+				        	if (((RadioButton)modeOfPayment.getChildAt(i)).isChecked()) {
+				        		currModeOfPayment=i;
+				        	}
+				        }
+				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
+				        editor.commit();						        
 				    }
 				}).show();
 				return true;
 			case android.R.id.home: //added by Mike, 22 Sept. 2015
+/*//commented out by Mike, 201702014; UsbongDecisionTreeEngineActivity is already the main menu				
 				processReturnToMainMenuActivity();
+*/				
 		        return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -1577,7 +1638,15 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     			initTakePhotoScreen();
         		break;
         }
-        initParser(); 
+		//added by Mike, 20160223
+		if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+			initTreeLoader();
+		}
+		else {
+		    initParser();		    					
+		}
+        /*initParser(); 
+         */
     }
 
     @Override
@@ -2216,8 +2285,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
    
     public void initBackNextButtons()
     {
+/*//commented out by Mike, 20170223; not used    	
     	initBackButton();
     	initNextButton();
+*/    	
     }
 
     public void initBackButton()
@@ -2269,7 +2340,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             else { 
         		//added by Mike, 20170206
         		if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
-        	    	initTreeLoader(); //added by Mike, 20170206   
+        			initTreeLoader(); //added by Mike, 20170206   
         	    	return;
         		}
         		else {
@@ -3361,6 +3432,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                     			.replace("Title:", "<b>Title:</b>")
             					.replace("\nAuthor:", "\n<b>Author:</b>")
             					.replace("\nPrice:", "\n<b>Price:</b>")
+//            					.replace("\nDetails:", "\n<b>Details:</b>")
             					.replace("\nLanguage:", "\n<b>Language:</b>")
             					.replace("\n", "<br>");
 
@@ -3370,7 +3442,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	                    		.replace("Title: ","")
 	                    		.replace("Åf","")
 	                    		.replace("'","")
-	                    		.replace(":","")+"_2.jpg"; //edited by Mike, 20170202
+	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
@@ -3379,11 +3451,18 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
 	            			@Override
 	            			public void onClick(View v) {
+/*	            				
 	            				//added by Mike, 20170203
 	                        	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
 	            				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
-	                    		image.setImageDrawable(myDrawableImage);	
+	                    		image.setImageDrawable(myDrawableImage);		                    		
 	                        	initParser(UsbongConstants.TREE_TYPE_BUY);           				
+*/
+                				//added by Mike, 20170216
+	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				startActivityForResult(toBuyActivityIntent,1);
 	            			}
 	                	});
                 		image.setImageDrawable(myDrawableImage);                		
@@ -3397,11 +3476,18 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 		image.setOnClickListener(new OnClickListener() {
                 			@Override
                 			public void onClick(View v) {
+/*
                 				//added by Mike, 20170203
                             	setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_VARIABLE_NAME, s);
                 				setVariableOntoMyUsbongVariableMemory(UsbongConstants.ITEM_IMAGE_NAME, imageFileName); //added by Mike, 20160203
                         		image.setImageDrawable(myDrawableImage);	
                 				initParser(UsbongConstants.TREE_TYPE_BUY); //added by Mike, 20160202          				                	
+*/
+                				//added by Mike, 20170216
+	            				Intent toBuyActivityIntent = new Intent().setClass(getInstance(), BuyActivity.class);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_VARIABLE_NAME, s);
+	            				toBuyActivityIntent.putExtra(UsbongConstants.ITEM_IMAGE_NAME, imageFileName);
+	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});
                 	}

@@ -897,7 +897,7 @@ public class UsbongScreenProcessor
 			myVideoFromFileWithTextScreenVideoView.setMediaController(new MediaController(((Activity)udtea)));
 			myVideoFromFileWithTextScreenVideoView.start();
 		} else if (udtea.currScreen == UsbongConstants.TEXT_IMAGE_DISPLAY_SCREEN) {
-			udtea.setContentView(R.layout.text_image_display_screen);
+			udtea.setContentView(R.layout.ecommerce_text_image_display_screen);
 			udtea.initBackNextButtons();
 			TextView myTextImageDisplayTextView = (TextView)udtea.findViewById(R.id.text_image_display_textview);
 			myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);

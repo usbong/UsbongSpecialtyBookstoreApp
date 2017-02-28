@@ -202,6 +202,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	{		
 		switch(item.getItemId())
 		{
+/*		
 			case(R.id.settings):
 				//Reference: http://stackoverflow.com/questions/16954196/alertdialog-with-checkbox-in-android;
 				//last accessed: 20160408; answer by: kamal; edited by: Empty2K12
@@ -298,13 +299,6 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 									else if (i==UsbongConstants.AUTO_PLAY) {
 							    		out.println("IS_IN_AUTO_PLAY_MODE=ON");
 							    		UsbongUtils.IS_IN_AUTO_PLAY_MODE=true;						
-	/*						    		
-							    		//if auto_play is ON, auto_narrate is also ON
-							    		//however, it is possible to have auto_play OFF,
-							    		//while auto_narrate is ON
-							    		out.println("IS_IN_AUTO_NARRATE_MODE=ON");
-							    		UsbongUtils.IS_IN_AUTO_NARRATE_MODE=true;
-	*/						    									
 									}	
 									else if (i==UsbongConstants.AUTO_LOOP) {
 							    		out.println("IS_IN_AUTO_LOOP_MODE=ON");
@@ -355,24 +349,8 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 				    }
 				}).create();
 				inAppSettingsDialog.show();
-	/*			
-			    	new AlertDialog.Builder(UsbongDecisionTreeEngineActivity.this).setTitle("Settings")
-					.setMessage("Automatic voice-over narration:")
-//					.setView(requiredFieldAlertStringTextView)
-			    	.setPositiveButton("Turn On", new DialogInterface.OnClickListener() {					
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							UsbongUtils.isInAutoVoiceOverNarration=true;
-						}
-			    	})
-				    .setNegativeButton("Turn Off", new DialogInterface.OnClickListener() {					
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							UsbongUtils.isInAutoVoiceOverNarration=false;
-						}
-					}).show();
-	*/				
 					return true;
+*/					
 			case(R.id.about):
 		    	new AlertDialog.Builder(UsbongMainActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(UsbongMainActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found
