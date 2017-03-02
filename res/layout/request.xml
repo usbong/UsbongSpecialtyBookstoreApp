@@ -68,6 +68,15 @@
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"        
 			/>
+			<TextView
+		        style="@style/UsbongLoginEditText"
+		        android:id="@+id/language"
+		        android:text="-Language-"
+		        android:textColor="#6f5630"
+		        android:textStyle="bold"		        
+		        android:padding="5dp"        
+		        android:layout_marginTop="5dp"        
+			/>									
 			<RadioGroup
 			    android:id="@+id/language_radiogroup"
 			    style="@style/UsbongLoginEditText"	
@@ -80,13 +89,15 @@
 			        android:id="@+id/meetup_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="English"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"		        
 			        />
 			    <RadioButton
 			        android:id="@+id/shipping_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Other"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"		        
 			        />
 			</RadioGroup>
 			<EditText
@@ -104,7 +115,7 @@
 			<TextView
 		        style="@style/UsbongLoginEditText"
 		        android:id="@+id/book_format"
-		        android:text="Book Format"
+		        android:text="-Book Format-"
 		        android:textColor="#6f5630"
 		        android:textStyle="bold"
 		        android:padding="5dp"        
@@ -122,19 +133,21 @@
 			        android:id="@+id/hardcover_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Hardcover"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/paperback_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Paperback"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			</RadioGroup>
 			<TextView
 		        style="@style/UsbongLoginEditText"
 		        android:id="@+id/book_type"
-		        android:text="Book Type"
+		        android:text="-Book Type-"
 		        android:textColor="#6f5630"
 		        android:textStyle="bold"	        
 		        android:padding="5dp"        
@@ -152,13 +165,15 @@
 			        android:id="@+id/used_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Used"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/new_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="New"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			</RadioGroup>
 			<EditText
@@ -198,7 +213,7 @@
 			<TextView
 		        style="@style/UsbongLoginEditText"
 		        android:id="@+id/total_budget_for_all_copies"
-		        android:text="Total Budget (for all copies)"
+		        android:text="-Total Budget (for all copies)-"
 		        android:textColor="#6f5630"
 		        android:textStyle="bold"		        
 		        android:padding="5dp"        
@@ -216,85 +231,99 @@
 			        android:id="@+id/lt_50_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 50pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_100_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 100pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_150_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 150pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_200_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 200pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_300_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 300pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />	    			    			    			    
 			    <RadioButton
 			        android:id="@+id/lt_400_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 400pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_500_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 500pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"			        
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_1000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 1000pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_2000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 2000pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_3000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 3000pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_5000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 5000pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_7500_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 7500pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/lt_10000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Less than 10000pesos"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/mt_1000_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
-			        android:text="More than 1000pesos"
-			        android:textColor="#ffffff"
+			        android:text="More than 10000pesos"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			</RadioGroup>
 		   	<EditText

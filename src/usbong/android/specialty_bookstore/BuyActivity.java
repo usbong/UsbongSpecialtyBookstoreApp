@@ -455,7 +455,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.title_menu, menu);
+		inflater.inflate(R.menu.standard_menu, menu);
 		return super.onCreateOptionsMenu(menu); 
 	}
 	
@@ -613,6 +613,13 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				inAppSettingsDialog.show();
 					return true;
 */					
+			case(R.id.request):
+				finish();
+				//added by Mike, 20170216
+				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
+				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toRequestActivityIntent);
+				return true;
 			case(R.id.about):
 		    	new AlertDialog.Builder(BuyActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(BuyActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found

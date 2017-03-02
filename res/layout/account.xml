@@ -72,13 +72,15 @@
 			        android:id="@+id/meetup_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Meet-up"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			    <RadioButton
 			        android:id="@+id/shipping_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Shipping"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			</RadioGroup>
 			<EditText
@@ -105,19 +107,22 @@
 			        android:id="@+id/cash_upon_meetup_radiobutton"	               
 			    	style="@style/UsbongLoginEditText"	
 			        android:text="Cash-upon Meetup"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+			        android:textStyle="bold"			        
 			        />
 			    <RadioButton
 			        android:id="@+id/bank_deposit_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Bank Deposit"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+		        	android:textStyle="bold"
 			        />
 			   	<RadioButton
 			        android:id="@+id/pera_padala_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Pera Padala"
-			        android:textColor="#ffffff"
+			        android:textColor="#6f5630"
+			        android:textStyle="bold"			        
 			        />	    
 			</RadioGroup>
 			<EditText
