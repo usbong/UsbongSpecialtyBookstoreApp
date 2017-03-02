@@ -49,6 +49,9 @@
         <activity android:name="BuyActivity" android:screenOrientation="portrait"
             	  android:theme="@style/ThemeHoloWithActionBar">
         </activity>
+        <activity android:name="RequestActivity" android:screenOrientation="portrait"
+            	  android:theme="@style/ThemeHoloWithActionBar">
+        </activity>
         <activity android:name="CameraActivity" android:permission="android.permission.CAMERA" android:screenOrientation="nosensor"
             android:theme="@style/ThemeHoloWithActionBar"></activity>
 		<activity android:name="SettingsActivity" android:screenOrientation="portrait"></activity>

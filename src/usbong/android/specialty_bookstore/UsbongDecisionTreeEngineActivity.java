@@ -1019,6 +1019,13 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				inAppSettingsDialog.show();
 				return true;
 */				
+			case(R.id.request):
+				finish();
+				//added by Mike, 20170216
+				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
+				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toRequestActivityIntent);
+				return true;
 			case(R.id.about):
 		    	new AlertDialog.Builder(UsbongDecisionTreeEngineActivity.this).setTitle("About")
 				.setMessage(UsbongUtils.readTextFileInAssetsFolder(UsbongDecisionTreeEngineActivity.this,"credits.txt")) //don't add a '/', otherwise the file would not be found
