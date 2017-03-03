@@ -134,11 +134,24 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
 		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
 		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
-/*		      
-		      //added by Mike, 20170223
-		      RadioGroup preferenceRadioButtonGroup = ((RadioGroup)findViewById(R.id.preference_radiogroup));
-			  ((RadioButton)preferenceRadioButtonGroup.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
-		      	
+
+		      //added by Mike, 20170303
+		      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
+			  ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
+
+		      //added by Mike, 20170303
+		      RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
+			  ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
+
+		      //added by Mike, 20170303
+		      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
+			  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
+
+		      //added by Mike, 20170303
+		      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
+			  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
+			  
+/*		      	
 			  ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
 */			  
 /*
@@ -166,8 +179,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     	requestButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {		
-/*				
 					if (verifyFields()) {			
+/*				
 						//save data 
 				        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 				        //; last accessed: 20150609
@@ -261,15 +274,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 					        Toast.makeText(RequestActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 					    }	
 					}
-				}				
-*/						    
-/*
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(BuyActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_BUY); 								
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-*/				
+*/						    					
+				}					
 			}
     	});    	
 /*    	
@@ -290,16 +296,66 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     public boolean verifyFields() {
     	boolean allFieldsAreFilledUp=true;
     	
-    	TextView surnameTextView = ((TextView)findViewById(R.id.surname));
-		String surname = surnameTextView.getText().toString();	
-		if (surname.trim().equals("")) {
-			surnameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+    	TextView bookTitleTextView = ((TextView)findViewById(R.id.book_title));
+		String bookTitle = bookTitleTextView.getText().toString();	
+		if (bookTitle.trim().equals("")) {
+			bookTitleTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
 			allFieldsAreFilledUp=false;
 		}
 		else {
-			surnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+			bookTitleTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
 
+    	TextView firstNameOfPrincipalAuthorTextView = ((TextView)findViewById(R.id.first_name_of_principal_author));
+		String firstNameOfPrincipalAuthor = firstNameOfPrincipalAuthorTextView.getText().toString();	
+		if (firstNameOfPrincipalAuthor.trim().equals("")) {
+			firstNameOfPrincipalAuthorTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			firstNameOfPrincipalAuthorTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
+    	TextView surnameOfPrincipalAuthorTextView = ((TextView)findViewById(R.id.surname_of_principal_author));
+		String surnameOfPrincipalAuthor = surnameOfPrincipalAuthorTextView.getText().toString();	
+		if (surnameOfPrincipalAuthor.trim().equals("")) {
+			surnameOfPrincipalAuthorTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			surnameOfPrincipalAuthorTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
+    	TextView publisherTextView = ((TextView)findViewById(R.id.publisher));
+		String publisher = publisherTextView.getText().toString();	
+		if (publisher.trim().equals("")) {
+			publisherTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			publisherTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
+    	TextView otherLanguageTextView = ((TextView)findViewById(R.id.other_language));
+		String otherLanguage = otherLanguageTextView.getText().toString();	
+		if (otherLanguage.trim().equals("")) {
+			otherLanguageTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+		
+    	TextView numberOfCopiesTextView = ((TextView)findViewById(R.id.number_of_copies));
+		String numberOfCopies = otherLanguageTextView.getText().toString();	
+		if ((numberOfCopies.trim().equals("")) || (numberOfCopies.trim().equals("0"))) {
+			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+			
     	TextView firstnameTextView = ((TextView)findViewById(R.id.first_name));
 		String firstname = firstnameTextView.getText().toString();
 		if (firstname.trim().equals("")) {
@@ -310,6 +366,16 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			firstnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
 
+    	TextView surnameTextView = ((TextView)findViewById(R.id.surname));
+		String surname = surnameTextView.getText().toString();	
+		if (surname.trim().equals("")) {
+			surnameTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			surnameTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+		
     	TextView contactNumberTextView = ((TextView)findViewById(R.id.contact_number));
 		String contactNumber = contactNumberTextView.getText().toString();
 		if (contactNumber.trim().equals("")) {
@@ -318,16 +384,6 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		}
 		else {
 			contactNumberTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
-		}
-
-    	TextView addressTextView = ((TextView)findViewById(R.id.address));
-		String address = addressTextView.getText().toString();
-		if (address.trim().equals("")) {
-			addressTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
-			allFieldsAreFilledUp=false;
-		}
-		else {
-			addressTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
 				
 		if (!allFieldsAreFilledUp) {
