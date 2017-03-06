@@ -180,7 +180,6 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			@Override
 			public void onClick(View v) {		
 					if (verifyFields()) {			
-/*				
 						//save data 
 				        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 				        //; last accessed: 20150609
@@ -191,73 +190,90 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("surname", ((TextView)findViewById(R.id.surname)).getText().toString());
 				        editor.putString("contactNumber", ((TextView)findViewById(R.id.contact_number)).getText().toString());
 
-				        RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.preference_radiogroup);				        		
-						for (int i=0; i< radioButtonGroup.getChildCount(); i++) {
-							if (((RadioButton)radioButtonGroup.getChildAt(i)).isChecked()) {
-								currPreference=i;
-							}
-						}
-						editor.putInt("preference", currPreference); //added by Mike, 20170223				        
-						
-				        editor.putString("shippingAddress", ((TextView)findViewById(R.id.address)).getText().toString());
-						
-						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
-						for (int i=0; i< paymentMethodRadioButtonGroup.getChildCount(); i++) {
-							if (((RadioButton)paymentMethodRadioButtonGroup.getChildAt(i)).isChecked()) {
-								currModeOfPayment=i;
-							}
-						}
-						editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
-				        editor.commit();				    	
 										        
-						StringBuffer buySummary = new StringBuffer();
-						buySummary.append("-Purchase Order Summary-\n");					
-						buySummary.append(productDetails+"\n--\n");
-											
-						buySummary.append("Customer Name: "+
+						StringBuffer requestSummary = new StringBuffer();
+						requestSummary.append("-Request Summary-\n");					
+						requestSummary.append("Book Title: "+
+								((TextView)findViewById(R.id.book_title)).getText().toString()+"\n");
+
+						requestSummary.append("First Name of Principal Author:\n"+
+								((TextView)findViewById(R.id.first_name_of_principal_author)).getText().toString()+"\n");
+
+						requestSummary.append("Surname of Principal Author:\n"+
+								((TextView)findViewById(R.id.surname_of_principal_author)).getText().toString()+"\n");
+						
+						requestSummary.append("Publisher: "+
+								((TextView)findViewById(R.id.publisher)).getText().toString()+"\n");
+
+						RadioGroup languageRadioButtonGroup = (RadioGroup)findViewById(R.id.language_radiogroup);
+						int languageRadioButtonID = languageRadioButtonGroup.getCheckedRadioButtonId();				
+						RadioButton languageRadioButton = (RadioButton) languageRadioButtonGroup.findViewById(languageRadioButtonID);
+						String languageSelectedText = languageRadioButton.getText().toString();	 
+						requestSummary.append("Language: "+languageSelectedText+"\n");    	
+	
+						if (languageSelectedText.equals("Other")) {
+							requestSummary.append(((TextView)findViewById(R.id.other_language)).getText().toString()+"\n");
+						}
+						
+						RadioGroup formatRadioButtonGroup = (RadioGroup)findViewById(R.id.format_radiogroup);
+						int formatRadioButtonID = formatRadioButtonGroup.getCheckedRadioButtonId();				
+						RadioButton formatRadioButton = (RadioButton) formatRadioButtonGroup.findViewById(formatRadioButtonID);
+						String formatSelectedText = formatRadioButton.getText().toString();	 
+						requestSummary.append("Format: "+formatSelectedText+"\n");    	
+
+						RadioGroup itemTypeRadioButtonGroup = (RadioGroup)findViewById(R.id.item_type_radiogroup);
+						int itemTypeRadioButtonID = itemTypeRadioButtonGroup.getCheckedRadioButtonId();				
+						RadioButton itemTypeRadioButton = (RadioButton) itemTypeRadioButtonGroup.findViewById(itemTypeRadioButtonID);
+						String itemTypeSelectedText = itemTypeRadioButton.getText().toString();	 
+						requestSummary.append("Book Type: "+itemTypeSelectedText+"\n");    	
+
+						String isbn10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
+						if (!isbn10String.equals("")) {
+							requestSummary.append("ISBN-10: "+
+									isbn10String+"\n");
+						}
+						else {
+							requestSummary.append("ISBN-10: "+
+									"N/A\n");
+						}
+
+						String isbn13String = ((TextView)findViewById(R.id.isbn_13)).getText().toString();
+						if (!isbn13String.equals("")) {
+							requestSummary.append("ISBN-13: "+
+									isbn13String+"\n");
+						}
+						else {
+							requestSummary.append("ISBN-13: "+
+									"N/A\n");
+						}
+
+						requestSummary.append("Number of copies: "+
+								((TextView)findViewById(R.id.number_of_copies)).getText().toString()+"\n");
+
+						RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
+						int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
+						RadioButton totalBudgetRadioButton = (RadioButton) totalBudgetRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
+						String totalBudgetSelectedText = totalBudgetRadioButton.getText().toString();	 
+						requestSummary.append("Total Budget (for all copies):\n"+
+								totalBudgetSelectedText+"\n");    	
+																						
+						requestSummary.append("Customer Name: "+
 								((TextView)findViewById(R.id.surname)).getText().toString()+", "+
 								((TextView)findViewById(R.id.first_name)).getText().toString()+"\n");    	
 	
-						buySummary.append("Contact Number: "+
-								((TextView)findViewById(R.id.contact_number)).getText().toString()+"\n");    	
-	
-//						RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.preference_radiogroup);
-						int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();				
-	//					RadioButton r = (RadioButton) radioButtonGroup.getChildAt(radioButtonID); 
-						RadioButton radioButton = (RadioButton) radioButtonGroup.findViewById(radioButtonID);
-						String selectedText = radioButton.getText().toString();	 
-						buySummary.append("Preference: "+selectedText+"\n");    	
-	
-						buySummary.append("Address: "+
-								((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
-						
-//						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
-						int paymentMethodRadioButtonID = paymentMethodRadioButtonGroup.getCheckedRadioButtonId();					
-						RadioButton paymentMethodRadioButton = (RadioButton) paymentMethodRadioButtonGroup.findViewById(paymentMethodRadioButtonID);
-						String paymentMethodSelectedText = paymentMethodRadioButton.getText().toString();	 
-	
-						buySummary.append("Payment Method: "+paymentMethodSelectedText+"\n");    	
-	
-						String additionalInstructionsString = ((TextView)findViewById(R.id.additional_instructions)).getText().toString();					
-						if (additionalInstructionsString.trim().equals("")) {
-							buySummary.append("Additional Instructions: "+
+						requestSummary.append("Contact Number: "+
+								((TextView)findViewById(R.id.contact_number)).getText().toString()+"\n");    		
+								
+						String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
+						if (commentsString.trim().equals("")) {
+							requestSummary.append("Comments: "+
 									"N/A\n");    							
 						}
 						else {
-							buySummary.append("Additional Instructions: "+
-									additionalInstructionsString+"\n");    							
+							requestSummary.append("Comments: "+
+									commentsString+"\n");    							
 						}
-						
-						String additionalInquiriesString = ((TextView)findViewById(R.id.additional_inquiries)).getText().toString();					
-						if (additionalInquiriesString.trim().equals("")) {
-							buySummary.append("Additional Inquiries: "+
-									"N/A\n");    							
-						}
-						else {
-							buySummary.append("Additional Inquiries: "+
-									additionalInquiriesString+"\n");    							
-						}
-						buySummary.append("-End of Summary-");    							
+						requestSummary.append("-End of Summary-");    							
 											
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
@@ -265,8 +281,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 					    Intent i = new Intent(Intent.ACTION_SEND);
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
-					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
-					    i.putExtra(Intent.EXTRA_TEXT   , buySummary.toString());
+					    i.putExtra(Intent.EXTRA_SUBJECT, "Book Request: "+((TextView)findViewById(R.id.book_title)).getText().toString());
+					    i.putExtra(Intent.EXTRA_TEXT   , requestSummary.toString());
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
 					        startActivityForResult(Intent.createChooser(i, "Sending email..."), 1); 
@@ -274,9 +290,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 					        Toast.makeText(RequestActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 					    }	
 					}
-*/						    					
 				}					
-			}
     	});    	
 /*    	
     	//added by Mike, 20160126
@@ -336,18 +350,26 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			publisherTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
 
-    	TextView otherLanguageTextView = ((TextView)findViewById(R.id.other_language));
-		String otherLanguage = otherLanguageTextView.getText().toString();	
-		if (otherLanguage.trim().equals("")) {
-			otherLanguageTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
-			allFieldsAreFilledUp=false;
-		}
-		else {
-			otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		//added by Mike, 20170306
+		RadioGroup languageRadioButtonGroup = (RadioGroup)findViewById(R.id.language_radiogroup);
+		int languageRadioButtonID = languageRadioButtonGroup.getCheckedRadioButtonId();				
+		RadioButton languageRadioButton = (RadioButton) languageRadioButtonGroup.findViewById(languageRadioButtonID);
+		String languageSelectedText = languageRadioButton.getText().toString();	 
+
+		if (languageSelectedText.equals("other")) {
+			TextView otherLanguageTextView = ((TextView)findViewById(R.id.other_language));
+			String otherLanguage = otherLanguageTextView.getText().toString();	
+			if (otherLanguage.trim().equals("")) {
+				otherLanguageTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+				allFieldsAreFilledUp=false;
+			}
+			else {
+				otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+			}			
 		}
 		
     	TextView numberOfCopiesTextView = ((TextView)findViewById(R.id.number_of_copies));
-		String numberOfCopies = otherLanguageTextView.getText().toString();	
+		String numberOfCopies = numberOfCopiesTextView.getText().toString();	
 		if ((numberOfCopies.trim().equals("")) || (numberOfCopies.trim().equals("0"))) {
 			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
 			allFieldsAreFilledUp=false;

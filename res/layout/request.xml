@@ -356,8 +356,8 @@
 			/>	
 			<EditText
 		        style="@style/UsbongTextAreaEditText"	
-		        android:id="@+id/additional_inquiries"
-		        android:hint="Additional Inquiries (optional)"
+		        android:id="@+id/comments"
+		        android:hint="Comments (optional)"
 		        android:textColorHint="#9a9898"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"
