@@ -641,6 +641,13 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				inAppSettingsDialog.show();
 					return true;
 */					
+			case(R.id.sell): //added by Mike, 20170308
+				finish();
+				//added by Mike, 20170216
+				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toSellActivityIntent);
+				return true;
 			case(R.id.request):
 				finish();
 				//added by Mike, 20170216

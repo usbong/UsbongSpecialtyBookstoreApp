@@ -677,7 +677,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		if (!isInTreeLoader) {
 			Log.d(">>>>", "inside !isInTreeLoader");
 			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.speak_and_set_language_menu, menu);
+			inflater.inflate(R.menu.standard_menu, menu);
 			return super.onCreateOptionsMenu(menu); //added by Mike, 22 Sept. 2015
 //			return true;
 		}/*
@@ -1019,6 +1019,13 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				inAppSettingsDialog.show();
 				return true;
 */				
+			case(R.id.sell): //added by Mike, 20170308
+				finish();
+				//added by Mike, 20170216
+				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toSellActivityIntent);
+				return true;
 			case(R.id.request):
 				finish();
 				//added by Mike, 20170216
