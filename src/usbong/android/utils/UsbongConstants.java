@@ -15,7 +15,7 @@ public class UsbongConstants {
 	public static final String ITEMS_LIST = "items_list";
 	public static final String ITEM_VARIABLE_NAME = "item_details";
 	public static final String ITEM_IMAGE_NAME = "item_image";
-		
+			
 	//added by Mike, 20170207
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";
     public static final String EMAIL_ADDRESS= "support@usbong.ph";//"order@retrocc.ph";	

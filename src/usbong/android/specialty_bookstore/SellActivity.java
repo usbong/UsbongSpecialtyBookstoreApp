@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -30,6 +31,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -68,6 +71,15 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	private String productDetails; //added by Mike, 20170221
 		
 	private Button sellButton;
+
+	//added by Mike, 20170309
+	private Button photoCaptureButton;
+	private ImageView myImageView;
+	public boolean performedCapturePhoto;
+	public static Intent photoCaptureIntent;
+	private String myPictureName="default"; //change this later in the code
+	private List<String> attachmentFilePaths;
+
 				
 	public static String timeStamp;
 		
@@ -174,6 +186,16 @@ public class SellActivity extends AppCompatActivity/*Activity*/
         	});    	    		
     	}
 */         
+	        
+	    //added by Mike, 20170309
+	    if (!performedCapturePhoto) {
+	    	//Reference: http://stackoverflow.com/questions/2793004/java-lista-addalllistb-fires-nullpointerexception
+	    	//Last accessed: 14 March 2012
+	    	attachmentFilePaths = new ArrayList<String>();            	
+
+	    	initTakePhotoScreen();
+	    }
+	        
     	//added by Mike, 20160126
     	sellButton = (Button)findViewById(R.id.sell_button);    	
     	sellButton.setOnClickListener(new OnClickListener() {
@@ -786,4 +808,56 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		}
 	}
 
+	//added by Mike, 20170309
+    @Override
+    public void onRestart() 
+    {
+        super.onRestart();
+        
+    	initTakePhotoScreen();
+    }
+    
+	//added by Mike, 20170309
+    public void initTakePhotoScreen()
+    {
+//    	myPictureName=currUsbongNode; //make the name of the picture the name of the currUsbongNode
+    	myPictureName=UsbongUtils.processStringToBeFilenameReady(((TextView)findViewById(R.id.book_title)).getText().toString()+UsbongUtils.getDateTimeStamp()); //make the name of the picture the name of the currUsbongNode
+    	
+//		String path = "/sdcard/usbong/"+ UsbongUtils.getTimeStamp() +"/"+ myPictureName +".jpg";
+		String path = UsbongUtils.BASE_FILE_PATH + myPictureName +".jpg";		
+		//only add path if it's not already in attachmentFilePaths
+		if (!attachmentFilePaths.contains(path)) {
+			attachmentFilePaths.add(path);
+		}
+		
+    	myImageView = (ImageView) findViewById(R.id.CameraImage);
+
+    	File imageFile = new File(path);
+        
+        if(imageFile.exists())
+        {
+        	Bitmap myBitmap = BitmapFactory.decodeFile(path);
+        	if(myBitmap != null)
+        	{
+        		myImageView.setImageBitmap(myBitmap);
+/*        		myImageView.setRotation(90);//added by Mike, rotate counter-clockwise once        	
+*/
+ 			}
+ 
+        	//Read more: http://www.brighthub.com/mobile/google-android/articles/64048.aspx#ixzz0yXLCazcU                	  
+        }
+        else
+        {        	
+        }
+    	photoCaptureButton = (Button)findViewById(R.id.photo_capture_button);
+		photoCaptureIntent = new Intent().setClass(this, CameraActivity.class);
+		photoCaptureIntent.putExtra("myPictureName",myPictureName);
+		photoCaptureButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(photoCaptureIntent);
+			}
+    	});
+
+    }
 }

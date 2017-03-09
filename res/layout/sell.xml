@@ -41,6 +41,15 @@
 	        android:padding="5dp"        
 	        android:layout_marginTop="5dp"        
 			/>
+		   	<Button android:id="@+id/photo_capture_button"
+			    style="@style/UsbongPhotoCaptureButton"	    	
+			    android:text="Take Photo of Book" 
+			    android:layout_marginTop="14dp"/>
+		   	<ImageView android:id="@+id/CameraImage"
+				style="@style/UsbongCameraImageView"
+				android:layout_marginTop="14dp"
+				android:layout_marginBottom="14dp"
+				android:contentDescription="book photo"/>		   	
 		    <EditText
 	        style="@style/UsbongLoginEditText"
 	        android:id="@+id/first_name_of_principal_author"
