@@ -162,10 +162,6 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	      //added by Mike, 20170303
 	      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
 		  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
-
-	      //added by Mike, 20170303
-	      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
-		  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
 		  
 /*		      	
 			  ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
@@ -276,12 +272,8 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 						sellSummary.append("Number of copies: "+
 								((TextView)findViewById(R.id.number_of_copies)).getText().toString()+"\n");
 
-						RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
-						int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
-						RadioButton totalBudgetRadioButton = (RadioButton) totalBudgetRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
-						String totalBudgetSelectedText = totalBudgetRadioButton.getText().toString();	 
-						sellSummary.append("Total Budget (for all copies):\n"+
-								totalBudgetSelectedText+"\n");    	
+						sellSummary.append("Total price (for all copies): "+
+								((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString()+"\n");
 																						
 						sellSummary.append("Customer Name: "+
 								((TextView)findViewById(R.id.surname)).getText().toString()+", "+
