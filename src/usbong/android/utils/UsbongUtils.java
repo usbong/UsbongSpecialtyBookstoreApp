@@ -119,6 +119,7 @@ public class UsbongUtils {
 
 	public static String DEFAULT_UTREE_TO_LOAD=UsbongConstants.TREE_TYPE_BUY;//"usbong_specialty_bookstore"; //updated by Mike, 20160418
 	public static String BASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/usbong_specialty_bookstore/";
+	public static String BASE_FILE_PATH_TEMP = BASE_FILE_PATH+"temp/";
 	public static String USBONG_TREES_FILE_PATH = BASE_FILE_PATH + "usbong_trees/"; //will be changed later in UsbongDecisionTreeEngineActivity.java
 
 	//added by Mike, 20160126

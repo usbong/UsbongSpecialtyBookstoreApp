@@ -35,6 +35,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -136,33 +137,36 @@ public class SellActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
-		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
-	        //; last accessed: 20150609
-	        //answer by Elenasys
-	        //added by Mike, 20150207
-	        SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
-	        if (prefs!=null) {
-	        	
-		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
-		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
-		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
+    	//added by Mike, 20170310
+    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+    	
+	    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+        //; last accessed: 20150609
+        //answer by Elenasys
+        //added by Mike, 20150207
+        SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+        if (prefs!=null) {
+        	
+	      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
+	      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
+	      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
 
-		      //added by Mike, 20170303
-		      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
-			  ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
+	      //added by Mike, 20170303
+	      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
+		  ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
 
-		      //added by Mike, 20170303
-		      RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
-			  ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
+	      //added by Mike, 20170303
+	      RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
+		  ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
 
-		      //added by Mike, 20170303
-		      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
-			  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
+	      //added by Mike, 20170303
+	      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
+		  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
 
-		      //added by Mike, 20170303
-		      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
-			  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
-			  
+	      //added by Mike, 20170303
+	      RadioGroup totalBudgetRadioButtonGroup = ((RadioGroup)findViewById(R.id.total_budget_radiogroup));
+		  ((RadioButton)totalBudgetRadioButtonGroup.getChildAt(0)).setChecked(true);
+		  
 /*		      	
 			  ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
 */			  
@@ -171,7 +175,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 			  RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
 			  ((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 */			  
-	        }
+        }
 //    	}
     	
 /*
@@ -300,11 +304,29 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
 						//added by Mike, 20170220
-					    Intent i = new Intent(Intent.ACTION_SEND);
+					    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE); //changed from ACTION_SEND to ACTION_SEND_MULTIPLE by Mike, 20170310
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
 					    i.putExtra(Intent.EXTRA_SUBJECT, "Book Sell: "+((TextView)findViewById(R.id.book_title)).getText().toString());
 					    i.putExtra(Intent.EXTRA_TEXT   , sellSummary.toString());
+					    
+					    //added by Mike, 20170310
+						//Reference: http://stackoverflow.com/questions/2264622/android-multiple-email-attachments-using-intent
+						//last accessed: 14 March 2012
+						//has to be an ArrayList
+					    ArrayList<Uri> uris = new ArrayList<Uri>();
+					    //convert from paths to Android friendly Parcelable Uri's
+					    for (String file : attachmentFilePaths)
+					    {
+					        File fileIn = new File(file);		        
+					        if (fileIn.exists()) { //added by Mike, May 13, 2012		        		        
+						        Uri u = Uri.fromFile(fileIn);
+						        uris.add(u);
+//						        System.out.println(">>>>>>>>>>>>>>>>>> u: "+u);
+					        }
+					    }
+					    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+					    
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
 					        startActivityForResult(Intent.createChooser(i, "Sending email..."), 1); 
@@ -821,11 +843,12 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     public void initTakePhotoScreen()
     {
 //    	myPictureName=currUsbongNode; //make the name of the picture the name of the currUsbongNode
-    	myPictureName=UsbongUtils.processStringToBeFilenameReady(((TextView)findViewById(R.id.book_title)).getText().toString()+UsbongUtils.getDateTimeStamp()); //make the name of the picture the name of the currUsbongNode
+    	myPictureName=UsbongUtils.processStringToBeFilenameReady(/*((TextView)findViewById(R.id.book_title)).getText().toString()+*/UsbongUtils.getDateTimeStamp()); 
     	
 //		String path = "/sdcard/usbong/"+ UsbongUtils.getTimeStamp() +"/"+ myPictureName +".jpg";
-		String path = UsbongUtils.BASE_FILE_PATH + myPictureName +".jpg";		
+		String path = UsbongUtils.BASE_FILE_PATH_TEMP + myPictureName +".jpg";		
 		//only add path if it's not already in attachmentFilePaths
+
 		if (!attachmentFilePaths.contains(path)) {
 			attachmentFilePaths.add(path);
 		}
@@ -836,20 +859,19 @@ public class SellActivity extends AppCompatActivity/*Activity*/
         
         if(imageFile.exists())
         {
+        
         	Bitmap myBitmap = BitmapFactory.decodeFile(path);
         	if(myBitmap != null)
         	{
         		myImageView.setImageBitmap(myBitmap);
 /*        		myImageView.setRotation(90);//added by Mike, rotate counter-clockwise once        	
-*/
+*/        		
  			}
  
         	//Read more: http://www.brighthub.com/mobile/google-android/articles/64048.aspx#ixzz0yXLCazcU                	  
-        }
-        else
-        {        	
-        }
-    	photoCaptureButton = (Button)findViewById(R.id.photo_capture_button);
+    	}
+
+        photoCaptureButton = (Button)findViewById(R.id.photo_capture_button);
 		photoCaptureIntent = new Intent().setClass(this, CameraActivity.class);
 		photoCaptureIntent.putExtra("myPictureName",myPictureName);
 		photoCaptureButton.setOnClickListener(new OnClickListener() {

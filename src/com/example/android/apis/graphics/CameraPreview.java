@@ -325,8 +325,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 			int quality, String expName) {
 
 //	        File sdImageMainDirectory = new File("/sdcard/usbong" + "/" +UsbongUtils.getDateTimeStamp() +"/");
-        	File sdImageMainDirectory = new File(UsbongUtils.BASE_FILE_PATH + "/" +UsbongUtils.getDateTimeStamp() +"/");
-    	
+/*
+			File sdImageMainDirectory = new File(UsbongUtils.BASE_FILE_PATH + "/" +UsbongUtils.getDateTimeStamp() +"/");
+*/
+			File sdImageMainDirectory = new File(UsbongUtils.BASE_FILE_PATH_TEMP);
+		
 		// stackoverflow.com/questions/2130932/how-to-create-directory-automatically-on-sd-card
 	        if (!sdImageMainDirectory.exists() && !sdImageMainDirectory.mkdirs()) 
 	    	{
@@ -364,8 +367,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 				bos.close();
 
 //				File imageFile = new File("/sdcard/usbong/" +UsbongUtils.getDateTimeStamp() +"/" + myPictureName+".jpg");
-				File imageFile = new File(UsbongUtils.BASE_FILE_PATH +UsbongUtils.getDateTimeStamp() +"/" + myPictureName+".jpg");
-						    
+/*				File imageFile = new File(UsbongUtils.BASE_FILE_PATH +UsbongUtils.getDateTimeStamp() +"/" + myPictureName+".jpg");
+*/
+				File imageFile = new File(UsbongUtils.BASE_FILE_PATH_TEMP + myPictureName+".jpg");				
+				
 				if(imageFile.exists())
 				{
 					System.out.println("FILE EXISTS!");

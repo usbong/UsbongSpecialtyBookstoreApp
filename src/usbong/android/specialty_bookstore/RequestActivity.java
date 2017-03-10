@@ -124,6 +124,9 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
+    	//added by Mike, 20170310
+    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+
 		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 	        //; last accessed: 20150609
 	        //answer by Elenasys

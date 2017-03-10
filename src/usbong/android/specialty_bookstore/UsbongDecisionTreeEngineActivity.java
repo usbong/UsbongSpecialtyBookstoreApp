@@ -292,7 +292,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		new MyBackgroundTask().execute();        
     }    
     
-    public void init() {
+    public void init() {    	
+    	//added by Mike, 20170310
+    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+
+    	
         //if return is null, then currScreen=0
 //        currScreen=Integer.parseInt(getIntent().getStringExtra("currScreen")); 
         //modified by JPT, May 25, 2015

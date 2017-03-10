@@ -140,6 +140,9 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
      */
     public void init()
     {    	
+    	//added by Mike, 20170310
+    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+
     	if (currScreen==BUY_SCREEN) {
     		TextView myTextImageDisplayTextView = (TextView)findViewById(R.id.text_image_display_textview);
         	myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));        	
