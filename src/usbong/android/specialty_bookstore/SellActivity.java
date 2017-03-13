@@ -80,7 +80,6 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	public static Intent photoCaptureIntent;
 	private String myPictureName="default"; //change this later in the code
 	private List<String> attachmentFilePaths;
-
 				
 	public static String timeStamp;
 		

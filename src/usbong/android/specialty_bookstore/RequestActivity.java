@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -30,8 +31,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -68,6 +72,14 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 	private String productDetails; //added by Mike, 20170221
 		
 	private Button requestButton;
+	
+	//added by Mike, 20170309
+	private Button photoCaptureButton;
+	private ImageView myImageView;
+	public boolean performedCapturePhoto;
+	public static Intent photoCaptureIntent;
+	private String myPictureName="default"; //change this later in the code
+	private List<String> attachmentFilePaths;
 				
 	public static String timeStamp;
 		
@@ -177,6 +189,15 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
         	});    	    		
     	}
 */         
+	    //added by Mike, 20170309
+	    if (!performedCapturePhoto) {
+	    	//Reference: http://stackoverflow.com/questions/2793004/java-lista-addalllistb-fires-nullpointerexception
+	    	//Last accessed: 14 March 2012
+	    	attachmentFilePaths = new ArrayList<String>();            	
+
+	    	initTakePhotoScreen();
+	    }
+    	        
     	//added by Mike, 20160126
     	requestButton = (Button)findViewById(R.id.request_button);    	
     	requestButton.setOnClickListener(new OnClickListener() {
@@ -281,11 +302,29 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
 						//added by Mike, 20170220
-					    Intent i = new Intent(Intent.ACTION_SEND);
+					    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE); //changed from ACTION_SEND to ACTION_SEND_MULTIPLE by Mike, 20170313
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
 					    i.putExtra(Intent.EXTRA_SUBJECT, "Book Request: "+((TextView)findViewById(R.id.book_title)).getText().toString());
 					    i.putExtra(Intent.EXTRA_TEXT   , requestSummary.toString());
+					    
+					    //added by Mike, 20170310
+						//Reference: http://stackoverflow.com/questions/2264622/android-multiple-email-attachments-using-intent
+						//last accessed: 14 March 2012
+						//has to be an ArrayList
+					    ArrayList<Uri> uris = new ArrayList<Uri>();
+					    //convert from paths to Android friendly Parcelable Uri's
+					    for (String file : attachmentFilePaths)
+					    {
+					        File fileIn = new File(file);		        
+					        if (fileIn.exists()) { //added by Mike, May 13, 2012		        		        
+						        Uri u = Uri.fromFile(fileIn);
+						        uris.add(u);
+//						        System.out.println(">>>>>>>>>>>>>>>>>> u: "+u);
+					        }
+					    }
+					    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+					    
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
 					        startActivityForResult(Intent.createChooser(i, "Sending email..."), 1); 
@@ -789,4 +828,56 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		}
 	}
 
+	//added by Mike, 20170309
+    @Override
+    public void onRestart() 
+    {
+        super.onRestart();
+        
+    	initTakePhotoScreen();
+    }
+    
+	//added by Mike, 20170309
+    public void initTakePhotoScreen()
+    {
+//    	myPictureName=currUsbongNode; //make the name of the picture the name of the currUsbongNode
+    	myPictureName=UsbongUtils.processStringToBeFilenameReady(/*((TextView)findViewById(R.id.book_title)).getText().toString()+*/UsbongUtils.getDateTimeStamp()); 
+    	
+//		String path = "/sdcard/usbong/"+ UsbongUtils.getTimeStamp() +"/"+ myPictureName +".jpg";
+		String path = UsbongUtils.BASE_FILE_PATH_TEMP + myPictureName +".jpg";		
+		//only add path if it's not already in attachmentFilePaths
+
+		if (!attachmentFilePaths.contains(path)) {
+			attachmentFilePaths.add(path);
+		}
+		
+    	myImageView = (ImageView) findViewById(R.id.CameraImage);
+
+    	File imageFile = new File(path);
+        
+        if(imageFile.exists())
+        {
+        
+        	Bitmap myBitmap = BitmapFactory.decodeFile(path);
+        	if(myBitmap != null)
+        	{
+        		myImageView.setImageBitmap(myBitmap);
+/*        		myImageView.setRotation(90);//added by Mike, rotate counter-clockwise once        	
+*/        		
+ 			}
+ 
+        	//Read more: http://www.brighthub.com/mobile/google-android/articles/64048.aspx#ixzz0yXLCazcU                	  
+    	}
+
+        photoCaptureButton = (Button)findViewById(R.id.photo_capture_button);
+		photoCaptureIntent = new Intent().setClass(this, CameraActivity.class);
+		photoCaptureIntent.putExtra("myPictureName",myPictureName);
+		photoCaptureButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(photoCaptureIntent);
+			}
+    	});
+
+    }
 }
