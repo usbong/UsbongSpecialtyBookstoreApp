@@ -687,7 +687,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 			case(R.id.request):
 				finish();
 				//added by Mike, 20170216
-				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
 				return true;
