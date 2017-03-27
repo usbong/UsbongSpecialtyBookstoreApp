@@ -255,7 +255,18 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 	
 						buySummary.append("Contact Number: "+
 								((TextView)findViewById(R.id.contact_number)).getText().toString()+"\n");    	
-	
+
+						String quantity = ((TextView)findViewById(R.id.quantity)).getText().toString();
+						if (quantity.trim().equals("")) {
+							buySummary.append("Quantity: "+ "1"
+									+"\n");    	    		
+    					}
+						else {
+							buySummary.append("Quantity: "+ quantity
+									+"\n");    	    									
+						}
+
+						
 //						RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.preference_radiogroup);
 						int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();				
 	//					RadioButton r = (RadioButton) radioButtonGroup.getChildAt(radioButtonID); 
