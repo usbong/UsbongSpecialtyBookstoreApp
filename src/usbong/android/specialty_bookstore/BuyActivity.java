@@ -14,12 +14,9 @@
  */
 package usbong.android.specialty_bookstore;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
+import usbong.android.features.node.QRCodeReaderActivity;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
@@ -28,7 +25,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -48,7 +44,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -72,8 +67,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 	private String productDetails; //added by Mike, 20170221
 		
 	private Button confirmButton;
-	private Button buyButton; //added by Mike, 20170220
-
+	private Button buyButton; //added by Mike, 20170220	
 	private Button backButton;
 
 /*	private Button sellButton;
@@ -190,7 +184,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 			  RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
 			  ((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 	        }
-    	}
+    	}    	
     	
 /*
     	//added by Mike, 20160126

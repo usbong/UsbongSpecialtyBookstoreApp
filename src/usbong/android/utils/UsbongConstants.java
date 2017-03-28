@@ -30,6 +30,10 @@ public class UsbongConstants {
 	public final static int PERA_PADALA=2;	
 	public final static int defaultModeOfPayment=BANK_DEPOSIT;	//default
     
+	//added by Mike, 20170327
+	public final static int ISBN_10=0;
+	public final static int ISBN_13=1;
+	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	

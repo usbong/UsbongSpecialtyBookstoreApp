@@ -1,11 +1,11 @@
 package usbong.android.features.node;
 
-import usbong.android.specialty_bookstore.UsbongDecisionTreeEngineActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
+import usbong.android.specialty_bookstore.SellActivity;
 
 /*
  * Reference: answer by Seshu Vinay at stackoverflow
@@ -15,7 +15,7 @@ import android.view.Window;
 
 public class QRCodeReaderActivity extends Activity
 {
-	public String myQRCodeReaderName;
+	public static String myQRCodeReaderName;
 /*
 	private String currentWord;
 	private String timeStamp;
@@ -43,7 +43,7 @@ public class QRCodeReaderActivity extends Activity
                     marketUri);
             startActivity(marketIntent);
         }
-        
+
         myQRCodeReaderName=this.getIntent().getStringExtra("myQRCodeReaderName");
 /*
         new AlertDialog.Builder(QRCodeReaderActivity.this).setTitle("Usbong Tip")
@@ -64,13 +64,22 @@ public class QRCodeReaderActivity extends Activity
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String content = data.getStringExtra("SCAN_RESULT");
-                
+/*                
                 //added by Mike, Dec. 23, 2012
                 UsbongDecisionTreeEngineActivity.setQRCodeContent(content);
+*/                
 			    //removed by Mike, Sept. 21, 2013
 //				UsbongDecisionTreeEngineActivity.setCurrScreen(UsbongDecisionTreeEngineActivity.QR_CODE_READER_SCREEN);				
-				this.finish();
-
+/*
+                this.finish();
+*/
+                //edited by Mike, 20170327
+				Intent toSellIntent = new Intent(QRCodeReaderActivity.this, SellActivity.class);
+				toSellIntent.putExtra("myQRCodeReaderName", myQRCodeReaderName);
+				toSellIntent.putExtra("scan_result", content);
+				finish();    
+				toSellIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+				startActivity(toSellIntent);
 			}
 			if(resultCode == RESULT_CANCELED){
 				//handle cancel

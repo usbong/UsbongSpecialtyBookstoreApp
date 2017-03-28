@@ -380,11 +380,12 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //    		UsbongUtils.storeAssetsFileIntoSDCard(this,"usbong_demo_tree.xml");
 /*    		UsbongUtils.storeAssetsFileIntoSDCard(this,UsbongUtils.DEFAULT_UTREE_TO_LOAD+".utree");
  */
+/*  //commented out by Mike, 20170327
   			//edited by Mike, 20160119
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_SELL+".utree");
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_REQUEST+".utree");  			
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_BUY+".utree"); //added by Mike, 20160126  			
-  			
+*/  			
   			//added by Mike, 20160126
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST+".txt");  
     	}
@@ -411,7 +412,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	    Bundle querySkus = new Bundle();
 	    querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 */	    
-	    
+
 	    new AsyncTask<String, Integer, Boolean>() {
 			@Override
 			protected void onPostExecute(Boolean result) {
@@ -448,8 +449,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				return true;		
 			}	
 	    }.execute();
-	    	        	
-        //reference: Labeeb P's answer from stackoverflow;
+
+	    //reference: Labeeb P's answer from stackoverflow;
         //http://stackoverflow.com/questions/4275797/view-setpadding-accepts-only-in-px-is-there-anyway-to-setpadding-in-dp;
         //last accessed: 23 May 2013
         final float scale = getResources().getDisplayMetrics().density;

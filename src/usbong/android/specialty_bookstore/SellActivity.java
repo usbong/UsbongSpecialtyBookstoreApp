@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import usbong.android.features.node.QRCodeReaderActivity;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
@@ -83,6 +84,12 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				
 	public static String timeStamp;
 		
+	//added by Mike, 20170327
+	private Button captureISBN10Button;
+	private Button captureISBN13Button;	
+	public static Intent captureISBN10Intent;
+	public static Intent captureISBN13Intent;
+	
 	protected UsbongDecisionTreeEngineActivity myUsbongDecisionTreeEngineActivity;
 	protected SettingsActivity mySettingsActivity;
 	
@@ -185,7 +192,55 @@ public class SellActivity extends AppCompatActivity/*Activity*/
         	});    	    		
     	}
 */         
-	        
+/*        
+    	String myQRCodeReaderName = getIntent().getStringExtra("myQRCodeReaderName");
+    	if (myQRCodeReaderName!=null) {
+	    	if (myQRCodeReaderName.equals(UsbongConstants.ISBN_10+"")) {
+	        	EditText ISBN10EditText= (EditText)findViewById(R.id.isbn_10);
+	        	ISBN10EditText.setText(getIntent().getStringExtra("scan_result"));
+	    	}
+	    	else {
+	        	EditText ISBN13EditText= (EditText)findViewById(R.id.isbn_13);
+	        	ISBN13EditText.setText(getIntent().getStringExtra("scan_result"));    		
+	    	}    		
+    	}
+*/	    
+
+        //added by Mike, 20170328
+    	String myQRCodeReaderName = getIntent().getStringExtra("myQRCodeReaderName");
+    	if (myQRCodeReaderName!=null) {
+	    	if (myQRCodeReaderName.equals(UsbongConstants.ISBN_10+"")) {
+	        	EditText ISBN10EditText= (EditText)findViewById(R.id.isbn_10);
+	        	ISBN10EditText.setText(getIntent().getStringExtra("scan_result"));
+	    	}
+	    	else {
+	        	EditText ISBN13EditText= (EditText)findViewById(R.id.isbn_13);
+	        	ISBN13EditText.setText(getIntent().getStringExtra("scan_result"));    		
+	    	}    		
+    	}
+
+      	//added by Mike, 20170327
+    	captureISBN10Button = (Button)findViewById(R.id.isbn_10_capture_button);
+    	captureISBN10Intent = new Intent().setClass(this, QRCodeReaderActivity.class);
+    	captureISBN10Intent.putExtra("myQRCodeReaderName", UsbongConstants.ISBN_10+"");
+    	captureISBN10Button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(captureISBN10Intent);
+			}
+    	});    	
+
+    	//added by Mike, 20170327
+    	captureISBN13Button = (Button)findViewById(R.id.isbn_13_capture_button);
+    	captureISBN13Intent = new Intent().setClass(this, QRCodeReaderActivity.class);
+    	captureISBN13Intent.putExtra("myQRCodeReaderName", UsbongConstants.ISBN_13+"");
+    	captureISBN13Button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(captureISBN13Intent);
+			}
+    	});    
+    	
 	    //added by Mike, 20170309
 	    if (!performedCapturePhoto) {
 	    	//Reference: http://stackoverflow.com/questions/2793004/java-lista-addalllistb-fires-nullpointerexception
@@ -470,7 +525,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
             if (resultCode == RESULT_CANCELED) {
                 //Write your code if there's no result
             }            
-
+            
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
