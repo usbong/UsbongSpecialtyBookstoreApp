@@ -25,7 +25,7 @@ public class CameraActivity extends Activity
 	// ----------------------------------------------------------------------
     private CameraPreview mPreview;
     public String myPictureName;
-    public String timeStamp;
+//    public String timeStamp;
         
     @Override
     protected void onCreate(Bundle savedInstanceState) {

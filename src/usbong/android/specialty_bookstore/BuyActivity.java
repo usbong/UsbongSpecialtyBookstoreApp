@@ -625,6 +625,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				finish();
 				//added by Mike, 20170216
 				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
 				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toSellActivityIntent);
 				return true;

@@ -77,6 +77,7 @@ public class QRCodeReaderActivity extends Activity
 				Intent toSellIntent = new Intent(QRCodeReaderActivity.this, SellActivity.class);
 				toSellIntent.putExtra("myQRCodeReaderName", myQRCodeReaderName);
 				toSellIntent.putExtra("scan_result", content);
+				toSellIntent.putExtra("fromQRCodeReader", true);				
 				finish();    
 				toSellIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 				startActivity(toSellIntent);

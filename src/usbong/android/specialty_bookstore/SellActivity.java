@@ -129,7 +129,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	        	}	        		
         	}
 */        	
-	        reset();
+//	        reset();
 	        init();
     }
     
@@ -142,10 +142,10 @@ public class SellActivity extends AppCompatActivity/*Activity*/
      * Initialize this activity
      */
     public void init()
-    {    	
-    	//added by Mike, 20170310
-    	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-    	
+    {    	    	
+    	//added by Mike, 20170328
+    	loadData();
+/*    	
 	    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
         //; last accessed: 20150609
         //answer by Elenasys
@@ -169,15 +169,8 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
 		  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
 		  
-/*		      	
-			  ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
-*/			  
-/*
-		      //added by Mike, 20170223
-			  RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
-			  ((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
-*/			  
         }
+*/        
 //    	}
     	
 /*
@@ -226,6 +219,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     	captureISBN10Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				saveData();
 				startActivity(captureISBN10Intent);
 			}
     	});    	
@@ -237,18 +231,19 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     	captureISBN13Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				saveData();
 				startActivity(captureISBN13Intent);
 			}
     	});    
     	
 	    //added by Mike, 20170309
-	    if (!performedCapturePhoto) {
+//	    if (!performedCapturePhoto) {
 	    	//Reference: http://stackoverflow.com/questions/2793004/java-lista-addalllistb-fires-nullpointerexception
 	    	//Last accessed: 14 March 2012
 	    	attachmentFilePaths = new ArrayList<String>();            	
 
 	    	initTakePhotoScreen();
-	    }
+//	    }
 	        
     	//added by Mike, 20160126
     	sellButton = (Button)findViewById(R.id.sell_button);    	
@@ -265,7 +260,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", ((TextView)findViewById(R.id.first_name)).getText().toString());
 				        editor.putString("surname", ((TextView)findViewById(R.id.surname)).getText().toString());
 				        editor.putString("contactNumber", ((TextView)findViewById(R.id.contact_number)).getText().toString());
-
+				        editor.commit(); //added by Mike, 20170328
 										        
 						StringBuffer sellSummary = new StringBuffer();
 						sellSummary.append("-Sell Summary-\n");					
@@ -303,20 +298,20 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 						String itemTypeSelectedText = itemTypeRadioButton.getText().toString();	 
 						sellSummary.append("Book Type: "+itemTypeSelectedText+"\n");    	
 
-						String isbn10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
-						if (!isbn10String.equals("")) {
+						String isbn_10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
+						if (!isbn_10String.equals("")) {
 							sellSummary.append("ISBN-10: "+
-									isbn10String+"\n");
+									isbn_10String+"\n");
 						}
 						else {
 							sellSummary.append("ISBN-10: "+
 									"N/A\n");
 						}
 
-						String isbn13String = ((TextView)findViewById(R.id.isbn_13)).getText().toString();
-						if (!isbn13String.equals("")) {
+						String isbn_13String = ((TextView)findViewById(R.id.isbn_13)).getText().toString();
+						if (!isbn_13String.equals("")) {
 							sellSummary.append("ISBN-13: "+
-									isbn13String+"\n");
+									isbn_13String+"\n");
 						}
 						else {
 							sellSummary.append("ISBN-13: "+
@@ -467,7 +462,17 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		else {
 			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-			
+
+    	TextView totalPriceForAllCopiesTextView = ((TextView)findViewById(R.id.total_price_for_all_copies));
+		String totalPriceForAllCopies = totalPriceForAllCopiesTextView.getText().toString();	
+		if ((totalPriceForAllCopies.trim().equals("")) || (totalPriceForAllCopies.trim().equals("0"))) {
+			totalPriceForAllCopiesTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			totalPriceForAllCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+
     	TextView firstnameTextView = ((TextView)findViewById(R.id.first_name));
 		String firstname = firstnameTextView.getText().toString();
 		if (firstname.trim().equals("")) {
@@ -503,6 +508,175 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	        return false;
 		}
 		return true;
+    }
+    
+    public void saveData() {
+		//save data 
+        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+        //; last accessed: 20150609
+        //answer by Elenasys
+        //added by Mike, 20170207
+        SharedPreferences.Editor editor = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE).edit();
+        editor.putString("firstName", ((TextView)findViewById(R.id.first_name)).getText().toString());
+        editor.putString("surname", ((TextView)findViewById(R.id.surname)).getText().toString());
+        editor.putString("contactNumber", ((TextView)findViewById(R.id.contact_number)).getText().toString());
+
+        editor.putString("bookTitle", ((TextView)findViewById(R.id.book_title)).getText().toString());
+        editor.putString("firstNameOfPrincipalAuthor", ((TextView)findViewById(R.id.first_name_of_principal_author)).getText().toString());
+        editor.putString("surNameOfPrincipalAuthor", ((TextView)findViewById(R.id.surname_of_principal_author)).getText().toString());
+        editor.putString("publisher", ((TextView)findViewById(R.id.publisher)).getText().toString());
+
+		RadioGroup languageRadioButtonGroup = (RadioGroup)findViewById(R.id.language_radiogroup);
+		int languageRadioButtonID = languageRadioButtonGroup.getCheckedRadioButtonId();				
+		RadioButton languageRadioButton = (RadioButton) languageRadioButtonGroup.findViewById(languageRadioButtonID);
+		String languageSelectedText;
+		if (languageRadioButton!=null) {
+			languageSelectedText = languageRadioButton.getText().toString();	 			
+		}
+		else {
+			languageSelectedText = ((RadioButton) languageRadioButtonGroup.getChildAt(0)).getText().toString();
+		}
+        editor.putString("language", languageSelectedText);
+
+		if (languageSelectedText.equals("Other")) {
+	        editor.putString("otherLanguage", ((TextView)findViewById(R.id.other_language)).getText().toString());
+		}
+		
+		RadioGroup formatRadioButtonGroup = (RadioGroup)findViewById(R.id.format_radiogroup);
+		int formatRadioButtonID = formatRadioButtonGroup.getCheckedRadioButtonId();				
+		RadioButton formatRadioButton = (RadioButton) formatRadioButtonGroup.findViewById(formatRadioButtonID);
+		String formatSelectedText;
+		if (formatRadioButton!=null) {
+			formatSelectedText = formatRadioButton.getText().toString();	 			
+		}
+		else {
+			formatSelectedText = ((RadioButton) formatRadioButtonGroup.getChildAt(0)).getText().toString();
+		}
+		editor.putString("format", formatSelectedText);
+
+		RadioGroup itemTypeRadioButtonGroup = (RadioGroup)findViewById(R.id.item_type_radiogroup);
+		int itemTypeRadioButtonID = itemTypeRadioButtonGroup.getCheckedRadioButtonId();				
+		RadioButton itemTypeRadioButton = (RadioButton) itemTypeRadioButtonGroup.findViewById(itemTypeRadioButtonID);
+		String itemTypeSelectedText;
+		if (itemTypeRadioButton!=null) {
+			itemTypeSelectedText = itemTypeRadioButton.getText().toString();	 			
+		}
+		else {
+			itemTypeSelectedText = ((RadioButton) itemTypeRadioButtonGroup.getChildAt(0)).getText().toString();
+		}
+		editor.putString("bookType", itemTypeSelectedText);
+
+		String isbn_10String = ((TextView)findViewById(R.id.isbn_10)).getText().toString();
+        editor.putString("isbn_10", isbn_10String);
+
+/*		if (!isbn_10String.equals("")) {
+	        editor.putString("isbn_10", isbn_10String);
+		}
+		else {
+	        editor.putString("isbn_10", "N/A");
+		}
+*/
+		String isbn_13String = ((TextView)findViewById(R.id.isbn_13)).getText().toString();
+        editor.putString("isbn_13", isbn_13String);
+/*
+		if (!isbn_13String.equals("")) {
+	        editor.putString("isbn_13", isbn_13String);
+		}
+		else {
+	        editor.putString("isbn_13", "N/A");
+		}
+*/
+        editor.putString("numberOfCopies", ((TextView)findViewById(R.id.number_of_copies)).getText().toString());
+        editor.putString("totalPriceForAllCopies", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
+        editor.putString("comments", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
+
+		String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
+        editor.putString("comments", commentsString);
+/*
+		if (commentsString.trim().equals("")) {
+	        editor.putString("comments", "N/A");
+		}
+		else {
+	        editor.putString("comments", commentsString);
+		}
+*/		
+        editor.commit();		
+    }
+
+    public void loadData() {
+	    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
+        //; last accessed: 20150609
+        //answer by Elenasys
+        //added by Mike, 20150207
+        SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+        if (prefs!=null) {        	
+	    	//added by Mike, 20170328
+	    	if (getIntent().getBooleanExtra("newSellActivity", false)) {
+	        	//added by Mike, 20170310
+	        	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
+
+    		
+      	        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
+      	        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
+      	        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
+
+      	        //added by Mike, 20170303
+    	        RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
+    		    ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
+
+    	        //added by Mike, 20170303
+    	        RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
+    		    ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
+
+    	        //added by Mike, 20170303
+    	        RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
+    		    ((RadioButton)itemTypeRadioButtonGroup.getChildAt(0)).setChecked(true);
+    		  
+    		    reset();
+	    	}
+	        else {
+		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
+		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
+		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
+	
+		      ((EditText)findViewById(R.id.book_title)).setText(prefs.getString("bookTitle", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.first_name_of_principal_author)).setText(prefs.getString("firstNameOfPrincipalAuthor", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.surname_of_principal_author)).setText(prefs.getString("surNameOfPrincipalAuthor", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.publisher)).setText(prefs.getString("publisher", "")); //"" is the default value
+		      
+		      RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
+			  for (int i=0; i<languageRadioButtonGroup.getChildCount(); i++) {
+			      if (((RadioButton)languageRadioButtonGroup.getChildAt(i)).getText().equals(prefs.getString("language", ""))) {
+					  ((RadioButton)languageRadioButtonGroup.getChildAt(i)).setChecked(true);		    	  
+			      }			  
+			  }
+	
+			  if (prefs.getString("language", "").equals("Other")) {
+			      ((EditText)findViewById(R.id.other_language)).setText(prefs.getString("otherLanguage", "")); //"" is the default value
+			  }
+	
+		      RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
+			  for (int i=0; i<formatRadioButtonGroup.getChildCount(); i++) {
+			      if (((RadioButton)formatRadioButtonGroup.getChildAt(i)).getText().equals(prefs.getString("format", ""))) {
+					  ((RadioButton)formatRadioButtonGroup.getChildAt(i)).setChecked(true);		    	  
+			      }			  
+			  }
+	
+		      RadioGroup itemTypeRadioButtonGroup = ((RadioGroup)findViewById(R.id.item_type_radiogroup));
+			  for (int i=0; i<itemTypeRadioButtonGroup.getChildCount(); i++) {
+			      if (((RadioButton)itemTypeRadioButtonGroup.getChildAt(i)).getText().equals(prefs.getString("bookType", ""))) {
+					  ((RadioButton)itemTypeRadioButtonGroup.getChildAt(i)).setChecked(true);		    	  
+			      }			  
+			  }
+	
+		      ((EditText)findViewById(R.id.isbn_10)).setText(prefs.getString("isbn_10", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.isbn_13)).setText(prefs.getString("isbn_13", "")); //"" is the default value
+		      
+		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.total_price_for_all_copies)).setText(prefs.getString("totalPriceForAllCopies", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.comments)).setText(prefs.getString("comments", "")); //"" is the default value
+	        }
+    	}
     }
     
     public void reset() {
@@ -735,6 +909,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				finish();
 				//added by Mike, 20170216
 				Intent toSellActivityIntent = new Intent().setClass(getInstance(), SellActivity.class);
+				toSellActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
 				toSellActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toSellActivityIntent);
 				return true;
@@ -895,7 +1070,8 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		String path = UsbongUtils.BASE_FILE_PATH_TEMP + myPictureName +".jpg";		
 		//only add path if it's not already in attachmentFilePaths
 
-		if (!attachmentFilePaths.contains(path)) {
+		//edited by Mike, 2070328
+		if ((attachmentFilePaths!=null) && (!attachmentFilePaths.contains(path))) {
 			attachmentFilePaths.add(path);
 		}
 		
@@ -923,6 +1099,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		photoCaptureButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				saveData(); //added by Mike, 20170328
 				startActivity(photoCaptureIntent);
 			}
     	});

@@ -28,11 +28,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import usbong.android.features.node.QRCodeReaderActivity;
+import usbong.android.specialty_bookstore.SellActivity;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -59,7 +62,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 	
     private CameraPreview mContext = this;
 	public String myPictureName;
-	public String timeStamp;
+//	public String timeStamp;
 	
 	private static Context myContext;
 	private Display myDisplay;
@@ -300,7 +303,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 				    
 				    //removed by Mike, Sept. 21, 2013
 //					UsbongDecisionTreeEngineActivity.setCurrScreen(UsbongDecisionTreeEngineActivity.PHOTO_CAPTURE_SCREEN);				
-					((Activity) getContext()).finish();
+
+				    ((Activity) getContext()).finish();
 				  }
 				});
 				builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
