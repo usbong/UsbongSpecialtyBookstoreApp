@@ -34,6 +34,12 @@ public class UsbongConstants {
 	public final static int ISBN_10=0;
 	public final static int ISBN_13=1;
 	
+	//added by Mike, 20170330
+	public final static int BUY_ACTIVITY=0;
+	public final static int SELL_ACTIVITY=1;
+	public final static int REQUEST_ACTIVITY=2;
+	public final static int ITEM_LIST_ACTIVITY=3; //UsbongDecisionTreeEngineActivity		
+	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
 	public static final int MULTIPLE_RADIO_BUTTONS_SCREEN=1;	

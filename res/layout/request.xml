@@ -187,29 +187,39 @@
 			        />
 			</RadioGroup>
 			<EditText
-		        style="@style/UsbongTextAreaEditText"	
+		        style="@style/UsbongLoginEditText"	
 		        android:id="@+id/isbn_10"
 		        android:hint="ISBN-10 (Optional)"
 		        android:textColorHint="#9a9898"
+	        	android:background="@drawable/rect_text_edit"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"
-		        android:lines="4"
+		        android:lines="1"
 		        android:textSize="18dp"
 		        android:layout_marginLeft="12dp"
 		        android:layout_marginRight="12dp"
 			/>
+			<Button android:id="@+id/isbn_10_capture_button"
+			    style="@style/UsbongPhotoCaptureButton"	    	
+			    android:text="Take ISBN-10 Bar Code" 
+			    android:layout_marginTop="14dp"/>			
 			<EditText
-		        style="@style/UsbongTextAreaEditText"	
+		        style="@style/UsbongLoginEditText"
 		        android:id="@+id/isbn_13"
 		        android:hint="ISBN-13 (Optional)"
 		        android:textColorHint="#9a9898"
+	        	android:background="@drawable/rect_text_edit"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"
-		        android:lines="4"
+		        android:lines="1"
 		        android:textSize="18dp"
 		        android:layout_marginLeft="12dp"
 		        android:layout_marginRight="12dp"
 			/>
+			<Button android:id="@+id/isbn_13_capture_button"
+			    style="@style/UsbongPhotoCaptureButton"	    	
+			    android:text="Take ISBN-13 Bar Code" 
+			    android:layout_marginTop="14dp"/>						
 			<EditText
 		        style="@style/UsbongLoginEditText"
 		        android:id="@+id/number_of_copies"

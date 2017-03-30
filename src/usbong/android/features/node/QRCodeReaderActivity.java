@@ -1,11 +1,15 @@
 package usbong.android.features.node;
 
+import usbong.android.specialty_bookstore.BuyActivity;
+import usbong.android.specialty_bookstore.RequestActivity;
+import usbong.android.specialty_bookstore.SellActivity;
+import usbong.android.specialty_bookstore.UsbongDecisionTreeEngineActivity;
+import usbong.android.utils.UsbongConstants;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
-import usbong.android.specialty_bookstore.SellActivity;
 
 /*
  * Reference: answer by Seshu Vinay at stackoverflow
@@ -16,6 +20,7 @@ import usbong.android.specialty_bookstore.SellActivity;
 public class QRCodeReaderActivity extends Activity
 {
 	public static String myQRCodeReaderName;
+	public static int callingActivity;
 /*
 	private String currentWord;
 	private String timeStamp;
@@ -45,6 +50,8 @@ public class QRCodeReaderActivity extends Activity
         }
 
         myQRCodeReaderName=this.getIntent().getStringExtra("myQRCodeReaderName");
+        callingActivity=this.getIntent().getIntExtra("callingActivity",UsbongConstants.BUY_ACTIVITY); //BUY_ACTIVITY is the default
+
 /*
         new AlertDialog.Builder(QRCodeReaderActivity.this).setTitle("Usbong Tip")
 //			.setMessage(currentWord)
@@ -73,19 +80,40 @@ public class QRCodeReaderActivity extends Activity
 /*
                 this.finish();
 */
-                //edited by Mike, 20170327
-				Intent toSellIntent = new Intent(QRCodeReaderActivity.this, SellActivity.class);
-				toSellIntent.putExtra("myQRCodeReaderName", myQRCodeReaderName);
-				toSellIntent.putExtra("scan_result", content);
-				toSellIntent.putExtra("fromQRCodeReader", true);				
-				finish();    
-				toSellIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				startActivity(toSellIntent);
+                //edited by Mike, 20170330
+                Intent toCallingActivityIntent;
+                switch (callingActivity) {
+                	case UsbongConstants.BUY_ACTIVITY:
+                		toCallingActivityIntent = new Intent(QRCodeReaderActivity.this, BuyActivity.class);
+                		processCallingActivityIntent(toCallingActivityIntent, content);
+                		break;
+                	case UsbongConstants.SELL_ACTIVITY:
+                		toCallingActivityIntent = new Intent(QRCodeReaderActivity.this, SellActivity.class);
+                		processCallingActivityIntent(toCallingActivityIntent, content);
+                		break;
+                	case UsbongConstants.REQUEST_ACTIVITY:
+                		toCallingActivityIntent = new Intent(QRCodeReaderActivity.this, RequestActivity.class);
+                		processCallingActivityIntent(toCallingActivityIntent, content);
+                		break;
+                	case UsbongConstants.ITEM_LIST_ACTIVITY:
+                		toCallingActivityIntent = new Intent(QRCodeReaderActivity.this, UsbongDecisionTreeEngineActivity.class);
+                		processCallingActivityIntent(toCallingActivityIntent, content);
+                		break;
+                }
 			}
 			if(resultCode == RESULT_CANCELED){
 				//handle cancel
 				this.finish();
 			}
         }
+	}
+	
+	public void processCallingActivityIntent(Intent toCallingActivityIntent, String content) {
+        toCallingActivityIntent.putExtra("myQRCodeReaderName", myQRCodeReaderName);
+        toCallingActivityIntent.putExtra("scan_result", content);
+        toCallingActivityIntent.putExtra("fromQRCodeReader", true);				
+		finish();    
+		toCallingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		startActivity(toCallingActivityIntent);
 	}
 }

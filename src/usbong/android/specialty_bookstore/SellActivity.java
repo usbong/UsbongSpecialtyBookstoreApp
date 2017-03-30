@@ -216,6 +216,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     	captureISBN10Button = (Button)findViewById(R.id.isbn_10_capture_button);
     	captureISBN10Intent = new Intent().setClass(this, QRCodeReaderActivity.class);
     	captureISBN10Intent.putExtra("myQRCodeReaderName", UsbongConstants.ISBN_10+"");
+    	captureISBN10Intent.putExtra("callingActivity", UsbongConstants.SELL_ACTIVITY);
     	captureISBN10Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -228,6 +229,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     	captureISBN13Button = (Button)findViewById(R.id.isbn_13_capture_button);
     	captureISBN13Intent = new Intent().setClass(this, QRCodeReaderActivity.class);
     	captureISBN13Intent.putExtra("myQRCodeReaderName", UsbongConstants.ISBN_13+"");
+    	captureISBN13Intent.putExtra("callingActivity", UsbongConstants.SELL_ACTIVITY);
     	captureISBN13Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -588,7 +590,6 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 */
         editor.putString("numberOfCopies", ((TextView)findViewById(R.id.number_of_copies)).getText().toString());
         editor.putString("totalPriceForAllCopies", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
-        editor.putString("comments", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
 
 		String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
         editor.putString("comments", commentsString);
@@ -615,7 +616,6 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	        	//added by Mike, 20170310
 	        	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
 
-    		
       	        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
@@ -917,6 +917,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				finish();
 				//added by Mike, 20170216
 				Intent toRequestActivityIntent = new Intent().setClass(getInstance(), RequestActivity.class);
+				toRequestActivityIntent.putExtra("newRequestActivity", true); //added by Mike, 20170330
 				toRequestActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(toRequestActivityIntent);
 				return true;
