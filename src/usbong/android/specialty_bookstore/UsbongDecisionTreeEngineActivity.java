@@ -14,12 +14,10 @@
  */
 package usbong.android.specialty_bookstore;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,7 +42,6 @@ import usbong.android.utils.PurchaseLanguageBundleListAdapter;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongScreenProcessor;
 import usbong.android.utils.UsbongUtils;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -54,6 +51,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -98,6 +96,8 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 
 //@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
+	//added by Mike, 20170330
+	private String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
 //	private static final boolean UsbongUtils.USE_UNESCAPE=true; //allows the use of \n (new line) in the decision tree
 
 //	private static boolean USE_ENG_ONLY=true; //uses English only	
@@ -386,8 +386,13 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_REQUEST+".utree");  			
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.TREE_TYPE_BUY+".utree"); //added by Mike, 20160126  			
 */  			
+  			//added by Mike, 20170330
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BOOKS+".txt");  
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_COMBOS+".txt");  
+/*
   			//added by Mike, 20160126
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST+".txt");  
+*/  			
     	}
     	catch(IOException ioe) {
     		ioe.printStackTrace();
@@ -627,18 +632,56 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     	usbongNodeContainerCounter=-1; //begin with -1
     }
     
+    //added by Mike, 20170330
+    public void initTreeLoader(String currCategory) {
+        this.currCategory = currCategory;
+        initTreeLoader();
+    }
+    
 	public void initTreeLoader()
 	{
 		setContentView(R.layout.tree_list_interface);				
 
 		isInTreeLoader=true;
 		
+        Button booksButton = (Button)findViewById(R.id.books_button);
+        booksButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_BOOKS);
+            }
+        });    
+
+        Button combosButton = (Button)findViewById(R.id.combos_button);
+        combosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_COMBOS);
+            }
+        });    
+
+        if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
+            booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+            combosButton.setTypeface(Typeface.DEFAULT);
+        }
+        else {
+            booksButton.setTypeface(Typeface.DEFAULT);
+            combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+        }
+
 		resetContainers();//added by Mike, 20170213
 
-//		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);
-		listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEMS_LIST+".txt");
-			
-		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+//		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);			
+//        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEMS_LIST+".txt");
+        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
+
+
+        if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
+    		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+        }
+        else { //combo
+    		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+        }
 		mCustomAdapter.sort(); //edited by Mike, 20170203
 /*
 		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
@@ -3442,7 +3485,12 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 View v = convertView;
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    v = vi.inflate(R.layout.tree_loader, null);
+                    if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
+                        v = vi.inflate(R.layout.tree_loader, null);
+                    }
+                    else { //combo
+                        v = vi.inflate(R.layout.tree_loader_alternative, null);
+                    }
                 }
                 final String o = items.get(position);
                 if (o != null) {

@@ -16,6 +16,10 @@ public class UsbongConstants {
 	public static final String ITEM_VARIABLE_NAME = "item_details";
 	public static final String ITEM_IMAGE_NAME = "item_image";
 			
+	//added by Mike, 20170330
+	public static final String ITEMS_LIST_BOOKS = "items_list_books";
+	public static final String ITEMS_LIST_COMBOS = "items_list_combos";
+
 	//added by Mike, 20170207
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";
     public static final String EMAIL_ADDRESS= "support@usbong.ph";//"order@retrocc.ph";	
