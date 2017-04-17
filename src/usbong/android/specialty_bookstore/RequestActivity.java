@@ -242,6 +242,15 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", ((TextView)findViewById(R.id.first_name)).getText().toString());
 				        editor.putString("surname", ((TextView)findViewById(R.id.surname)).getText().toString());
 				        editor.putString("contactNumber", ((TextView)findViewById(R.id.contact_number)).getText().toString());
+				        editor.putString("shippingAddress", ((TextView)findViewById(R.id.address)).getText().toString());
+						
+						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
+						for (int i=0; i< paymentMethodRadioButtonGroup.getChildCount(); i++) {
+							if (((RadioButton)paymentMethodRadioButtonGroup.getChildAt(i)).isChecked()) {
+								currModeOfPayment=i;
+							}
+						}
+						editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
 				        editor.commit(); //added by Mike, 20170330
 										        
 						StringBuffer requestSummary = new StringBuffer();
@@ -300,8 +309,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 									"N/A\n");
 						}
 
-						requestSummary.append("Number of copies: "+
-								((TextView)findViewById(R.id.number_of_copies)).getText().toString()+"\n");
+						requestSummary.append("Quantity: "+
+								((TextView)findViewById(R.id.quantity)).getText().toString()+"\n");
 
 						RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
 						int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
@@ -317,6 +326,16 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						requestSummary.append("Contact Number: "+
 								((TextView)findViewById(R.id.contact_number)).getText().toString()+"\n");    		
 								
+						requestSummary.append("Address: "+
+								((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
+						
+//						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
+						int paymentMethodRadioButtonID = paymentMethodRadioButtonGroup.getCheckedRadioButtonId();					
+						RadioButton paymentMethodRadioButton = (RadioButton) paymentMethodRadioButtonGroup.findViewById(paymentMethodRadioButtonID);
+						String paymentMethodSelectedText = paymentMethodRadioButton.getText().toString();	 
+	
+						requestSummary.append("Payment Method: "+paymentMethodSelectedText+"\n");    	
+						
 						String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
 						if (commentsString.trim().equals("")) {
 							requestSummary.append("Comments: "+
@@ -438,7 +457,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 			}			
 		}
-		
+/*		
     	TextView numberOfCopiesTextView = ((TextView)findViewById(R.id.number_of_copies));
 		String numberOfCopies = numberOfCopiesTextView.getText().toString();	
 		if ((numberOfCopies.trim().equals("")) || (numberOfCopies.trim().equals("0"))) {
@@ -448,7 +467,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-			
+*/			
     	TextView firstnameTextView = ((TextView)findViewById(R.id.first_name));
 		String firstname = firstnameTextView.getText().toString();
 		if (firstname.trim().equals("")) {
@@ -478,7 +497,17 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		else {
 			contactNumberTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-				
+
+    	TextView addressTextView = ((TextView)findViewById(R.id.address));
+		String address = addressTextView.getText().toString();
+		if (address.trim().equals("")) {
+			addressTextView.setBackgroundColor(Color.parseColor("#fff9b6")); 
+			allFieldsAreFilledUp=false;
+		}
+		else {
+			addressTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
+		}
+		
 		if (!allFieldsAreFilledUp) {
 	        Toast.makeText(RequestActivity.this, "Please fill up all required fields.", Toast.LENGTH_LONG).show();
 	        return false;
@@ -574,7 +603,11 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 	        editor.putString("isbn_13", "N/A");
 		}
 */
+/*        
         editor.putString("numberOfCopies", ((TextView)findViewById(R.id.number_of_copies)).getText().toString());
+*/
+        editor.putString("quantity", ((TextView)findViewById(R.id.quantity)).getText().toString());
+        
 /*        editor.putString("totalPriceForAllCopies", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
  */
 		String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
@@ -596,16 +629,33 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
         //answer by Elenasys
         //added by Mike, 20150207
         SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+		
+        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
+        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
+        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
+
+        ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
+
+	    //added by Mike, 20170223
+		RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
+		((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
+
         if (prefs!=null) {        	
 	    	//added by Mike, 20170328
 	    	if (getIntent().getBooleanExtra("newRequestActivity", false)) {
 	        	//added by Mike, 20170310
 	        	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-    		
+/*    		
       	        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
 
+      	        ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
+
+			    //added by Mike, 20170223
+				RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
+				((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
+*/      	        
       	        //added by Mike, 20170303
     	        RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
     		    ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
@@ -625,10 +675,11 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
     		    reset();
 	    	}
 	        else {
+/*	        	
 		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
 		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
 		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
-	
+*/	
 		      ((EditText)findViewById(R.id.book_title)).setText(prefs.getString("bookTitle", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.first_name_of_principal_author)).setText(prefs.getString("firstNameOfPrincipalAuthor", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.surname_of_principal_author)).setText(prefs.getString("surNameOfPrincipalAuthor", "")); //"" is the default value
@@ -668,8 +719,9 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 			  
 		      ((EditText)findViewById(R.id.isbn_10)).setText(prefs.getString("isbn_10", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.isbn_13)).setText(prefs.getString("isbn_13", "")); //"" is the default value
-		      
-		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
+
+		      ((EditText)findViewById(R.id.quantity)).setText(prefs.getString("quantity", "")); //"" is the default value
+//		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
 /*		      ((EditText)findViewById(R.id.total_price_for_all_copies)).setText(prefs.getString("totalPriceForAllCopies", "")); //"" is the default value 
  */
 		      ((EditText)findViewById(R.id.comments)).setText(prefs.getString("comments", "")); //"" is the default value
@@ -936,7 +988,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				final EditText contactNumber = new EditText(this);
 				contactNumber.setHint("Contact Number");
 				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-				
+/*				
 				//added by Mike, 20170223
 				final RadioGroup preference = new RadioGroup(this);
 				preference.setOrientation(RadioGroup.HORIZONTAL);
@@ -948,7 +1000,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				RadioButton shipping = new AppCompatRadioButton(this);
 				shipping.setText("Shipping");
 				preference.addView(shipping);				
-				
+*/				
 				final EditText shippingAddress = new EditText(this);
 				shippingAddress.setHint("Shipping Address");
 				shippingAddress.setMinLines(5);
@@ -969,6 +1021,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				peraPadala.setText("Pera Padala");
 				modeOfPayment.addView(peraPadala);
 
+				RadioButton paypal = new AppCompatRadioButton(this);
+				paypal.setText("PayPal");
+				modeOfPayment.addView(paypal);
+				
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
 		        //answer by Elenasys
@@ -978,10 +1034,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
 		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
 		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
-
+/*
 		          //added by Mike, 20170223
 		          ((RadioButton)preference.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
-				  		          
+*/				  		          
 		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
 		          
 			      //added by Mike, 20170223				  
@@ -993,7 +1049,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				ll.addView(firstName);
 				ll.addView(surName);
 				ll.addView(contactNumber);
-				ll.addView(preference);
+/*				ll.addView(preference);*/
 				ll.addView(shippingAddress);				
 				ll.addView(modeOfPayment);
 
@@ -1015,14 +1071,14 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", firstName.getText().toString());
 				        editor.putString("surname", surName.getText().toString());
 				        editor.putString("contactNumber", contactNumber.getText().toString());
-
+/*
 				        for (int i=0; i< preference.getChildCount(); i++) {
 				        	if (((RadioButton)preference.getChildAt(i)).isChecked()) {
 				        		currPreference=i;
 				        	}
 				        }
 				        editor.putInt("preference", currPreference); //added by Mike, 20170223				        
-				        
+*/				        
 				        editor.putString("shippingAddress", shippingAddress.getText().toString());
 
 				        for (int i=0; i< modeOfPayment.getChildCount(); i++) {

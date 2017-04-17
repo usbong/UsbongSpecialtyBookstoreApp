@@ -1100,7 +1100,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				final EditText contactNumber = new EditText(this);
 				contactNumber.setHint("Contact Number");
 				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-				
+/*				
 				//added by Mike, 20170223
 				final RadioGroup preference = new RadioGroup(this);
 				preference.setOrientation(RadioGroup.HORIZONTAL);
@@ -1112,7 +1112,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				RadioButton shipping = new AppCompatRadioButton(this);
 				shipping.setText("Shipping");
 				preference.addView(shipping);				
-				
+*/				
 				final EditText shippingAddress = new EditText(this);
 				shippingAddress.setHint("Shipping Address");
 				shippingAddress.setMinLines(5);
@@ -1133,6 +1133,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				peraPadala.setText("Pera Padala");
 				modeOfPayment.addView(peraPadala);
 
+				RadioButton paypal = new AppCompatRadioButton(this);
+				paypal.setText("PayPal");
+				modeOfPayment.addView(paypal);
+				
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
 		        //answer by Elenasys
@@ -1142,10 +1146,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
 		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
 		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
-
+/*
 		          //added by Mike, 20170223
 		          ((RadioButton)preference.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
-				  		          
+*/				  		          
 		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
 		          
 			      //added by Mike, 20170223				  
@@ -1157,7 +1161,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				ll.addView(firstName);
 				ll.addView(surName);
 				ll.addView(contactNumber);
-				ll.addView(preference);
+/*				ll.addView(preference);*/
 				ll.addView(shippingAddress);				
 				ll.addView(modeOfPayment);
 
@@ -1179,14 +1183,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				        editor.putString("firstName", firstName.getText().toString());
 				        editor.putString("surname", surName.getText().toString());
 				        editor.putString("contactNumber", contactNumber.getText().toString());
-
+/*
 				        for (int i=0; i< preference.getChildCount(); i++) {
 				        	if (((RadioButton)preference.getChildAt(i)).isChecked()) {
 				        		currPreference=i;
 				        	}
 				        }
 				        editor.putInt("preference", currPreference); //added by Mike, 20170223				        
-				        
+*/				        
 				        editor.putString("shippingAddress", shippingAddress.getText().toString());
 
 				        for (int i=0; i< modeOfPayment.getChildCount(); i++) {
@@ -1195,7 +1199,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				        	}
 				        }
 				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
-				        editor.commit();						        
+				        editor.commit();		
 				    }
 				}).show();
 				return true;

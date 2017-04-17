@@ -173,11 +173,11 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 		      ((TextView)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
 		      ((TextView)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
 		      ((TextView)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
-		      
+/*		      
 		      //added by Mike, 20170223
 		      RadioGroup preferenceRadioButtonGroup = ((RadioGroup)findViewById(R.id.preference_radiogroup));
 			  ((RadioButton)preferenceRadioButtonGroup.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
-		      	
+*/		      	
 			  ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
 
 		      //added by Mike, 20170223
@@ -219,7 +219,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", ((TextView)findViewById(R.id.first_name)).getText().toString());
 				        editor.putString("surname", ((TextView)findViewById(R.id.surname)).getText().toString());
 				        editor.putString("contactNumber", ((TextView)findViewById(R.id.contact_number)).getText().toString());
-
+/*
 				        RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.preference_radiogroup);				        		
 						for (int i=0; i< radioButtonGroup.getChildCount(); i++) {
 							if (((RadioButton)radioButtonGroup.getChildAt(i)).isChecked()) {
@@ -227,7 +227,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 							}
 						}
 						editor.putInt("preference", currPreference); //added by Mike, 20170223				        
-						
+*/						
 				        editor.putString("shippingAddress", ((TextView)findViewById(R.id.address)).getText().toString());
 						
 						RadioGroup paymentMethodRadioButtonGroup = (RadioGroup)findViewById(R.id.mode_of_payment_radiogroup);
@@ -241,8 +241,18 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 										        
 						StringBuffer buySummary = new StringBuffer();
 						buySummary.append("-Purchase Order Summary-\n");					
-						buySummary.append(productDetails+"\n--\n");
+						buySummary.append(productDetails+"\n");
 											
+						String quantity = ((TextView)findViewById(R.id.quantity)).getText().toString();
+						if (quantity.trim().equals("")) {
+							buySummary.append("Quantity: "+ "1"
+									+"\n--\n");    	    		
+    					}
+						else {
+							buySummary.append("Quantity: "+ quantity
+									+"\n--\n");    	    									
+						}
+						
 						buySummary.append("Customer Name: "+
 								((TextView)findViewById(R.id.surname)).getText().toString()+", "+
 								((TextView)findViewById(R.id.first_name)).getText().toString()+"\n");    	
@@ -250,24 +260,14 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 						buySummary.append("Contact Number: "+
 								((TextView)findViewById(R.id.contact_number)).getText().toString()+"\n");    	
 
-						String quantity = ((TextView)findViewById(R.id.quantity)).getText().toString();
-						if (quantity.trim().equals("")) {
-							buySummary.append("Quantity: "+ "1"
-									+"\n");    	    		
-    					}
-						else {
-							buySummary.append("Quantity: "+ quantity
-									+"\n");    	    									
-						}
-
-						
+/*						
 //						RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.preference_radiogroup);
 						int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();				
 	//					RadioButton r = (RadioButton) radioButtonGroup.getChildAt(radioButtonID); 
 						RadioButton radioButton = (RadioButton) radioButtonGroup.findViewById(radioButtonID);
 						String selectedText = radioButton.getText().toString();	 
 						buySummary.append("Preference: "+selectedText+"\n");    	
-	
+*/	
 						buySummary.append("Address: "+
 								((TextView)findViewById(R.id.address)).getText().toString()+"\n");    	
 						
@@ -654,7 +654,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				final EditText contactNumber = new EditText(this);
 				contactNumber.setHint("Contact Number");
 				contactNumber.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-				
+/*				
 				//added by Mike, 20170223
 				final RadioGroup preference = new RadioGroup(this);
 				preference.setOrientation(RadioGroup.HORIZONTAL);
@@ -666,7 +666,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				RadioButton shipping = new AppCompatRadioButton(this);
 				shipping.setText("Shipping");
 				preference.addView(shipping);				
-				
+*/				
 				final EditText shippingAddress = new EditText(this);
 				shippingAddress.setHint("Shipping Address");
 				shippingAddress.setMinLines(5);
@@ -687,6 +687,10 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				peraPadala.setText("Pera Padala");
 				modeOfPayment.addView(peraPadala);
 
+				RadioButton paypal = new AppCompatRadioButton(this);
+				paypal.setText("PayPal");
+				modeOfPayment.addView(paypal);
+				
 			    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 		        //; last accessed: 20150609
 		        //answer by Elenasys
@@ -696,10 +700,10 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 		          firstName.setText(prefs.getString("firstName", ""));//"" is the default value.
 		          surName.setText(prefs.getString("surname", "")); //"" is the default value.
 		          contactNumber.setText(prefs.getString("contactNumber", "")); //"" is the default value.
-
+/*
 		          //added by Mike, 20170223
 		          ((RadioButton)preference.getChildAt(prefs.getInt("preference", UsbongConstants.defaultPreference))).setChecked(true);
-				  		          
+*/				  		          
 		          shippingAddress.setText(prefs.getString("shippingAddress", "")); //"" is the default value.
 		          
 			      //added by Mike, 20170223				  
@@ -711,7 +715,7 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				ll.addView(firstName);
 				ll.addView(surName);
 				ll.addView(contactNumber);
-				ll.addView(preference);
+/*				ll.addView(preference);*/
 				ll.addView(shippingAddress);				
 				ll.addView(modeOfPayment);
 
@@ -733,14 +737,14 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 				        editor.putString("firstName", firstName.getText().toString());
 				        editor.putString("surname", surName.getText().toString());
 				        editor.putString("contactNumber", contactNumber.getText().toString());
-
+/*
 				        for (int i=0; i< preference.getChildCount(); i++) {
 				        	if (((RadioButton)preference.getChildAt(i)).isChecked()) {
 				        		currPreference=i;
 				        	}
 				        }
 				        editor.putInt("preference", currPreference); //added by Mike, 20170223				        
-				        
+*/				        
 				        editor.putString("shippingAddress", shippingAddress.getText().toString());
 
 				        for (int i=0; i< modeOfPayment.getChildCount(); i++) {

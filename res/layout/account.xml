@@ -88,33 +88,10 @@
 			        android:maxLength="3"
 				/>
 			</LinearLayout>
-			<RadioGroup
-			    android:id="@+id/preference_radiogroup"
-			    style="@style/UsbongLoginEditText"	
-			    android:padding="5dp"        
-		        android:layout_marginTop="5dp"  	
-		        android:orientation="horizontal"    
-		        android:layout_width="wrap_content"	        
-			    >
-			    <RadioButton
-			        android:id="@+id/meetup_radiobutton"	               
-			    	style="@style/UsbongLoginEditText"	
-			        android:text="Meet-up"
-			        android:textColor="#6f5630"
-		        	android:textStyle="bold"
-			        />
-			    <RadioButton
-			        android:id="@+id/shipping_radiobutton"	               
-			        style="@style/UsbongLoginEditText"	 
-			        android:text="Shipping"
-			        android:textColor="#6f5630"
-		        	android:textStyle="bold"
-			        />
-			</RadioGroup>
 			<EditText
 		        style="@style/UsbongTextAreaEditText"	
 		        android:id="@+id/address"
-		        android:hint="Meet-up Place/Shipping Address"
+		        android:hint="Shipping Address"
 		        android:textColorHint="#9a9898"
 		        android:padding="5dp"        
 		        android:layout_marginTop="5dp"
@@ -123,6 +100,15 @@
 		        android:layout_marginLeft="12dp"
 		        android:layout_marginRight="12dp"
 			/>
+			<TextView
+		        style="@style/UsbongLoginEditText"
+		        android:id="@+id/mode_of_payment"
+		        android:text="-Mode of Payment-"
+		        android:textColor="#6f5630"
+		        android:textStyle="bold"		        
+		        android:padding="5dp"        
+		        android:layout_marginTop="5dp"        
+			/>	
 			<RadioGroup
 			    android:id="@+id/mode_of_payment_radiogroup"			    
 			    style="@style/UsbongLoginEditText"	
@@ -149,6 +135,13 @@
 			        android:id="@+id/pera_padala_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Pera Padala"
+			        android:textColor="#6f5630"
+			        android:textStyle="bold"			        
+			        />	    
+			    <RadioButton
+			        android:id="@+id/paypal_radiobutton"	               
+			        style="@style/UsbongLoginEditText"	 
+			        android:text="PayPal"
 			        android:textColor="#6f5630"
 			        android:textStyle="bold"			        
 			        />	    
