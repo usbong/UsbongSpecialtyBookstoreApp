@@ -25,7 +25,7 @@ Language: English
 --
 Title: Tokyo University's English: 25 years (3rd edition)
 Author: Masafumi Satou
-Price: ₱700 (used)
+Price: out of stock
 Language: English and Japanese
 --
 Title: Siddhartha
@@ -115,5 +115,10 @@ Language: English
 --
 Title: Standard First Aid & Personal Safety (2nd Ed.)
 Author: American Red Cross
-Price: ₱300 (used)
+Price: out of stock
 Language: English
+--
+Title: HSK Level 5 Sample Exam
+Author: 孔子学院总部/国家汉办 (Translated by: 株式会社スプリックス)
+Price: out of stock
+Language: Mandarin and Japanese

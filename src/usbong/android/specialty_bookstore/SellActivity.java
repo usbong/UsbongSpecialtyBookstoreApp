@@ -320,9 +320,19 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 									"N/A\n");
 						}
 
+						String quantity = ((TextView)findViewById(R.id.quantity)).getText().toString();
+						if (quantity.trim().equals("")) {
+							sellSummary.append("Quantity: "+ "1"
+									+"\n");    	    		
+    					}
+						else {
+							sellSummary.append("Quantity: "+ quantity
+									+"\n");    	    									
+						}
+/*
 						sellSummary.append("Number of copies: "+
 								((TextView)findViewById(R.id.number_of_copies)).getText().toString()+"\n");
-
+*/
 						sellSummary.append("Total price (for all copies): "+
 								((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString()+"\n");
 																						
@@ -454,7 +464,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				otherLanguageTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 			}			
 		}
-		
+/*		
     	TextView numberOfCopiesTextView = ((TextView)findViewById(R.id.number_of_copies));
 		String numberOfCopies = numberOfCopiesTextView.getText().toString();	
 		if ((numberOfCopies.trim().equals("")) || (numberOfCopies.trim().equals("0"))) {
@@ -464,7 +474,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		else {
 			numberOfCopiesTextView.setBackgroundColor(Color.parseColor("#EEEEEE")); 
 		}
-
+*/
     	TextView totalPriceForAllCopiesTextView = ((TextView)findViewById(R.id.total_price_for_all_copies));
 		String totalPriceForAllCopies = totalPriceForAllCopiesTextView.getText().toString();	
 		if ((totalPriceForAllCopies.trim().equals("")) || (totalPriceForAllCopies.trim().equals("0"))) {
@@ -588,7 +598,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 	        editor.putString("isbn_13", "N/A");
 		}
 */
-        editor.putString("numberOfCopies", ((TextView)findViewById(R.id.number_of_copies)).getText().toString());
+        editor.putString("quantity", ((TextView)findViewById(R.id.quantity)).getText().toString());
         editor.putString("totalPriceForAllCopies", ((TextView)findViewById(R.id.total_price_for_all_copies)).getText().toString());
 
 		String commentsString = ((TextView)findViewById(R.id.comments)).getText().toString();					
@@ -610,21 +620,33 @@ public class SellActivity extends AppCompatActivity/*Activity*/
         //answer by Elenasys
         //added by Mike, 20150207
         SharedPreferences prefs = getSharedPreferences(UsbongConstants.MY_ACCOUNT_DETAILS, MODE_PRIVATE);
+
+        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
+        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
+        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
+
+        ((TextView)findViewById(R.id.address)).setText(prefs.getString("shippingAddress", "")); //"" is the default value
+
+	    //added by Mike, 20170223
+		RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
+		((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
+
         if (prefs!=null) {        	
 	    	//added by Mike, 20170328
 	    	if (getIntent().getBooleanExtra("newSellActivity", false)) {
 	        	//added by Mike, 20170310
 	        	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-
+/*
       	        ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", ""));//"" is the default value.
       	        ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", ""));//"" is the default value.    	            	      
+*/
 
       	        //added by Mike, 20170303
     	        RadioGroup languageRadioButtonGroup = ((RadioGroup)findViewById(R.id.language_radiogroup));
     		    ((RadioButton)languageRadioButtonGroup.getChildAt(0)).setChecked(true);
 
-    	        //added by Mike, 20170303
+    		    //added by Mike, 20170303
     	        RadioGroup formatRadioButtonGroup = ((RadioGroup)findViewById(R.id.format_radiogroup));
     		    ((RadioButton)formatRadioButtonGroup.getChildAt(0)).setChecked(true);
 
@@ -635,10 +657,11 @@ public class SellActivity extends AppCompatActivity/*Activity*/
     		    reset();
 	    	}
 	        else {
+/*	        	
 		      ((EditText)findViewById(R.id.first_name)).setText(prefs.getString("firstName", ""));//"" is the default value.
 		      ((EditText)findViewById(R.id.surname)).setText(prefs.getString("surname", "")); //"" is the default value.
 		      ((EditText)findViewById(R.id.contact_number)).setText(prefs.getString("contactNumber", "")); //"" is the default value
-	
+*/	
 		      ((EditText)findViewById(R.id.book_title)).setText(prefs.getString("bookTitle", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.first_name_of_principal_author)).setText(prefs.getString("firstNameOfPrincipalAuthor", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.surname_of_principal_author)).setText(prefs.getString("surNameOfPrincipalAuthor", "")); //"" is the default value
@@ -672,7 +695,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 		      ((EditText)findViewById(R.id.isbn_10)).setText(prefs.getString("isbn_10", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.isbn_13)).setText(prefs.getString("isbn_13", "")); //"" is the default value
 		      
-		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.quantity)).setText(prefs.getString("quantity", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.total_price_for_all_copies)).setText(prefs.getString("totalPriceForAllCopies", "")); //"" is the default value
 		      ((EditText)findViewById(R.id.comments)).setText(prefs.getString("comments", "")); //"" is the default value
 	        }
@@ -1037,7 +1060,9 @@ public class SellActivity extends AppCompatActivity/*Activity*/
 				        	}
 				        }
 				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
-				        editor.commit();		
+				        editor.commit();
+				        
+				        init();
 				    }
 				}).show();
 				return true;

@@ -724,7 +724,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 //		      ((EditText)findViewById(R.id.number_of_copies)).setText(prefs.getString("numberOfCopies", "")); //"" is the default value
 /*		      ((EditText)findViewById(R.id.total_price_for_all_copies)).setText(prefs.getString("totalPriceForAllCopies", "")); //"" is the default value 
  */
-		      ((EditText)findViewById(R.id.comments)).setText(prefs.getString("comments", "")); //"" is the default value
+		      ((EditText)findViewById(R.id.comments)).setText(prefs.getString("comments", "")); //"" is the default value		      
 	        }
     	}
     }
@@ -1088,6 +1088,8 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 				        }
 				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
 				        editor.commit();		
+				        
+					    init();
 				    }
 				}).show();
 				return true;
