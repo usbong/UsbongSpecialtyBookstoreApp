@@ -48,6 +48,14 @@
 		    android:background="@android:color/transparent"		    
 		    android:text="Combos"
 		    />
+		<Button 
+		    android:id="@+id/teas_button"		    
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textColor="#554223"
+		    android:background="@android:color/transparent"		    
+		    android:text="Teas"
+		    />		
 	</LinearLayout>
 	<ListView
 		android:id="@+id/tree_list_view"

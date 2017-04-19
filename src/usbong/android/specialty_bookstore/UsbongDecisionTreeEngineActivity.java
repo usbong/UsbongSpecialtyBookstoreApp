@@ -389,6 +389,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			//added by Mike, 20170330
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BOOKS+".txt");  
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_COMBOS+".txt");  
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_TEAS+".txt");   //added by Mike, 20170419
+
 /*
   			//added by Mike, 20160126
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST+".txt");  
@@ -660,29 +662,40 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
-        if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
-            booksButton.setTypeface(Typeface.DEFAULT_BOLD);
-            combosButton.setTypeface(Typeface.DEFAULT);
-        }
-        else {
-            booksButton.setTypeface(Typeface.DEFAULT);
-            combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
-        }
+        Button teasButton = (Button)findViewById(R.id.teas_button);
+        teasButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_TEAS);
+            }
+        });    
 
+        //edited by Mike, 20170419
 		resetContainers();//added by Mike, 20170213
-
-//		listOfTreesArrayList = UsbongUtils.getTreeArrayList(UsbongUtils.USBONG_TREES_FILE_PATH);			
-//        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + UsbongConstants.ITEMS_LIST+".txt");
         listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
 
-
-        if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
-    		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
-        }
-        else { //combo
-    		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+        switch (currCategory) {
+        	case UsbongConstants.ITEMS_LIST_BOOKS:
+                booksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                combosButton.setTypeface(Typeface.DEFAULT);
+                teasButton.setTypeface(Typeface.DEFAULT);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.ITEMS_LIST_COMBOS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                teasButton.setTypeface(Typeface.DEFAULT);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                break;
+        	case UsbongConstants.ITEMS_LIST_TEAS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                combosButton.setTypeface(Typeface.DEFAULT);            
+                teasButton.setTypeface(Typeface.DEFAULT_BOLD);
+        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
         }
 		mCustomAdapter.sort(); //edited by Mike, 20170203
+		
 /*
 		//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
 		//last accessed: 2 Jan. 2014; answer by Alex Lockwood
@@ -3489,12 +3502,25 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 View v = convertView;
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    switch (currCategory) {
+                    	case UsbongConstants.ITEMS_LIST_COMBOS:
+                            v = vi.inflate(R.layout.tree_loader_alternative, null);
+                            break;
+                        default:
+/*                    	case UsbongConstants.ITEMS_LIST_BOOKS:
+                    	case UsbongConstants.ITEMS_LIST_TEAS:*/
+                            v = vi.inflate(R.layout.tree_loader, null);
+                        	break;                            
+                    }
+/*                    
                     if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
                         v = vi.inflate(R.layout.tree_loader, null);
                     }
                     else { //combo
                         v = vi.inflate(R.layout.tree_loader_alternative, null);
                     }
+*/                    
                 }
                 final String o = items.get(position);
                 if (o != null) {
