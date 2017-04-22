@@ -573,7 +573,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 
 		RadioGroup totalBudgetRadioButtonGroup = (RadioGroup)findViewById(R.id.total_budget_radiogroup);
 		int totalBudgetRadioButtonID = totalBudgetRadioButtonGroup.getCheckedRadioButtonId();				
-		RadioButton totalBudgetRadioButton = (RadioButton) itemTypeRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
+		RadioButton totalBudgetRadioButton = (RadioButton) totalBudgetRadioButtonGroup.findViewById(totalBudgetRadioButtonID);
 		String totalBudgetSelectedText;
 		if (totalBudgetRadioButton!=null) {
 			totalBudgetSelectedText = totalBudgetRadioButton.getText().toString();	 			
