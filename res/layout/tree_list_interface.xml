@@ -54,7 +54,7 @@
 		    android:layout_height="wrap_content"
 		    android:textColor="#554223"
 		    android:background="@android:color/transparent"		    
-		    android:text="Teas"
+		    android:text="Tea"
 		    />		
 	</LinearLayout>
 	<ListView
