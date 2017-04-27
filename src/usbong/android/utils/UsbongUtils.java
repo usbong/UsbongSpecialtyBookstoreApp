@@ -89,6 +89,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -135,6 +136,11 @@ public class UsbongUtils {
 	
 	//added by Mike, 20160504
 	public static Activity myActivityInstance;
+	
+	//added by Mike, 20170427
+	public static MenuItem cartIcon;
+	public static int cartIconDrawableResourceIdDefault = R.drawable.cart_icon;
+	public static int cartIconDrawableResourceId = cartIconDrawableResourceIdDefault;
 	
 	//	public static String BASE_FILE_PATH = "/sdcard/usbong/";
 	private static String timeStamp;

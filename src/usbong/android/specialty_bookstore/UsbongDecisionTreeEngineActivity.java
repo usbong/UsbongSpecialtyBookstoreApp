@@ -98,6 +98,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 	//added by Mike, 20170330
 	private String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
+		
 //	private static final boolean UsbongUtils.USE_UNESCAPE=true; //allows the use of \n (new line) in the decision tree
 
 //	private static boolean USE_ENG_ONLY=true; //uses English only	
@@ -740,6 +741,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			Log.d(">>>>", "inside !isInTreeLoader");
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.standard_menu, menu);
+			
+			//added by Mike, 20170427
+			UsbongUtils.cartIcon = menu.findItem(R.id.cart).setIcon(UsbongUtils.cartIconDrawableResourceId);		
+
 			return super.onCreateOptionsMenu(menu); //added by Mike, 22 Sept. 2015
 //			return true;
 		}/*

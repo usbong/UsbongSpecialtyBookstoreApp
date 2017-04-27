@@ -204,6 +204,12 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 			@Override
 			public void onClick(View v) {		
 				if (currScreen==BUY_SCREEN) {
+					
+					//added by Mike, 20170427
+//					UsbongUtils.cartIcon.setIcon(R.drawable.cart_icon_not_empty);
+					UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon_not_empty;
+					myActivityInstance.invalidateOptionsMenu();
+					
 					currScreen=ACCOUNT_SCREEN;
 					setContentView(R.layout.account);	
 					init();
@@ -464,6 +470,10 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 	{
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.standard_menu, menu);
+
+		//added by Mike, 20170427
+		UsbongUtils.cartIcon = menu.findItem(R.id.cart).setIcon(UsbongUtils.cartIconDrawableResourceId);		
+		
 		return super.onCreateOptionsMenu(menu); 
 	}
 	

@@ -798,6 +798,10 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 	{
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.standard_menu, menu);
+		
+		//added by Mike, 20170427
+		UsbongUtils.cartIcon = menu.findItem(R.id.cart).setIcon(UsbongUtils.cartIconDrawableResourceId);		
+
 		return super.onCreateOptionsMenu(menu); 
 	}
 	
