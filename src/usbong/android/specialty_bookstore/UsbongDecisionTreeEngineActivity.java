@@ -1086,6 +1086,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				inAppSettingsDialog.show();
 				return true;
 */				
+			case(R.id.cart): //added by Mike, 20170427
+				finish();
+				//added by Mike, 20170216
+				Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
+//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+				toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(toCartActivityIntent);
+				return true;
 			case(R.id.sell): //added by Mike, 20170308
 				finish();
 				//added by Mike, 20170216

@@ -141,6 +141,7 @@ public class UsbongUtils {
 	public static MenuItem cartIcon;
 	public static int cartIconDrawableResourceIdDefault = R.drawable.cart_icon;
 	public static int cartIconDrawableResourceId = cartIconDrawableResourceIdDefault;
+	public static int totalNumOfItemsInCart=0;
 	
 	//	public static String BASE_FILE_PATH = "/sdcard/usbong/";
 	private static String timeStamp;
