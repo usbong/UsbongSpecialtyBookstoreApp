@@ -42,14 +42,27 @@
 		    android:layout_marginLeft="12dp"
 		    />
 	</LinearLayout>
-	<ListView
-		android:id="@+id/tree_list_view"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:cacheColorHint="#FFFFFF"
-		android:divider="#6d8f48"
-		android:dividerHeight="3dp"
-		android:layout_marginLeft="6dp"
-		android:layout_marginRight="6dp"
-	/>
+	<ScrollView style="@style/UsbongDefaultScrollView"
+	    android:fillViewport="true">	
+		<ListView
+				android:id="@+id/tree_list_view"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:cacheColorHint="#FFFFFF"
+				android:divider="#6d8f48"
+				android:dividerHeight="3dp"
+				android:layout_marginLeft="6dp"
+				android:layout_marginRight="6dp"
+		/>
+	</ScrollView>
+	<LinearLayout
+	style="@style/UsbongDefaultBuySellRequestButtonLayout">	
+	    <Button android:id="@+id/continue_to_checkout_button"
+		    style="@style/UsbongDefaultBuySellRequestButton"
+			android:text="@string/continue_to_checkout" 
+			android:layout_width="256dp"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			android:background="@drawable/button_yellow"/>		    
+	</LinearLayout>
 </LinearLayout>
