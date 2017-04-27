@@ -112,7 +112,7 @@ public class SellActivity extends AppCompatActivity/*Activity*/
                 
         //added by Mike, 25 Sept. 2015
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        getSupportActionBar().setTitle(getResources().getString(R.string.usbong)); //app_name
 //        getSupportActionBar().setDisplayUseLogoEnabled(true);        
 
 
