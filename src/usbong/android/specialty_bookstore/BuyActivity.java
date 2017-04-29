@@ -15,8 +15,8 @@
 package usbong.android.specialty_bookstore;
 
 import java.io.File;
+import java.util.ArrayList;
 
-import usbong.android.features.node.QRCodeReaderActivity;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
 import android.app.Activity;
@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -143,6 +142,12 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 
         	productDetails = myTextImageDisplayTextView.getText().toString();//added by Mike, 20170221
 
+        	//added by Mike, 20170429
+        	if (UsbongUtils.itemsInCart==null) {
+        		UsbongUtils.itemsInCart = new ArrayList<String>();
+        	}        	
+        	UsbongUtils.itemsInCart.add(productDetails);
+        	
     		ImageView myTextImageDisplayImageView = (ImageView)findViewById(R.id.image_display_imageview);
 
     		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011

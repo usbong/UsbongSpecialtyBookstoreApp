@@ -149,9 +149,18 @@ public class CartActivity extends AppCompatActivity/*Activity*/
      * Initialize this activity
      */
     public void init() {
-    	String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
-        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
-		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+
+    	//edited by Mike, 20170429
+//    	String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
+//        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
+    	if (UsbongUtils.itemsInCart!=null) {
+    		listOfTreesArrayList = UsbongUtils.itemsInCart;
+    	}        	
+    	else {
+    		listOfTreesArrayList = new ArrayList<String>();
+    	}
+
+    	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		mCustomAdapter.sort(); //edited by Mike, 20170203
     			
     	/*
@@ -166,7 +175,20 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
-
+/*		
+		//edited by Mike, 20170429
+		if (listOfTreesArrayList.isEmpty()){
+        	new AlertDialog.Builder(CartActivity.this).setTitle("Hey!")
+			.setMessage("Your Shopping Cart is currently empty.")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			}).show();	        		        	
+		  }			
+*/
+		
+/*
     	String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
     	String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
 
@@ -176,16 +198,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					//UsbongDecisionTreeEngineActivity is already the Main Menu
-/*
-					finish();    
-					Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
-					toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-					startActivity(toUsbongMainActivityIntent);
-*/					
 				}
 			}).show();	        		        	
 		  }			
+*/		  
     }
     
     public void initBuyActivity()
