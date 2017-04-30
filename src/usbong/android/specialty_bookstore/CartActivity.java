@@ -888,7 +888,14 @@ public class CartActivity extends AppCompatActivity/*Activity*/
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                    v = vi.inflate(R.layout.tree_loader, null);
+/*                    v = vi.inflate(R.layout.tree_loader, null);
+ */
+                    if (items.get(position).toString().contains(";")) { //COMBO
+	                        v = vi.inflate(R.layout.tree_loader_alternative, null);
+                    }
+                    else {
+	                        v = vi.inflate(R.layout.tree_loader, null);
+                    }
                 }
 
                 final String o = items.get(position);

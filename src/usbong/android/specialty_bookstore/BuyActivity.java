@@ -215,9 +215,17 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 					UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon_not_empty;
 					myActivityInstance.invalidateOptionsMenu();
 					
+					//edited by Mike, 20170430
+/*					
 					currScreen=ACCOUNT_SCREEN;
 					setContentView(R.layout.account);	
 					init();
+*/					
+					//return to UsbongDecisionTreeEngineActivity
+					finish();
+					Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(getInstance(), UsbongDecisionTreeEngineActivity.class);
+					toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					startActivity(toUsbongDecisionTreeEngineActivityIntent);
 				}
 				else {
 					if (verifyFields()) {			
