@@ -159,7 +159,41 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     	else {
     		listOfTreesArrayList = new ArrayList<String>();
     	}
-
+    	    	
+    	int listOfTreesArrayListSize = listOfTreesArrayList.size();    	
+/*
+    	//remove Quantity
+    	ArrayList<String> noQuantityList = new ArrayList<String>();
+    	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
+    		if (listOfTreesArrayList.get(i).contains("Quantity")) {
+    			noQuantityList.add(listOfTreesArrayList.get(i).split("\n<b>Quantity:</b> ")[0]);
+    		}
+    	}
+*/
+    	String prev="";
+    	int quantity=0;
+    	ArrayList<String> tempList = new ArrayList<String>();
+/*    	listOfTreesArrayList = noQuantityList;
+ */
+    	listOfTreesArrayListSize = listOfTreesArrayList.size();    	
+    	
+    	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
+    		if (prev.equals("")) {
+    			quantity++;
+        		prev = listOfTreesArrayList.get(i);    			
+    		}
+    		else if (listOfTreesArrayList.get(i).equals(prev)) {
+    			quantity++;
+    		}
+    		else {
+    			tempList.add(listOfTreesArrayList.get(i-1).toString().concat("\n<b>Quantity:</b> "+quantity));
+        		prev = listOfTreesArrayList.get(i);    			
+        		quantity=1;
+    		}
+    	}    	
+		tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1).toString().concat("\n<b>Quantity:</b> "+quantity));
+    	listOfTreesArrayList = tempList;
+    	
     	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
 		mCustomAdapter.sort(); //edited by Mike, 20170203
     			
