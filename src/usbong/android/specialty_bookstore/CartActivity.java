@@ -36,6 +36,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,6 +101,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	private ProgressDialog myProgressDialog;
 	
     private AlertDialog inAppSettingsDialog; //added by Mike, 20160417
+    
+    private ArrayList<String> quantityList; //added by Mike, 20170505
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -173,9 +176,12 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     	String prev="";
     	int quantity=0;
     	ArrayList<String> tempList = new ArrayList<String>();
+    	quantityList = new ArrayList<String>();
+    	
 /*    	listOfTreesArrayList = noQuantityList;
  */
     	listOfTreesArrayListSize = listOfTreesArrayList.size();    	
+    	Collections.sort(listOfTreesArrayList);
     	
     	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
     		if (prev.equals("")) {
@@ -186,16 +192,22 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     			quantity++;
     		}
     		else {
-    			tempList.add(listOfTreesArrayList.get(i-1).toString().concat("\n<b>Quantity:</b> "+quantity));
+    			Log.d(">>>>>>listOfTreesArrayList.get(i)", i+": "+listOfTreesArrayList.get(i));
+    			Log.d(">>>>>>prev", prev);
+    			
+    			
+    			tempList.add(listOfTreesArrayList.get(i-1).toString());
+    			quantityList.add("<b>Quantity:</b> "+quantity);
         		prev = listOfTreesArrayList.get(i);    			
         		quantity=1;
     		}
     	}    	
-		tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1).toString().concat("\n<b>Quantity:</b> "+quantity));
-    	listOfTreesArrayList = tempList;
+		tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1));
+		quantityList.add("<b>Quantity:</b> "+quantity);
+//    	listOfTreesArrayList = tempList;
     	
-    	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
-		mCustomAdapter.sort(); //edited by Mike, 20170203
+    	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_cart, tempList); //listOfTreesArrayList
+//		mCustomAdapter.sort(); //edited by Mike, 20170203
     			
     	/*
     			//Reference: http://stackoverflow.com/questions/8908549/sorting-of-listview-by-name-of-the-product-using-custom-adaptor;
@@ -925,10 +937,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 /*                    v = vi.inflate(R.layout.tree_loader, null);
  */
                     if (items.get(position).toString().contains(";")) { //COMBO
-	                        v = vi.inflate(R.layout.tree_loader_alternative, null);
+	                        v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
                     }
                     else {
-	                        v = vi.inflate(R.layout.tree_loader, null);
+	                        v = vi.inflate(R.layout.tree_loader_cart, null);
                     }
                 }
 
@@ -999,6 +1011,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});
+                		
+                		//added by Mike, 20170505
+	            		TextView quantity = (TextView) v.findViewById(R.id.quantity);
+	            		quantity.setText(Html.fromHtml(quantityList.get(position)));
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();
