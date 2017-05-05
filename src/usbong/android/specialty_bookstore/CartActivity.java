@@ -930,21 +930,22 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-                View v = convertView;
-                if (v == null) {
+				//edited by Mike, 20170505
+            	final String o = items.get(position);			
+				View v = convertView;
+//                if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 /*                    v = vi.inflate(R.layout.tree_loader, null);
  */
-                    if (items.get(position).toString().contains(";")) { //COMBO
+                    if (o.toString().contains(";")) { //COMBO
 	                        v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
                     }
                     else {
 	                        v = vi.inflate(R.layout.tree_loader_cart, null);
                     }
-                }
+//                }
 
-                final String o = items.get(position);
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);

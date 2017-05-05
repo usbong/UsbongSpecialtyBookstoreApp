@@ -43,7 +43,10 @@
 		    />
 	</LinearLayout>
 	<ScrollView style="@style/UsbongDefaultScrollView"
-	    android:fillViewport="true">	
+	    android:fillViewport="true"
+	    android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"	    
+	    >	
 		<ListView
 				android:id="@+id/tree_list_view"
 				android:layout_width="fill_parent"
@@ -51,8 +54,6 @@
 				android:cacheColorHint="#FFFFFF"
 				android:divider="#6d8f48"
 				android:dividerHeight="3dp"
-				android:layout_marginLeft="6dp"
-				android:layout_marginRight="6dp"
 		/>
 	</ScrollView>
 	<LinearLayout
