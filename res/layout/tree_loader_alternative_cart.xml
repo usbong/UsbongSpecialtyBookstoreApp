@@ -68,28 +68,5 @@
 				android:textColor="#4a452a"
 		        android:text="₱1000 (Subtotal)"		
 			/>    		    				
-	</LinearLayout>	
-    <RelativeLayout 
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:focusable="true" 
-    		android:focusableInTouchMode="true"
-    		android:layout_below="@+id/subtotal_row"
- 		    android:padding="5dp"
-    		>    
-       <Button
-			android:id="@+id/remove_item"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-       		android:layout_alignParentRight="true"
-       		android:layout_centerVertical="true"
-			android:textSize="16dp"
-			android:textColor="#6f5630"
-	        android:text="Remove Item"		
-	        android:textStyle="bold"
-	        android:drawableLeft="@drawable/remove_item"
-	        android:background="@android:color/transparent"
-		/>    
-	</RelativeLayout>	
+	</LinearLayout>	    
 </RelativeLayout>

@@ -1018,7 +1018,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		quantity.setText(Html.fromHtml(quantityList.get(position)));
 */
 	            		Spinner quantity = (Spinner) v.findViewById(R.id.quantity);
-	            		String[] items = new String[]{"   1   ", "  2   ", "  3   ", "  99  "};
+	            		String[] items = new String[]{"  1   ", "  2   ", "  3   ", "  99  ", "Remove"};
 	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, items);
 	            		quantity.setAdapter(adapter);
                 	}
