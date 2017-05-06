@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal"
+	android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="1"
@@ -26,16 +26,68 @@
         android:layout_marginBottom="6dp"		
         android:layout_marginLeft="6dp"		
 	/>
-    <TextView
-		android:id="@+id/quantity"
-		android:gravity="center"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:padding="3dip"
-		android:textSize="20dp"
-		android:textColor="#4a452a"
-		android:layout_below="@+id/tree_item"
-        android:layout_marginBottom="6dp"		
-        android:layout_marginLeft="6dp"		
-	/>
+    <LinearLayout 
+			android:id="@+id/subtotal_row"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:focusable="true" 
+    		android:focusableInTouchMode="true"
+    		android:layout_below="@+id/tree_item"
+		    android:padding="5dp"
+    		>
+	        <TextView
+				android:id="@+id/price"
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="3dip"
+				android:textSize="20dp"
+				android:textColor="#4a452a"
+		        android:text="₱500 each"		
+			/>    		    				
+	        <Spinner
+			    android:id="@+id/quantity"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:spinnerMode="dropdown"
+			    android:background="#706f5630"
+				android:textSize="20dp"
+				android:textColor="#4a452a"
+				android:layout_marginLeft="20sp"
+			    />
+	        <TextView
+				android:id="@+id/subtotal"
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="3dip"
+				android:textSize="20dp"
+				android:textColor="#4a452a"
+		        android:text="₱1000 (Subtotal)"		
+			/>    		    				
+	</LinearLayout>	
+    <RelativeLayout 
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:focusable="true" 
+    		android:focusableInTouchMode="true"
+    		android:layout_below="@+id/subtotal_row"
+ 		    android:padding="5dp"
+    		>    
+       <Button
+			android:id="@+id/remove_item"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+       		android:layout_alignParentRight="true"
+       		android:layout_centerVertical="true"
+			android:textSize="16dp"
+			android:textColor="#6f5630"
+	        android:text="Remove Item"		
+	        android:textStyle="bold"
+	        android:drawableLeft="@drawable/remove_item"
+	        android:background="@android:color/transparent"
+		/>    
+	</RelativeLayout>		    				    
 </RelativeLayout>

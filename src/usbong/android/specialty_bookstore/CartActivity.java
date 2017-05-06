@@ -42,8 +42,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -54,6 +54,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -194,7 +195,6 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     		else {
     			Log.d(">>>>>>listOfTreesArrayList.get(i)", i+": "+listOfTreesArrayList.get(i));
     			Log.d(">>>>>>prev", prev);
-    			
     			
     			tempList.add(listOfTreesArrayList.get(i-1).toString());
     			quantityList.add("<b>Quantity:</b> "+quantity);
@@ -1012,10 +1012,15 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            				startActivityForResult(toBuyActivityIntent,1);
                 			}
                 		});
-                		
+/*                		
                 		//added by Mike, 20170505
 	            		TextView quantity = (TextView) v.findViewById(R.id.quantity);
 	            		quantity.setText(Html.fromHtml(quantityList.get(position)));
+*/
+	            		Spinner quantity = (Spinner) v.findViewById(R.id.quantity);
+	            		String[] items = new String[]{"   1   ", "  2   ", "  3   ", "  99  "};
+	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, items);
+	            		quantity.setAdapter(adapter);
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();
