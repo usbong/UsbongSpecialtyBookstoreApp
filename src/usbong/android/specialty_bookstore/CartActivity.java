@@ -197,13 +197,13 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     			Log.d(">>>>>>prev", prev);
     			
     			tempList.add(listOfTreesArrayList.get(i-1).toString());
-    			quantityList.add("<b>Quantity:</b> "+quantity);
+    			quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
         		prev = listOfTreesArrayList.get(i);    			
         		quantity=1;
     		}
     	}    	
 		tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1));
-		quantityList.add("<b>Quantity:</b> "+quantity);
+		quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
 //    	listOfTreesArrayList = tempList;
     	
     	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_cart, tempList); //listOfTreesArrayList
@@ -1017,10 +1017,18 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		TextView quantity = (TextView) v.findViewById(R.id.quantity);
 	            		quantity.setText(Html.fromHtml(quantityList.get(position)));
 */
-	            		Spinner quantity = (Spinner) v.findViewById(R.id.quantity);
-	            		String[] items = new String[]{"  1   ", "  2   ", "  3   ", "  99  ", "Remove"};
+	            		Spinner quantitySpinner = (Spinner) v.findViewById(R.id.quantity);
+	            		
+	            		//edited by Mike, 20170508
+	            		int quantity = Integer.parseInt(quantityList.get(position));
+	            		ArrayList<String> items = new ArrayList<String>();
+	            		for (int i=quantity; i>0; i--) {
+	            			items.add("  "+i+"  ");
+	            		}
+            			items.add("Remove");
+
 	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, items);
-	            		quantity.setAdapter(adapter);
+	            		quantitySpinner.setAdapter(adapter);
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();
