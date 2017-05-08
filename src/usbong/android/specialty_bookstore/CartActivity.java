@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -962,7 +963,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
 	                    		.replace("Title: ","")
-	                    		.replace("�f","")
+	                    		.replace("’","")
 	                    		.replace("'","")
 	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
@@ -1029,6 +1030,17 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 
 	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, items);
 	            		quantitySpinner.setAdapter(adapter);
+	            		
+	            		//added by Mike, 20170508
+	            		TextView price = (TextView) v.findViewById(R.id.price);
+	            		//get item price
+	            		String item_price = s.substring(s.indexOf("₱"),s.indexOf("("));//(used), (new)
+	            		price.setText(item_price+"\neach");
+	            		
+	            		//added by Mike, 20170508
+	            		TextView subtotal = (TextView) v.findViewById(R.id.subtotal);
+	            		int subtotalNumber = quantity*Integer.parseInt(item_price.replace("₱", "").trim());
+	            		subtotal.setText("₱"+subtotalNumber+"\n(Subtotal)");
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();

@@ -35,6 +35,7 @@
     		android:focusableInTouchMode="true"
     		android:layout_below="@+id/tree_item"
 		    android:padding="5dp"
+		    android:gravity="center"
     		>
 	        <TextView
 				android:id="@+id/price"
