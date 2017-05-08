@@ -37,6 +37,7 @@
     		android:focusableInTouchMode="true"
     		android:layout_below="@+id/tree_item"
 		    android:padding="5dp"
+		    android:gravity="center"		    
     		>
 	        <TextView
 				android:id="@+id/price"
@@ -44,7 +45,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="3dip"
-				android:textSize="20dp"
+				android:textSize="20dp"				
 				android:textColor="#4a452a"
 		        android:text="₱500 each"		
 			/>    		    				
@@ -56,17 +57,19 @@
 			    android:background="#706f5630"
 				android:textSize="20dp"
 				android:textColor="#4a452a"
+				android:gravity="center"				
 				android:layout_marginLeft="20sp"
 			    />
 	        <TextView
 				android:id="@+id/subtotal"
-				android:gravity="center"
+				android:gravity="right"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="3dip"
 				android:textSize="20dp"
 				android:textColor="#4a452a"
 		        android:text="₱1000 (Subtotal)"		
+		        android:layout_marginLeft="10sp"		        
 			/>    		    				
 	</LinearLayout>	    
 </RelativeLayout>

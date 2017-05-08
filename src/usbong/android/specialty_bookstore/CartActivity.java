@@ -1034,7 +1034,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		//added by Mike, 20170508
 	            		TextView price = (TextView) v.findViewById(R.id.price);
 	            		//get item price
-	            		String item_price = s.substring(s.indexOf("₱"),s.indexOf("("));//(used), (new)
+	            		String sPart1 = s.substring(s.indexOf("₱"));	            				
+	            		String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
 	            		price.setText(item_price+"\neach");
 	            		
 	            		//added by Mike, 20170508
