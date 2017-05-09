@@ -235,7 +235,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		}
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
-		orderSubtotalCostTextView.setText("Order Total: "+orderSubtotalCost);		 
+		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 
     }
     
     public void initBuyActivity()
