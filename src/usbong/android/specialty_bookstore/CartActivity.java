@@ -737,6 +737,29 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				inAppSettingsDialog.show();
 					return true;
 */					
+			case(R.id.cart): //added by Mike, 20170427
+				if ((UsbongUtils.itemsInCart==null) || (UsbongUtils.itemsInCart.isEmpty())) {
+			    	AlertDialog.Builder emptyCartAlertDialog = new AlertDialog.Builder(CartActivity.this).setTitle("Your Shopping Cart");
+					TextView tv = new TextView(this);
+					tv.setText("\nIt is currently empty.");
+					tv.setGravity(Gravity.CENTER_HORIZONTAL);
+					tv.setTextSize(16);
+					emptyCartAlertDialog.setView(tv);
+					emptyCartAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					}).show();
+				}
+				else {
+					finish();
+					//added by Mike, 20170216
+					Intent toCartActivityIntent = new Intent().setClass(getInstance(), CartActivity.class);
+	//				toCartActivityIntent.putExtra("newSellActivity", true); //added by Mike, 20170328
+					toCartActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(toCartActivityIntent);
+				}
+				return true;
 			case(R.id.sell): //added by Mike, 20170308
 				finish();
 				//added by Mike, 20170216
