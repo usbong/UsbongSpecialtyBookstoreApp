@@ -105,6 +105,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private AlertDialog inAppSettingsDialog; //added by Mike, 20160417
     
     private ArrayList<String> quantityList; //added by Mike, 20170505
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -222,6 +223,20 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView = (ListView)findViewById(R.id.tree_list_view);
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
+
+		int orderSubtotalCost = 0;
+		for (int i=0; i<tempList.size(); i++) { 
+			String s = tempList.get(i); 
+			String sPart1 = s.substring(s.indexOf("₱"));	            				
+			String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
+			
+			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));
+		}
+		
+		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
+		orderSubtotalCostTextView.setText("Order Total: "+orderSubtotalCost);
+		
+		
 /*		
 		//edited by Mike, 20170429
 		if (listOfTreesArrayList.isEmpty()){

@@ -39,31 +39,48 @@
 		    android:textStyle="bold"
 		    android:background="@android:color/transparent"		    
 		    android:text="Shopping Cart"
+		    android:textSize="18sp"
 		    android:layout_marginLeft="12dp"
 		    />
 	</LinearLayout>
-	<ScrollView style="@style/UsbongDefaultScrollView"
-	    android:fillViewport="true"
-	    android:layout_marginLeft="6dp"
-		android:layout_marginRight="6dp"	    
-	    >	
-		<ListView
-				android:id="@+id/tree_list_view"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:cacheColorHint="#FFFFFF"
-				android:divider="#6d8f48"
-				android:dividerHeight="3dp"
-		/>
-	</ScrollView>
+	<ListView
+			android:id="@+id/tree_list_view"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:cacheColorHint="#FFFFFF"
+			android:divider="#6d8f48"
+			android:dividerHeight="3dp"
+		    android:layout_marginLeft="6dp"
+			android:layout_marginRight="6dp"	  
+			android:isScrollContainer="true"
+			android:layout_weight="1"			
+	/>
 	<LinearLayout
-	style="@style/UsbongDefaultBuySellRequestButtonLayout">	
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:background="#306f5630"
+		>
+		<TextView
+	        android:id="@+id/order_subtotal"
+	        android:textSize="22sp"
+	        android:textStyle="bold"
+	        android:textColor="#6f5630"
+	        android:layout_height="wrap_content"
+	        android:layout_width="fill_parent"
+	        android:gravity="bottom|right"/>
+	</LinearLayout>	
+	<LinearLayout
+	style="@style/UsbongDefaultBuySellRequestButtonLayout"
+	android:layout_weight="0"
+	>		    
 	    <Button android:id="@+id/continue_to_checkout_button"
 		    style="@style/UsbongDefaultBuySellRequestButton"
 			android:text="@string/continue_to_checkout" 
 			android:layout_width="256dp"
 			android:textSize="16sp"
 			android:textStyle="bold"
-			android:background="@drawable/button_yellow"/>		    
+			android:background="@drawable/button_yellow"
+			/>		    
 	</LinearLayout>
 </LinearLayout>
