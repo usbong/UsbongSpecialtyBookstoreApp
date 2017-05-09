@@ -18,7 +18,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.regex.Pattern;
 
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -38,6 +37,7 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +47,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -160,22 +162,18 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 //    	String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
 //        listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
     	if (UsbongUtils.itemsInCart!=null) {
+	    	Collections.sort(UsbongUtils.itemsInCart); //added by Mike, 20170509
     		listOfTreesArrayList = UsbongUtils.itemsInCart;
     	}        	
     	else {
     		listOfTreesArrayList = new ArrayList<String>();
     	}
-    	    	
-    	int listOfTreesArrayListSize = listOfTreesArrayList.size();    	
-/*
-    	//remove Quantity
-    	ArrayList<String> noQuantityList = new ArrayList<String>();
-    	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
-    		if (listOfTreesArrayList.get(i).contains("Quantity")) {
-    			noQuantityList.add(listOfTreesArrayList.get(i).split("\n<b>Quantity:</b> ")[0]);
-    		}
+/*    	    	
+    	int listOfTreesArrayListSize = listOfTreesArrayList.size();  
+    	if (listOfTreesArrayListSize==0) {
+    		return;
     	}
-*/
+*/    	
     	String prev="";
     	int quantity=0;
     	ArrayList<String> tempList = new ArrayList<String>();
@@ -183,30 +181,33 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     	
 /*    	listOfTreesArrayList = noQuantityList;
  */
-    	listOfTreesArrayListSize = listOfTreesArrayList.size();    	
-    	Collections.sort(listOfTreesArrayList);
+    	int listOfTreesArrayListSize = listOfTreesArrayList.size();    	
     	
-    	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
-    		if (prev.equals("")) {
-    			quantity++;
-        		prev = listOfTreesArrayList.get(i);    			
-    		}
-    		else if (listOfTreesArrayList.get(i).equals(prev)) {
-    			quantity++;
-    		}
-    		else {
-    			Log.d(">>>>>>listOfTreesArrayList.get(i)", i+": "+listOfTreesArrayList.get(i));
-    			Log.d(">>>>>>prev", prev);
-    			
-    			tempList.add(listOfTreesArrayList.get(i-1).toString());
-    			quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
-        		prev = listOfTreesArrayList.get(i);    			
-        		quantity=1;
-    		}
-    	}    	
-		tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1));
-		quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
-//    	listOfTreesArrayList = tempList;
+    	if (listOfTreesArrayListSize != 0) {
+//	    	Collections.sort(listOfTreesArrayList);
+	    	
+	    	for (int i=0; i<listOfTreesArrayListSize; i++) {    					    		
+	    		if (prev.equals("")) {
+	    			quantity++;
+	        		prev = listOfTreesArrayList.get(i);    			
+	    		}
+	    		else if (listOfTreesArrayList.get(i).equals(prev)) {
+	    			quantity++;
+	    		}
+	    		else {
+	    			Log.d(">>>>>>listOfTreesArrayList.get(i)", i+": "+listOfTreesArrayList.get(i));
+	    			Log.d(">>>>>>prev", prev);
+	    			
+	    			tempList.add(listOfTreesArrayList.get(i-1).toString());
+	    			quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
+	        		prev = listOfTreesArrayList.get(i);    			
+	        		quantity=1;
+	    		}
+	    	}    	
+			tempList.add(listOfTreesArrayList.get(listOfTreesArrayListSize-1));
+			quantityList.add(""+quantity); //"<b>Quantity:</b> "+quantity
+			//listOfTreesArrayList = tempList;
+    	}
     	
     	mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_cart, tempList); //listOfTreesArrayList
 //		mCustomAdapter.sort(); //edited by Mike, 20170203
@@ -234,36 +235,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		}
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
-		orderSubtotalCostTextView.setText("Order Total: "+orderSubtotalCost);
-		
-		
-/*		
-		//edited by Mike, 20170429
-		if (listOfTreesArrayList.isEmpty()){
-        	new AlertDialog.Builder(CartActivity.this).setTitle("Hey!")
-			.setMessage("Your Shopping Cart is currently empty.")
-			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			}).show();	        		        	
-		  }			
-*/
-		
-/*
-    	String pleaseMakeSureThatXMLTreeExistsString = (String) getResources().getText(R.string.pleaseMakeSureThatXMLTreeExistsString);
-    	String alertString = (String) getResources().getText(R.string.alertStringValueEnglish);
-
-		if (listOfTreesArrayList.isEmpty()){
-        	new AlertDialog.Builder(CartActivity.this).setTitle(alertString)
-			.setMessage(pleaseMakeSureThatXMLTreeExistsString)
-			.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			}).show();	        		        	
-		  }			
-*/		  
+		orderSubtotalCostTextView.setText("Order Total: "+orderSubtotalCost);		 
     }
     
     public void initBuyActivity()
@@ -1033,18 +1005,68 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		TextView quantity = (TextView) v.findViewById(R.id.quantity);
 	            		quantity.setText(Html.fromHtml(quantityList.get(position)));
 */
-	            		Spinner quantitySpinner = (Spinner) v.findViewById(R.id.quantity);
+	            		final Spinner quantitySpinner = (Spinner) v.findViewById(R.id.quantity);
 	            		
 	            		//edited by Mike, 20170508
 	            		int quantity = Integer.parseInt(quantityList.get(position));
-	            		ArrayList<String> items = new ArrayList<String>();
+	            		ArrayList<String> quantityItems = new ArrayList<String>();
 	            		for (int i=quantity; i>0; i--) {
-	            			items.add("  "+i+"  ");
+	            			quantityItems.add("  "+i+"  ");
 	            		}
-            			items.add("Remove");
+	            		quantityItems.add("Remove");
 
-	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, items);
+	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, quantityItems);
 	            		quantitySpinner.setAdapter(adapter);
+	            		
+	            		//added by Mike, 20170509	            		
+	            		quantitySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	            			private int prevQuantity;
+							@Override
+							public void onItemSelected(AdapterView<?> arg0,
+									View arg1, final int arg2, long arg3) {
+								if (quantitySpinner.getItemAtPosition(arg2).toString().equals("Remove")){
+						        	new AlertDialog.Builder(CartActivity.this).setTitle("Hey!")
+									.setMessage("Are you sure you want to remove this item from your cart?")
+									.setPositiveButton("Yes", new DialogInterface.OnClickListener() {					
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+/*											for (int i=0; i<quantitySpinner.getCount()-1; i++) { //Remove is not included, so -1
+												UsbongUtils.itemsInCart.remove(position+i);
+											}
+*/
+											items.remove(position);
+											quantityList.remove(position);																								
+
+											UsbongUtils.itemsInCart.clear();
+											for (int i=0; i<items.size(); i++) {
+												int quantitySize = Integer.parseInt(quantityList.get(i));
+												for (int k=0; k<quantitySize; k++) {
+													UsbongUtils.itemsInCart.add(items.get(i));
+												}
+											}
+											
+											prevQuantity=0;
+											instance.init();
+										}
+									})
+									.setNegativeButton("No", new DialogInterface.OnClickListener() {					
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											quantitySpinner.setSelection(prevQuantity);
+										}
+									}).show();	 
+								}								
+								else {
+									prevQuantity=arg2;
+								}
+							}
+
+							@Override
+							public void onNothingSelected(AdapterView<?> arg0) {
+								// TODO Auto-generated method stub
+								
+							}	            			
+	            		});
 	            		
 	            		//added by Mike, 20170508
 	            		TextView price = (TextView) v.findViewById(R.id.price);
