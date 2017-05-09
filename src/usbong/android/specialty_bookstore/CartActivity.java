@@ -1030,10 +1030,6 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 									.setPositiveButton("Yes", new DialogInterface.OnClickListener() {					
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-/*											for (int i=0; i<quantitySpinner.getCount()-1; i++) { //Remove is not included, so -1
-												UsbongUtils.itemsInCart.remove(position+i);
-											}
-*/
 											items.remove(position);
 											quantityList.remove(position);																								
 
@@ -1043,6 +1039,12 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 												for (int k=0; k<quantitySize; k++) {
 													UsbongUtils.itemsInCart.add(items.get(i));
 												}
+											}
+											
+											//added by Mike, 20170509
+											if (UsbongUtils.itemsInCart.isEmpty()) {
+												UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+												myActivityInstance.invalidateOptionsMenu();
 											}
 											
 											prevQuantity=0;
