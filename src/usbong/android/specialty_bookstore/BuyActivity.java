@@ -141,12 +141,6 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
         	myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));        	
 
         	productDetails = myTextImageDisplayTextView.getText().toString();//added by Mike, 20170221
-
-        	//added by Mike, 20170429
-        	if (UsbongUtils.itemsInCart==null) {
-        		UsbongUtils.itemsInCart = new ArrayList<String>();
-        	}        	
-        	UsbongUtils.itemsInCart.add(productDetails);
         	
     		ImageView myTextImageDisplayImageView = (ImageView)findViewById(R.id.image_display_imageview);
 
@@ -214,6 +208,20 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
 //					UsbongUtils.cartIcon.setIcon(R.drawable.cart_icon_not_empty);
 					UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon_not_empty;
 					myActivityInstance.invalidateOptionsMenu();
+										
+					//TODO: make this more efficient
+					//added by Mike, 20170509
+			    	TextView quantity = (TextView)findViewById(R.id.quantity);    	
+					
+					if (UsbongUtils.itemsInCart==null) {
+		        		UsbongUtils.itemsInCart = new ArrayList<String>();
+		        	}        	
+					
+					int quantityNumber = Integer.parseInt(quantity.getText().toString());
+					for (int i=0; i<quantityNumber; i++) {
+			        	UsbongUtils.itemsInCart.add(productDetails);						
+					}
+
 					
 					//edited by Mike, 20170430
 /*					
