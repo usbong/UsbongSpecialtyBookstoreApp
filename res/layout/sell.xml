@@ -321,26 +321,12 @@
 		        android:layout_width="wrap_content"
 			    >
 			    <RadioButton
-			        android:id="@+id/cash_upon_meetup_radiobutton"	               
-			    	style="@style/UsbongLoginEditText"	
-			        android:text="Cash-upon Meetup"
-			        android:textColor="#6f5630"
-			        android:textStyle="bold"			        
-			        />
-			    <RadioButton
 			        android:id="@+id/bank_deposit_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 
 			        android:text="Bank Deposit"
 			        android:textColor="#6f5630"
 		        	android:textStyle="bold"
 			        />
-			   	<RadioButton
-			        android:id="@+id/pera_padala_radiobutton"	               
-			        style="@style/UsbongLoginEditText"	 
-			        android:text="Pera Padala"
-			        android:textColor="#6f5630"
-			        android:textStyle="bold"			        
-			        />	    
 			    <RadioButton
 			        android:id="@+id/paypal_radiobutton"	               
 			        style="@style/UsbongLoginEditText"	 

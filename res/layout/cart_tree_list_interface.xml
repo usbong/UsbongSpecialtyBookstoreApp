@@ -74,7 +74,7 @@
 	style="@style/UsbongDefaultBuySellRequestButtonLayout"
 	android:layout_weight="0"
 	>		    
-	    <Button android:id="@+id/continue_to_checkout_button"
+	    <Button android:id="@+id/confirm_button"
 		    style="@style/UsbongDefaultBuySellRequestButton"
 			android:text="@string/continue_to_checkout" 
 			android:layout_width="256dp"

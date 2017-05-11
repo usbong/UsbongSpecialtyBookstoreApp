@@ -66,7 +66,7 @@ import android.widget.Toast;
  */
 public class CartActivity extends AppCompatActivity/*Activity*/ 
 {	
-	private final static int BUY_SCREEN=0;
+	private final static int SHOPPING_CART_SCREEN=0;
 	private final static int ACCOUNT_SCREEN=1;	
 	private static int currScreen;
 
@@ -107,7 +107,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private AlertDialog inAppSettingsDialog; //added by Mike, 20160417
     
     private ArrayList<String> quantityList; //added by Mike, 20170505
-    
+    private ArrayList<String> tempList; //added by Mike, 20170511
+    private int orderSubtotalCost; //added by Mike, 20170511
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -123,7 +124,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
         
         myActivityInstance = this;
         
-        currScreen=BUY_SCREEN;//default; added by Mike, 20170220
+        currScreen=SHOPPING_CART_SCREEN;//default; added by Mike, 20170220
         
         //added by Mike, 25 Sept. 2015
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,7 +146,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
         	}
 */        	
 	        reset();
-	        init();
+	        initCart();
     }
     
     public Activity getInstance() {
@@ -156,7 +157,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     /*
      * Initialize this activity
      */
-    public void init() {
+    public void initCart() {
 
     	//edited by Mike, 20170429
 //    	String currCategory = UsbongConstants.ITEMS_LIST_BOOKS;
@@ -176,7 +177,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 */    	
     	String prev="";
     	int quantity=0;
-    	ArrayList<String> tempList = new ArrayList<String>();
+    	tempList = new ArrayList<String>();
     	quantityList = new ArrayList<String>();
     	
 /*    	listOfTreesArrayList = noQuantityList;
@@ -225,7 +226,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
 
-		int orderSubtotalCost = 0;
+		orderSubtotalCost = 0;
 		for (int i=0; i<tempList.size(); i++) { 
 			String s = tempList.get(i); 
 			String sPart1 = s.substring(s.indexOf("₱"));	            				
@@ -236,40 +237,31 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		
 		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
 		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 
+				
+		//added by Mike, 20170511
+		//added by Mike, 20160126
+    	confirmButton = (Button)findViewById(R.id.confirm_button);    	
+    	confirmButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {		
+				if (currScreen==SHOPPING_CART_SCREEN) { //this should be true					
+					//added by Mike, 20170427
+//					UsbongUtils.cartIcon.setIcon(R.drawable.cart_icon_not_empty);
+					UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon_not_empty;
+					myActivityInstance.invalidateOptionsMenu();
+					
+					currScreen=ACCOUNT_SCREEN;
+					setContentView(R.layout.account);	
+					init();
+				}
+			}
+    	});    	
     }
     
-    public void initBuyActivity()
+    public void init()
     {    	    	
     	//added by Mike, 20170310
     	UsbongUtils.deleteRecursive(new File(UsbongUtils.BASE_FILE_PATH_TEMP));
-
-    	if (currScreen==BUY_SCREEN) {
-    		TextView myTextImageDisplayTextView = (TextView)findViewById(R.id.text_image_display_textview);
-        	myTextImageDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myTextImageDisplayTextView, UsbongUtils.IS_TEXTVIEW, getIntent().getStringExtra(UsbongConstants.ITEM_VARIABLE_NAME));        	
-
-        	productDetails = myTextImageDisplayTextView.getText().toString();//added by Mike, 20170221
-
-    		ImageView myTextImageDisplayImageView = (ImageView)findViewById(R.id.image_display_imageview);
-
-    		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
-            Resources myRes = getResources();
-            try {
-                Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(getIntent().getStringExtra(UsbongConstants.ITEM_IMAGE_NAME)), null); //edited by Mike, 20170202        	
-            
-                if (myDrawableImage!=null) {
-            		myTextImageDisplayImageView.setImageDrawable(myDrawableImage);        	
-                }
-                else {
-            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
-        			myDrawableImage = myRes.getDrawable(myRes.getIdentifier("no_image", "drawable", UsbongUtils.myPackageName));
-        			myTextImageDisplayImageView.setImageDrawable(myDrawableImage);		        		        	        	
-                }
-            }
-            catch (Exception e) {
-            	e.printStackTrace();
-            }            		
-    	}
-    	else { //if account screen
 		    //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
 	        //; last accessed: 20150609
 	        //answer by Elenasys
@@ -290,26 +282,13 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 			  RadioGroup modeOfPaymentRadioButtonGroup = ((RadioGroup)findViewById(R.id.mode_of_payment_radiogroup));
 			  ((RadioButton)modeOfPaymentRadioButtonGroup.getChildAt(prefs.getInt("modeOfPayment", UsbongConstants.defaultModeOfPayment))).setChecked(true);
 	        }
-    	}    	
-    	
-/*
-    	//added by Mike, 20160126
-    	buyButton = (Button)findViewById(R.id.buy_button);
-    	if (buyButton!=null) {
-        	buyButton.setOnClickListener(new OnClickListener() {
-    			@Override
-    			public void onClick(View v) {		
-    			    setContentView(R.layout.account);	        
-    			}
-        	});    	    		
-    	}
-*/         
-    	//added by Mike, 20160126
+
+	    //added by Mike, 20160126
     	confirmButton = (Button)findViewById(R.id.confirm_button);    	
     	confirmButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {		
-				if (currScreen==BUY_SCREEN) {
+				/*if (currScreen==SHOPPING_CART_SCREEN) {
 					
 					//added by Mike, 20170427
 //					UsbongUtils.cartIcon.setIcon(R.drawable.cart_icon_not_empty);
@@ -320,7 +299,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					setContentView(R.layout.account);	
 					init();
 				}
-				else {
+				else {*/
 					if (verifyFields()) {			
 						//save data 
 				        //Reference: http://stackoverflow.com/questions/23024831/android-shared-preferences-example
@@ -352,9 +331,20 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				        editor.commit();				    	
 										        
 						StringBuffer buySummary = new StringBuffer();
-						buySummary.append("-Purchase Order Summary-\n");					
-						buySummary.append(productDetails+"\n");
-											
+						buySummary.append("-Purchase Order Summary-\n");	
+						
+						int tempListSize = tempList.size();
+						for (int i=0; i<tempListSize; i++) {
+							buySummary.append(tempList.get(i)+"\n");
+							buySummary.append("Quantity: "+quantityList.get(i)+"\n");							
+							
+							if (i<tempListSize-1) {
+								buySummary.append("-\n");								
+							}
+						}
+						buySummary.append("--\n");
+/*						
+						buySummary.append(productDetails+"\n");											
 						String quantity = ((TextView)findViewById(R.id.quantity)).getText().toString();
 						if (quantity.trim().equals("")) {
 							buySummary.append("Quantity: "+ "1"
@@ -364,7 +354,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 							buySummary.append("Quantity: "+ quantity
 									+"\n--\n");    	    									
 						}
-						
+*/						
 						buySummary.append("Customer Name: "+
 								((TextView)findViewById(R.id.surname)).getText().toString()+", "+
 								((TextView)findViewById(R.id.first_name)).getText().toString()+"\n");    	
@@ -416,13 +406,20 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	*/					
 						buySummary.append("-End of Summary-");    							
 											
+						
+						//added by Mike, 20170511
+						String s = "";
+						if (tempList.size()>1) {
+							s="...";
+						}
 						//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
 						//answer by: Jeremy Logan, 20100204
 						//added by Mike, 20170220
 					    Intent i = new Intent(Intent.ACTION_SEND);
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
-					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
+//					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
+					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring(0,tempList.get(0).indexOf("\n")).replace("Title: ","")+s);
 					    i.putExtra(Intent.EXTRA_TEXT   , buySummary.toString());
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
@@ -432,15 +429,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					    }	
 					}
 				}				
-			    
-/*
-				reset(); //generate new timestamp
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent().setClass(BuyActivity.getInstance(), UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("currScreen","0"); //make currScreen=0; meaning very first screen				
-				toUsbongDecisionTreeEngineActivityIntent.putExtra("utreeToLoad",UsbongConstants.TREE_TYPE_BUY); 								
-				startActivityForResult(toUsbongDecisionTreeEngineActivityIntent,1);
-*/				
-			}
+/*			}
+ */
     	});    	
 /*    	
     	//added by Mike, 20160126
@@ -813,19 +803,19 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				//added by Mike, 20170223
 				final RadioGroup modeOfPayment = new RadioGroup(this);
 				modeOfPayment.setOrientation(RadioGroup.VERTICAL);
-				
+/*				
 				RadioButton cashUponMeetup = new AppCompatRadioButton(this);
 				cashUponMeetup.setText("Cash upon meet-up");
 				modeOfPayment.addView(cashUponMeetup);
-									
+*/									
 				RadioButton bankDeposit = new AppCompatRadioButton(this);
 				bankDeposit.setText("Bank Deposit");
 				modeOfPayment.addView(bankDeposit);
-
+/*
 				RadioButton peraPadala = new AppCompatRadioButton(this);
 				peraPadala.setText("Pera Padala");
 				modeOfPayment.addView(peraPadala);
-
+*/
 				RadioButton paypal = new AppCompatRadioButton(this);
 				paypal.setText("PayPal");
 				modeOfPayment.addView(paypal);
@@ -894,7 +884,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				        editor.putInt("modeOfPayment", currModeOfPayment); //added by Mike, 20170223
 				        editor.commit();		
 				        
-				        if (currScreen!=BUY_SCREEN) {
+				        if (currScreen!=SHOPPING_CART_SCREEN) {
 					        //added by Mike, 20170222
 					        setContentView(R.layout.account);	
 					        init();				        	
@@ -1071,7 +1061,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 											}
 											
 											prevQuantity=0;
-											instance.init();
+											instance.initCart();
 										}
 									})
 									.setNegativeButton("No", new DialogInterface.OnClickListener() {					

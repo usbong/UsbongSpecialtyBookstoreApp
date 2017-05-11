@@ -1163,19 +1163,19 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 				//added by Mike, 20170223
 				final RadioGroup modeOfPayment = new RadioGroup(this);
 				modeOfPayment.setOrientation(RadioGroup.VERTICAL);
-				
+/*				
 				RadioButton cashUponMeetup = new AppCompatRadioButton(this);
 				cashUponMeetup.setText("Cash upon meet-up");
 				modeOfPayment.addView(cashUponMeetup);
-									
+*/									
 				RadioButton bankDeposit = new AppCompatRadioButton(this);
 				bankDeposit.setText("Bank Deposit");
 				modeOfPayment.addView(bankDeposit);
-
+/*
 				RadioButton peraPadala = new AppCompatRadioButton(this);
 				peraPadala.setText("Pera Padala");
 				modeOfPayment.addView(peraPadala);
-
+*/
 				RadioButton paypal = new AppCompatRadioButton(this);
 				paypal.setText("PayPal");
 				modeOfPayment.addView(paypal);
