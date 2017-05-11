@@ -203,7 +203,23 @@ public class BuyActivity extends AppCompatActivity/*Activity*/
     	confirmButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {		
-				if (currScreen==BUY_SCREEN) {
+				if (currScreen==BUY_SCREEN) {					
+					//TODO: add wishlist
+					if (productDetails.contains("out of stock")) {
+				    	AlertDialog.Builder outOfStockAlertDialog = new AlertDialog.Builder(BuyActivity.this).setTitle("Hey!");
+						TextView tv = new TextView(myActivityInstance);
+						tv.setText("\nThis item is presently out of stock.");
+						tv.setGravity(Gravity.CENTER_HORIZONTAL);
+						tv.setTextSize(16);
+						outOfStockAlertDialog.setView(tv);
+						outOfStockAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						}).show();
+
+						return;
+					}
 					
 					//added by Mike, 20170427
 //					UsbongUtils.cartIcon.setIcon(R.drawable.cart_icon_not_empty);

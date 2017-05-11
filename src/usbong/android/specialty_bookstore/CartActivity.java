@@ -228,7 +228,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 
 		orderSubtotalCost = 0;
 		for (int i=0; i<tempList.size(); i++) { 
-			String s = tempList.get(i); 
+			String s = tempList.get(i); 			
 			String sPart1 = s.substring(s.indexOf("₱"));	            				
 			String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
 			
@@ -1033,7 +1033,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		
 	            		//added by Mike, 20170509	            		
 	            		quantitySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-	            			private int prevQuantity;
+	            			private int prevQuantityIndex;
 							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, final int arg2, long arg3) {
@@ -1060,19 +1060,21 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 												myActivityInstance.invalidateOptionsMenu();
 											}
 											
-											prevQuantity=0;
+											prevQuantityIndex=0;
 											instance.initCart();
 										}
 									})
 									.setNegativeButton("No", new DialogInterface.OnClickListener() {					
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-											quantitySpinner.setSelection(prevQuantity);
+											quantitySpinner.setSelection(prevQuantityIndex);
 										}
 									}).show();	 
 								}								
 								else {
-									prevQuantity=arg2;
+									prevQuantityIndex=arg2;
+									quantityList.remove(position);
+									quantityList.add(position, quantitySpinner.getSelectedItem().toString().trim());
 								}
 							}
 

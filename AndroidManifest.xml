@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="usbong.android.specialty_bookstore"
       android:versionCode="26"
-      android:versionName="1.1.1-20170511"
+      android:versionName="1.1.2-20170511"
       android:installLocation="auto"      
 >
 
