@@ -1053,13 +1053,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 											items.remove(position);
 											quantityList.remove(position);																								
 
-											UsbongUtils.itemsInCart.clear();
-											for (int i=0; i<items.size(); i++) {
-												int quantitySize = Integer.parseInt(quantityList.get(i));
-												for (int k=0; k<quantitySize; k++) {
-													UsbongUtils.itemsInCart.add(items.get(i));
-												}
-											}
+											updateItemsInCart(items);
 											
 											//added by Mike, 20170509
 											if (UsbongUtils.itemsInCart.isEmpty()) {
@@ -1085,6 +1079,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 										String q = quantitySpinner.getSelectedItem().toString().trim();
 										quantityList.add(position, q);
 
+										//added by Mike, 20170511
+										updateItemsInCart(items);
+										
 					            		processSubtotal(v, Integer.parseInt(q), s);
 										processOrderTotal();
 //									}
@@ -1123,5 +1120,15 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		TextView subtotal = (TextView) v.findViewById(R.id.subtotal);
 		int subtotalNumber = quantity*Integer.parseInt(item_price.replace("₱", "").trim());
 		subtotal.setText("₱"+subtotalNumber+"\n(Subtotal)");		
+	}
+	
+	public void updateItemsInCart(ArrayList<String> items) {
+		UsbongUtils.itemsInCart.clear();
+		for (int i=0; i<items.size(); i++) {
+			int quantitySize = Integer.parseInt(quantityList.get(i));
+			for (int k=0; k<quantitySize; k++) {
+				UsbongUtils.itemsInCart.add(items.get(i));
+			}
+		}
 	}
 }
