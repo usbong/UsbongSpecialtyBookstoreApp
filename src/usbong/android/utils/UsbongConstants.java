@@ -19,7 +19,7 @@ public class UsbongConstants {
 	//added by Mike, 20170330
 	public static final String ITEMS_LIST_BOOKS = "items_list_books";
 	public static final String ITEMS_LIST_COMBOS = "items_list_combos";
-	public static final String ITEMS_LIST_TEAS = "items_list_teas";
+	public static final String ITEMS_LIST_BEVERAGES = "items_list_beverages";
 
 	//added by Mike, 20170207
     public static final String MY_ACCOUNT_DETAILS= "MyAccountDetails";

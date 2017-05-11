@@ -49,12 +49,12 @@
 		    android:text="Combos"
 		    />
 		<Button 
-		    android:id="@+id/teas_button"		    
+		    android:id="@+id/beverages_button"		    
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:textColor="#554223"
 		    android:background="@android:color/transparent"		    
-		    android:text="Tea"
+		    android:text="Beverages"
 		    />		
 	</LinearLayout>
 	<ListView

@@ -1,0 +1,10 @@
+Title: Earl Grey
+Author: N/A
+Price: ₱390 (new), free shipping 
+Language: English
+--
+Title: sencha
+Author: N/A
+Price: ₱390 (new), free shipping 
+Language: Japanese
+--

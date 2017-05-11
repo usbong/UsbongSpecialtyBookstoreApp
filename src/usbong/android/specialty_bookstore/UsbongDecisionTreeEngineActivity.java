@@ -392,7 +392,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
   			//added by Mike, 20170330
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BOOKS+".txt");  
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_COMBOS+".txt");  
-  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_TEAS+".txt");   //added by Mike, 20170419
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BEVERAGES+".txt");   //added by Mike, 20170419
 
 /*
   			//added by Mike, 20160126
@@ -665,11 +665,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
-        Button teasButton = (Button)findViewById(R.id.teas_button);
-        teasButton.setOnClickListener(new OnClickListener() {
+        Button beveragesButton = (Button)findViewById(R.id.beverages_button);
+        beveragesButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_TEAS);
+                initTreeLoader(UsbongConstants.ITEMS_LIST_BEVERAGES);
             }
         });    
 
@@ -681,19 +681,19 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         	case UsbongConstants.ITEMS_LIST_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
                 combosButton.setTypeface(Typeface.DEFAULT);
-                teasButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         	case UsbongConstants.ITEMS_LIST_COMBOS:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
-                teasButton.setTypeface(Typeface.DEFAULT);
+                beveragesButton.setTypeface(Typeface.DEFAULT);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
-        	case UsbongConstants.ITEMS_LIST_TEAS:
+        	case UsbongConstants.ITEMS_LIST_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
                 combosButton.setTypeface(Typeface.DEFAULT);            
-                teasButton.setTypeface(Typeface.DEFAULT_BOLD);
+                beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         }
