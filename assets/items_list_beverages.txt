@@ -1,10 +1,15 @@
 Title: Earl Grey
 Author: N/A
-Price: ₱390 (new), free shipping 
+Price: ₱420 (new), free shipping 
 Language: English
 --
 Title: sencha
 Author: N/A
-Price: ₱390 (new), free shipping 
+Price: ₱420 (new), free shipping 
+Language: Japanese
+--
+Title: UCC Coffee (Rich Blend)
+Author: N/A
+Price: ₱580 (new), free shipping 
 Language: Japanese
 --
