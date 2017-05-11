@@ -110,6 +110,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private ArrayList<String> tempList; //added by Mike, 20170511
     private int orderSubtotalCost; //added by Mike, 20170511
 
+    private View v; //added by Mike, 20170511
+    
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -226,18 +228,8 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		treesListView.setLongClickable(true);
 		treesListView.setAdapter(mCustomAdapter);
 
-		orderSubtotalCost = 0;
-		for (int i=0; i<tempList.size(); i++) { 
-			String s = tempList.get(i); 			
-			String sPart1 = s.substring(s.indexOf("₱"));	            				
-			String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
-			
-			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));
-		}
+		processOrderTotal();
 		
-		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
-		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 
-				
 		//added by Mike, 20170511
 		//added by Mike, 20160126
     	confirmButton = (Button)findViewById(R.id.confirm_button);    	
@@ -256,6 +248,21 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				}
 			}
     	});    	
+    }
+    
+    //added by Mike, 20170511
+    public void processOrderTotal() {
+		orderSubtotalCost = 0;
+		for (int i=0; i<tempList.size(); i++) { 
+			String s = tempList.get(i); 			
+			String sPart1 = s.substring(s.indexOf("₱"));	            				
+			String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
+			
+			orderSubtotalCost+=Integer.parseInt(item_price.replace("₱", "").trim())*Integer.parseInt(quantityList.get(i));
+		}
+		
+		TextView orderSubtotalCostTextView = (TextView)findViewById(R.id.order_subtotal);
+		orderSubtotalCostTextView.setText("Order Total: ₱"+orderSubtotalCost);		 				
     }
     
     public void init()
@@ -933,7 +940,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		public View getView(final int position, View convertView, ViewGroup parent) {
 				//edited by Mike, 20170505
             	final String o = items.get(position);			
-				View v = convertView;
+				v = convertView; //edited by Mike, 20170511
 //                if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -1021,16 +1028,16 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	            		final Spinner quantitySpinner = (Spinner) v.findViewById(R.id.quantity);
 	            		
 	            		//edited by Mike, 20170508
-	            		int quantity = Integer.parseInt(quantityList.get(position));
+	            		final int quantity = Integer.parseInt(quantityList.get(position));
 	            		ArrayList<String> quantityItems = new ArrayList<String>();
 	            		for (int i=quantity; i>0; i--) {
 	            			quantityItems.add("  "+i+"  ");
 	            		}
 	            		quantityItems.add("Remove");
 
-	            		ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, quantityItems);
-	            		quantitySpinner.setAdapter(adapter);
-	            		
+	            		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(instance, android.R.layout.simple_dropdown_item_1line, quantityItems);
+	            		quantitySpinner.setAdapter(adapter);	            	
+	            			            		
 	            		//added by Mike, 20170509	            		
 	            		quantitySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	            			private int prevQuantityIndex;
@@ -1072,9 +1079,15 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 									}).show();	 
 								}								
 								else {
-									prevQuantityIndex=arg2;
-									quantityList.remove(position);
-									quantityList.add(position, quantitySpinner.getSelectedItem().toString().trim());
+//									if (prevQuantityIndex!=arg2) {
+										prevQuantityIndex=arg2;
+										quantityList.remove(position);
+										String q = quantitySpinner.getSelectedItem().toString().trim();
+										quantityList.add(position, q);
+
+					            		processSubtotal(v, Integer.parseInt(q), s);
+										processOrderTotal();
+//									}
 								}
 							}
 
@@ -1084,18 +1097,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 								
 							}	            			
 	            		});
+	            		            		
+	            		//added by Mike, 20170511
+	            		processSubtotal(v, quantity, s);
 	            		
-	            		//added by Mike, 20170508
-	            		TextView price = (TextView) v.findViewById(R.id.price);
-	            		//get item price
-	            		String sPart1 = s.substring(s.indexOf("₱"));	            				
-	            		String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
-	            		price.setText(item_price+"\neach");
-	            		
-	            		//added by Mike, 20170508
-	            		TextView subtotal = (TextView) v.findViewById(R.id.subtotal);
-	            		int subtotalNumber = quantity*Integer.parseInt(item_price.replace("₱", "").trim());
-	            		subtotal.setText("₱"+subtotalNumber+"\n(Subtotal)");
                 	}
 	            	catch(Exception e) {
 	            		e.printStackTrace();
@@ -1103,5 +1108,20 @@ public class CartActivity extends AppCompatActivity/*Activity*/
                 }
                 return v;
         }
+	}
+	
+	//added by Mike, 20170511
+	public void processSubtotal(View v, int quantity, String s) {
+		//added by Mike, 20170508
+		TextView price = (TextView) v.findViewById(R.id.price);
+		//get item price
+		String sPart1 = s.substring(s.indexOf("₱"));	            				
+		String item_price = sPart1.substring(0,sPart1.indexOf("("));//(used), (new)
+		price.setText(item_price+"\neach");
+		
+		//added by Mike, 20170508
+		TextView subtotal = (TextView) v.findViewById(R.id.subtotal);
+		int subtotalNumber = quantity*Integer.parseInt(item_price.replace("₱", "").trim());
+		subtotal.setText("₱"+subtotalNumber+"\n(Subtotal)");		
 	}
 }
