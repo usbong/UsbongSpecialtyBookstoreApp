@@ -109,8 +109,6 @@ public class CartActivity extends AppCompatActivity/*Activity*/
     private ArrayList<String> quantityList; //added by Mike, 20170505
     private ArrayList<String> tempList; //added by Mike, 20170511
     private int orderSubtotalCost; //added by Mike, 20170511
-
-    private View v; //added by Mike, 20170511
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -940,7 +938,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 		public View getView(final int position, View convertView, ViewGroup parent) {
 				//edited by Mike, 20170505
             	final String o = items.get(position);			
-				v = convertView; //edited by Mike, 20170511
+				final View v;// = convertView; //edited by Mike, 20170511
 //                if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
