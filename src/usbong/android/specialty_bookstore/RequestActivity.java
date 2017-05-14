@@ -353,7 +353,7 @@ public class RequestActivity extends AppCompatActivity/*Activity*/
 						//added by Mike, 20170220
 					    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE); //changed from ACTION_SEND to ACTION_SEND_MULTIPLE by Mike, 20170313
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
-					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
+					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.REQUEST_EMAIL_ADDRESS});
 					    i.putExtra(Intent.EXTRA_SUBJECT, "Book Request: "+((TextView)findViewById(R.id.book_title)).getText().toString());
 					    i.putExtra(Intent.EXTRA_TEXT   , requestSummary.toString());
 					    

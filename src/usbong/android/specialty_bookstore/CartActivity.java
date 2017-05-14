@@ -422,7 +422,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						//added by Mike, 20170220
 					    Intent i = new Intent(Intent.ACTION_SEND);
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
-					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.EMAIL_ADDRESS});
+					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.ORDER_EMAIL_ADDRESS});
 //					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
 					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring(0,tempList.get(0).indexOf("\n")).replace("Title: ","")+s);
 					    i.putExtra(Intent.EXTRA_TEXT   , buySummary.toString());
