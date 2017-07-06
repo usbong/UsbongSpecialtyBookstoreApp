@@ -939,19 +939,32 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 				//edited by Mike, 20170505
             	final String o = items.get(position);			
 				final View v;// = convertView; //edited by Mike, 20170511
-//                if (v == null) {
-                    LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-/*                    v = vi.inflate(R.layout.tree_loader, null);
- */
+				//Reference: https://stackoverflow.com/questions/14156996/out-of-memory-on-android-app-on-scrolling-list-with-images;
+	        	//last accessed: 20170607
+	        	//answer by: dev_android
+	        	if (convertView == null) {
+	                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	                if (o.contains("PROMO")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
+	                    v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
+	                }
+	                else {
+	                    v = vi.inflate(R.layout.tree_loader, null);                
+	                }
+	        	}
+	        	else {
+	        		v = convertView;
+	        	}
+/*				
+					LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
                     if (o.toString().contains(";")) { //COMBO
 	                        v = vi.inflate(R.layout.tree_loader_alternative_cart, null);
                     }
                     else {
 	                        v = vi.inflate(R.layout.tree_loader_cart, null);
                     }
-//                }
-
+*/
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);

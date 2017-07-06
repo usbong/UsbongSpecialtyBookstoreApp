@@ -51,6 +51,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -74,6 +75,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -391,8 +393,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 */  			
   			//added by Mike, 20170330
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BOOKS+".txt");  
-  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_COMBOS+".txt");  
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_PROMOS+".txt");  
   			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_BEVERAGES+".txt");   //added by Mike, 20170419
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_MANGA+".txt");   //added by Mike, 20170706
+  			UsbongUtils.storeAssetsFileIntoSDCard(this, UsbongConstants.ITEMS_LIST_TEXTBOOKS+".txt");   //added by Mike, 20170706
 
 /*
   			//added by Mike, 20160126
@@ -569,6 +573,10 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		            	public void run() {		            		
 		    				//added by Mike, 20160126
 		    				if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+
+		    					//added by Mike, 20170706
+		    					setContentView(R.layout.tree_list_interface);				
+
 		    					initTreeLoader();
 		    				}
 		    				else {
@@ -645,10 +653,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     
 	public void initTreeLoader()
 	{
-		setContentView(R.layout.tree_list_interface);				
+//		setContentView(R.layout.tree_list_interface);				
 
 		isInTreeLoader=true;
 		
+		//edited by Mike, 20170706
         Button booksButton = (Button)findViewById(R.id.books_button);
         booksButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -657,11 +666,19 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
-        Button combosButton = (Button)findViewById(R.id.combos_button);
-        combosButton.setOnClickListener(new OnClickListener() {
+        Button textbooksButton = (Button)findViewById(R.id.textbooks_button);
+        textbooksButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTreeLoader(UsbongConstants.ITEMS_LIST_COMBOS);
+                initTreeLoader(UsbongConstants.ITEMS_LIST_TEXTBOOKS);
+            }
+        });    
+
+        Button promosButton = (Button)findViewById(R.id.promos_button);
+        promosButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_PROMOS);
             }
         });    
 
@@ -673,6 +690,14 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
         });    
 
+        Button mangaButton = (Button)findViewById(R.id.manga_button);
+        mangaButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTreeLoader(UsbongConstants.ITEMS_LIST_MANGA);
+            }
+        });    
+
         //edited by Mike, 20170419
 		resetContainers();//added by Mike, 20170213
         listOfTreesArrayList = UsbongUtils.getItemArrayList(UsbongUtils.USBONG_TREES_FILE_PATH + currCategory+".txt");
@@ -680,21 +705,43 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
         switch (currCategory) {
         	case UsbongConstants.ITEMS_LIST_BOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT_BOLD);
-                combosButton.setTypeface(Typeface.DEFAULT);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);
                 beveragesButton.setTypeface(Typeface.DEFAULT);
-        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                mangaButton.setTypeface(Typeface.DEFAULT);                
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
-        	case UsbongConstants.ITEMS_LIST_COMBOS:
+        	case UsbongConstants.ITEMS_LIST_TEXTBOOKS:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                textbooksButton.setTypeface(Typeface.DEFAULT_BOLD);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);                
         		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
+                break;
+        	case UsbongConstants.ITEMS_LIST_PROMOS:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT_BOLD);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT);                
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader_alternative, listOfTreesArrayList);        	
                 break;
         	case UsbongConstants.ITEMS_LIST_BEVERAGES:
                 booksButton.setTypeface(Typeface.DEFAULT);
-                combosButton.setTypeface(Typeface.DEFAULT);            
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
                 beveragesButton.setTypeface(Typeface.DEFAULT_BOLD);
-        		mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                mangaButton.setTypeface(Typeface.DEFAULT);                
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
+                break;
+        	case UsbongConstants.ITEMS_LIST_MANGA:
+                booksButton.setTypeface(Typeface.DEFAULT);
+                textbooksButton.setTypeface(Typeface.DEFAULT);
+                promosButton.setTypeface(Typeface.DEFAULT);            
+                beveragesButton.setTypeface(Typeface.DEFAULT);
+                mangaButton.setTypeface(Typeface.DEFAULT_BOLD);                
+                mCustomAdapter = new CustomDataAdapter(this, R.layout.tree_loader, listOfTreesArrayList);
                 break;
         }
 		mCustomAdapter.sort(); //edited by Mike, 20170203
@@ -3529,30 +3576,44 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-                View v = convertView;
+			final String o = items.get(position);
+        	final View v; //edited by Mike, 20170530
+/*                View v = convertView;
+            if (v == null) {
+*/                
+        	//Reference: https://stackoverflow.com/questions/14156996/out-of-memory-on-android-app-on-scrolling-list-with-images;
+        	//last accessed: 20170607
+        	//answer by: dev_android
+        	if (convertView == null) {
+                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                if (o.contains("PROMO")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
+                    v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
+                }
+                else {
+                    v = vi.inflate(R.layout.tree_loader, null);                
+                }
+        	}
+        	else {
+        		v = convertView;
+        	}
+/*        	
+				View v = convertView;
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                     switch (currCategory) {
-                    	case UsbongConstants.ITEMS_LIST_COMBOS:
+                    	case UsbongConstants.ITEMS_LIST_PROMOS:
                             v = vi.inflate(R.layout.tree_loader_alternative, null);
                             break;
                         default:
-/*                    	case UsbongConstants.ITEMS_LIST_BOOKS:
-                    	case UsbongConstants.ITEMS_LIST_TEAS:*/
                             v = vi.inflate(R.layout.tree_loader, null);
                         	break;                            
                     }
-/*                    
-                    if (currCategory==UsbongConstants.ITEMS_LIST_BOOKS) {
-                        v = vi.inflate(R.layout.tree_loader, null);
-                    }
-                    else { //combo
-                        v = vi.inflate(R.layout.tree_loader_alternative, null);
-                    }
-*/                    
                 }
+                
                 final String o = items.get(position);
+*/                    
+                
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);

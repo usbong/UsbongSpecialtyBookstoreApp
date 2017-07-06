@@ -1,56 +1,6 @@
-Title: software kaihatsu gijutsusha 2008 ed
-Author: nikkei BP company
-Price: ₱2700 (used)
-Language: Japanese
---
-Title: shimbun de manabu nihongo (with CDs)
-Author: mizutani osamu et al.
-Price: ₱2700 (new)
-Language: Japanese
---
 Title: kenshuui junjou monogatari
 Author: keiichi kawafuchi
 Price: ₱350 (new)
-Language: Japanese
---
-Title: kanzen masta- 2kyuu
-Author: suri- e- nettwa-ku
-Price: ₱1300 (new)
-Language: Japanese
---
-Title: kanzen masta- 1kyuu
-Author: 3A Corporation
-Price: ₱1300 (new)
-Language: Japanese
---
-Title: kanji look and learn
-Author: eri banno et al. (The Japan Times)
-Price: ₱1400 (new)
-Language: Japanese
---
-Title: genki II 2nd ed (with CD)
-Author: eri banno et al. (The Japan Times)
-Price: ₱3800 (new)
-Language: Japanese
---
-Title: genki I 2nd ed (with CD)
-Author: eri banno et al. (The Japan Times)
-Price: ₱3800 (new)
-Language: Japanese
---
-Title: erin (with DVD) vol 3
-Author: The Japan Foundation
-Price: ₱2600 (new)
-Language: Japanese
---
-Title: erin (with DVD) vol 2
-Author: The Japan Foundation
-Price: ₱2600 (new)
-Language: Japanese
---
-Title: erin (with DVD) vol 1
-Author: The Japan Foundation
-Price: ₱2600 (new)
 Language: Japanese
 --
 Title: The Remains of the Day
@@ -87,11 +37,6 @@ Title: Steve Jobs
 Author: Walter Isaacson
 Price: ₱500 (used)
 Language: English
---
-Title: Tokyo University's English: 25 years (3rd edition)
-Author: Masafumi Satou
-Price: out of stock
-Language: English and Japanese
 --
 Title: Siddhartha
 Author: Hermann Hesse
@@ -182,8 +127,3 @@ Title: Standard First Aid & Personal Safety (2nd Ed.)
 Author: American Red Cross
 Price: out of stock
 Language: English
---
-Title: HSK Level 5 Sample Exam
-Author: 孔子学院总部/国家汉办 (Translated by: 株式会社スプリックス)
-Price: out of stock
-Language: Mandarin and Japanese
