@@ -9,7 +9,7 @@ Price: ₱2700 (new)
 Language: Japanese
 --
 Title: kanzen masta- 2kyuu
-Author: suri- e- nettwa-ku
+Author: 3A Corporation
 Price: ₱1300 (new)
 Language: Japanese
 --
@@ -20,7 +20,7 @@ Language: Japanese
 --
 Title: kanji look and learn
 Author: eri banno et al. (The Japan Times)
-Price: ₱1400 (new)
+Price: ₱2000 (new)
 Language: Japanese
 --
 Title: genki II 2nd ed (with CD)

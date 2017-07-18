@@ -1,3 +1,23 @@
+Title: Godel, Escher, Bach
+Author: Douglas Hofstadter
+Price: ₱700 (used)
+Language: English
+--
+Title: Intelligent Investor
+Author: Benjamin Graham
+Price: ₱550 (used)
+Language: English
+--
+Title: The Hero with a Thousand Faces
+Author: Joseph Campbell
+Price: ₱600 (used)
+Language: English
+--
+Title: The Seasons of a Woman's Life
+Author: Daniel Levinson et al.
+Price: ₱500 (used)
+Language: English
+--
 Title: kenshuui junjou monogatari
 Author: keiichi kawafuchi
 Price: ₱350 (new)
