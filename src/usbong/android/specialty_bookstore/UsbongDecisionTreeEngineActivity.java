@@ -1642,8 +1642,8 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             }
             mTts = new TextToSpeech(this, this);        		
         }
-        else if (requestCode==UsbongUtils.EMAIL_SENDING_SUCCESS) {
-    		finish();    		
+        else if (requestCode==UsbongUtils.EMAIL_SENDING_SUCCESS) {        	
+        	finish();    		
 			Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
 			toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 			startActivity(toUsbongMainActivityIntent);
@@ -3617,15 +3617,23 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                    	//added by Mike, 20170131
-                    	final String s = o.toString()
+                    	//edited by Mike, 20170739
+/*                    	final String s = o.toString()
                     			.replace("Title:", "<b>Title:</b>")
             					.replace("\nAuthor:", "\n<b>Author:</b>")
             					.replace("\nPrice:", "\n<b>Price:</b>")
 //            					.replace("\nDetails:", "\n<b>Details:</b>")
             					.replace("\nLanguage:", "\n<b>Language:</b>")
             					.replace("\n", "<br>");
-
+*/
+                    	final String s = o.toString()
+					                    	.replace("Title: ", "<b>")
+					    					.replace("\nAuthor: ", "</b>\n")
+					    					.replace("\nPrice: ", "\n<font color='#644d17'><b>")
+					//    					.replace("\nDetails:", "\n<b>Details:</b>")
+					    					.replace("\nLanguage: ", "</b>\n[Free Delivery]</font>\n")
+					    					.replace("\n", "<br>");
+                    	
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))

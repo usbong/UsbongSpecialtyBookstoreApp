@@ -340,7 +340,9 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 						
 						int tempListSize = tempList.size();
 						for (int i=0; i<tempListSize; i++) {
-							buySummary.append(tempList.get(i)+"\n");
+							//edited by Mike, 20170729
+							String o = tempList.get(i).toString();
+							buySummary.append(Html.fromHtml(o)+"\n");										
 							buySummary.append("Quantity: "+quantityList.get(i)+"\n");							
 							
 							if (i<tempListSize-1) {
@@ -424,7 +426,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 					    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
 					    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.ORDER_EMAIL_ADDRESS});
 //					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+productDetails.substring(0,productDetails.indexOf("\n")).replace("Title: ",""));
-					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring(0,tempList.get(0).indexOf("\n")).replace("Title: ","")+s);
+					    i.putExtra(Intent.EXTRA_SUBJECT, "Purchase Order: "+tempList.get(0).substring("<b>".length(),tempList.get(0).indexOf("</b>"))+s);
 					    i.putExtra(Intent.EXTRA_TEXT   , buySummary.toString());
 					    try {
 					    	isSendingData=true; //added by Mike, 20170225
@@ -526,7 +528,7 @@ public class CartActivity extends AppCompatActivity/*Activity*/
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
-	
+		    		
 		        //added by Mike, 20170225
 				finish();    
 				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(CartActivity.this, UsbongDecisionTreeEngineActivity.class);
@@ -968,22 +970,25 @@ public class CartActivity extends AppCompatActivity/*Activity*/
                 if (o != null) {
                 	try {       
                     	TextView dataCurrentTextView = (TextView)v.findViewById(R.id.tree_item);
-                    	//added by Mike, 20170131
-                    	final String s = o.toString()
-                    			.replace("Title:", "<b>Title:</b>")
-            					.replace("\nAuthor:", "\n<b>Author:</b>")
-            					.replace("\nPrice:", "\n<b>Price:</b>")
-//            					.replace("\nDetails:", "\n<b>Details:</b>")
-            					.replace("\nLanguage:", "\n<b>Language:</b>")
-            					.replace("\n", "<br>");
-
-	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
-	                    Resources myRes = instance.getResources();
-	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
-	                    		.replace("Title: ","")
-	                    		.replace("’","")
-	                    		.replace("'","")
-	                    		.replace(":","")+".jpg"; //edited by Mike, 20170202
+                    	//edited by Mike, 20170729
+/*                    	final String s = o.toString()
+            			.replace("Title:", "<b>Title:</b>")
+    					.replace("\nAuthor:", "\n<b>Author:</b>")
+    					.replace("\nPrice:", "\n<b>Price:</b>")
+//    					.replace("\nDetails:", "\n<b>Details:</b>")
+    					.replace("\nLanguage:", "\n<b>Language:</b>")
+    					.replace("\n", "<br>");
+*/
+                    	final String s = o.toString();
+        	
+			    		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+			            Resources myRes = instance.getResources();
+			            final String imageFileName = o.toString().substring("<b>".length(), o.toString().indexOf("</b>"))
+			            		.replace("Title: ","")
+			            		.replace("’","")
+			            		.replace("'","")
+			            		.replace(":","")+".jpg"; //edited by Mike, 20170202
+                                    		
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	

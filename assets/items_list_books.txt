@@ -1,3 +1,23 @@
+Title: The Salmon of Doubt
+Author: Douglas Adams
+Price: ₱400 (used)
+Language: English
+--
+Title: A New Earth
+Author: Eckhart Tolle
+Price: ₱500 (used)
+Language: English
+--
+Title: Banker to the Poor
+Author: Muhammad Yunus
+Price: ₱400 (used)
+Language: English
+--
+Title: Delivering Happiness
+Author: Tony Hsieh
+Price: ₱500 (used)
+Language: English
+--
 Title: Godel, Escher, Bach
 Author: Douglas Hofstadter
 Price: ₱700 (used)
