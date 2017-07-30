@@ -95,7 +95,10 @@ public class UsbongConstants {
 	
 	public static final int END_STATE_SCREEN=34;		
 
-    
+    //added by Mike, 20170730
+	public static final String FROM_SENDING_EMAIL="fromSendingEmail";
+	
+	
     //JSON constants
 	public static String MY_TREE = "MY_TREE";
 	public static String CURR_USBONG_NODE = "CURR_USBONG_NODE";

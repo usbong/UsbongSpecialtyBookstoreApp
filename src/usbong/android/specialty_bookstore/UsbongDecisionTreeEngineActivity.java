@@ -51,7 +51,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -63,6 +62,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
@@ -75,7 +75,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -544,7 +543,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		        Intent returnIntent = new Intent();
 		        returnIntent.putExtra("result","result");
 		        setResult(RESULT_OK,returnIntent);
-*/		        
+*/		            	
     }
 
     //added by Mike, 29 Sept. 2015
@@ -570,18 +569,18 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		            Handler mainHandler = new Handler(getInstance().getBaseContext().getMainLooper());
 		            Runnable myRunnable = new Runnable() {
 		            	@Override
-		            	public void run() {		            		
+		            	public void run() {		     		            		
 		    				//added by Mike, 20160126
-		    				if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
-
+/*		    				if (myTree.equals(UsbongConstants.TREE_TYPE_BUY)) {
+*/
 		    					//added by Mike, 20170706
 		    					setContentView(R.layout.tree_list_interface);				
 
 		    					initTreeLoader();
-		    				}
-		    				else {
-							    initParser();		    					
-		    				}
+/*		    				}
+		    				else {		    				
+							    initParser();		    												    
+		    				}*/
 		    				
 						    if (instance.myProgressDialog != null) {
 						        instance.myProgressDialog.dismiss();
@@ -777,7 +776,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 */					
 				}
 			}).show();	        		        	
-		  }				  
+		  }				  		
 	}
     
 	@Override
@@ -1618,10 +1617,11 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 */
 	}
 
+	@Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
 
-    	if (requestCode == UsbongUtils.MY_DATA_CHECK_CODE) {
+		if (requestCode == UsbongUtils.MY_DATA_CHECK_CODE) {
     		/*
         	if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
                 // success, create the TTS instance

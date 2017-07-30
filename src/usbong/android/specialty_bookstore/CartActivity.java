@@ -530,16 +530,67 @@ public class CartActivity extends AppCompatActivity/*Activity*/
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
-		    		
-		        //added by Mike, 20170225
-				finish();    
-				Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(CartActivity.this, UsbongDecisionTreeEngineActivity.class);
-				toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-				startActivity(toUsbongDecisionTreeEngineActivityIntent);
+	    		
+//				returnToProductSelection();
+				//added by Mike, 20170730
+        		AlertDialog.Builder allowUsToEmptyCartAlertDialog = new AlertDialog.Builder(CartActivity.this).setTitle("Hey!");
+				TextView tv = new TextView(getInstance());
+				tv.setText("\nAllow us to empty your cart?");
+				tv.setGravity(Gravity.CENTER_HORIZONTAL);
+				tv.setTextSize(16);
+				allowUsToEmptyCartAlertDialog.setView(tv);
+				allowUsToEmptyCartAlertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//added by Mike, 20170730
+			    		UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+			    		UsbongDecisionTreeEngineActivity.getInstance().invalidateOptionsMenu();
+						UsbongUtils.itemsInCart.clear();			            						    	
+						
+						returnToProductSelection();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+        				}).show();	        		        	
+
+/*
+				new AlertDialog.Builder(CartActivity.this).setTitle("Hey!")
+				.setMessage("Allow us to empty your cart?")
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//added by Mike, 20170729
+			    		UsbongUtils.cartIconDrawableResourceId = R.drawable.cart_icon;
+						myActivityInstance.invalidateOptionsMenu();
+						UsbongUtils.itemsInCart.clear();
+						
+						returnToProductSelection();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						returnToProductSelection();
+					}
+				}).show();	        		        	
+*/
 	    	}
         }
     }//onActivityResult
 
+    //added by Mike, 20170730
+    public void returnToProductSelection() {
+        //added by Mike, 20170225
+		finish();    
+		Intent toUsbongDecisionTreeEngineActivityIntent = new Intent(CartActivity.this, UsbongDecisionTreeEngineActivity.class);
+		toUsbongDecisionTreeEngineActivityIntent.putExtra(UsbongConstants.FROM_SENDING_EMAIL, "true"); //added by Mike, 20170730
+		toUsbongDecisionTreeEngineActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		startActivity(toUsbongDecisionTreeEngineActivityIntent);
+    }
+    
     //added by Mike, July 2, 2015
     @Override
 	public void onBackPressed() {
