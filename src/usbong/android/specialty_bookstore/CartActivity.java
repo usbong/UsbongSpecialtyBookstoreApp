@@ -521,10 +521,12 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 //                String result=data.getStringExtra("result");
 
             }
+/*            
             if (resultCode == RESULT_CANCELED) {
                 //Write your code if there's no result
+            	Log.d(">>>>>","Inside RESULT_CANCELED");
             }            
-
+*/
             //added by Mike, 20170225
 	    	if (isSendingData) {
 	    		isSendingData=false;
@@ -948,10 +950,10 @@ public class CartActivity extends AppCompatActivity/*Activity*/
 	        	if (convertView == null) {
 	                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	                if (o.contains("PROMO")||o.toLowerCase().contains("manga")) { //TODO: make this more generic 
-	                    v = vi.inflate(R.layout.tree_loader_alternative, null);                    	
+	                    v = vi.inflate(R.layout.tree_loader_alternative_cart, null);                    	
 	                }
 	                else {
-	                    v = vi.inflate(R.layout.tree_loader, null);                
+	                    v = vi.inflate(R.layout.tree_loader_cart, null);                
 	                }
 	        	}
 	        	else {
