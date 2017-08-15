@@ -1,5 +1,5 @@
 --Usbong Specialty Bookstore--
-ver: 1.1.18
+ver: 1.1.19
 date: 20160815
 
 Usbong Social Systems, Inc.
