@@ -288,7 +288,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);        
 //        getSupportActionBar().setTitle("Title Screen");
         //edited by Mike, 20170426
-        getSupportActionBar().setTitle(getResources().getString(R.string.usbong));//getResources().getString(R.string.app_name)); //edited by Mike, 20170214
+        getSupportActionBar().setTitle(Html.fromHtml("<small>"+getResources().getString(R.string.usbong)+"</small>"));//getResources().getString(R.string.app_name)); //edited by Mike, 20170214
       
         currUsbongNode=""; //added by Mike, 20160417
         isAutoLoopedTree=false; //added by Mike, 20160417
