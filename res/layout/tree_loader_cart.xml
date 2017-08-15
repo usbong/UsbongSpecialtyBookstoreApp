@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="1"
     android:padding="6dip">
+    <RelativeLayout 
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+    		>
     <ImageView
         android:id="@+id/tree_item_image_view"
         android:layout_width="wrap_content"
@@ -26,6 +30,7 @@
         android:layout_marginBottom="6dp"		
         android:layout_marginLeft="6dp"		
 	/>
+    </RelativeLayout>
     <LinearLayout 
 			android:id="@+id/subtotal_row"
 		    android:layout_width="fill_parent" 
@@ -33,7 +38,6 @@
 	        android:orientation="horizontal"
 	        android:focusable="true" 
     		android:focusableInTouchMode="true"
-    		android:layout_below="@+id/tree_item_image_view"
     		android:layout_marginTop="9dp"		    		
 		    android:padding="5dp"
 		    android:gravity="center"
@@ -70,4 +74,4 @@
 				android:layout_marginLeft="10sp"
 			/>    	    				
 	</LinearLayout>	
-</RelativeLayout>
+</LinearLayout>
