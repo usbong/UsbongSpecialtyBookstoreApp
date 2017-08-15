@@ -51,6 +51,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -62,11 +63,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -3626,14 +3629,17 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
             					.replace("\nLanguage:", "\n<b>Language:</b>")
             					.replace("\n", "<br>");
 */
+                    	//edited by Mike, 20170815                    
                     	final String s = o.toString()
-					                    	.replace("Title: ", "<b>")
-					    					.replace("\nAuthor: ", "</b>\n")
-					    					.replace("\nPrice: ", "\n<font color='#644d17'><b>")
-					//    					.replace("\nDetails:", "\n<b>Details:</b>")
-					    					.replace("\nLanguage: ", "</b>\n[Free Delivery]</font>\n")
-					    					.replace("\n", "<br>");
-                    	
+				                    	.replace("Title: ", "<b>")
+				    					.replace("\nAuthor: ", "</b>\n")
+				    					.replace("\nPrice: ", "\n<font color='#644d17'><b>")
+				//    					.replace("\nDetails:", "\n<b>Details:</b>")
+				    					.replace("\nLanguage: ", "</b>\n[Free Delivery]</font>\n")
+				    					.replace("\n", "<br>")
+                    					.replace("<strike>","{strike}")
+                    					.replace("</strike>","{/strike}");
+                    	                    	                    	
 	            		//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
 	                    Resources myRes = instance.getResources();
 	                    final String imageFileName = o.toString().substring(0, o.toString().indexOf("\nAuthor:"))
@@ -3644,7 +3650,9 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 	                    final Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open(imageFileName), null); //edited by Mike, 20170202
 	            		final ImageView image = (ImageView) v.findViewById(R.id.tree_item_image_view);
 		            	
+	            		//edited by Mike, 20170815
 	                	dataCurrentTextView.setText(Html.fromHtml(s));
+	                	
 //	                	dataCurrentTextView.setText(o.toString());
 	                	dataCurrentTextView.setOnClickListener(new OnClickListener() {
 	            			@Override

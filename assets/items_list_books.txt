@@ -1,3 +1,28 @@
+Title: My Stroke of Insight
+Author: Jill Bolte Taylor, Ph.D.
+Price: ₱350 (used)
+Language: English
+--
+Title: Tuesdays with Morrie
+Author: Mitch Albolm
+Price: ₱300 (used)
+Language: English
+--
+Title: Made in America
+Author: Sam Walton/John Huey
+Price: ₱350 (used)
+Language: English
+--
+Title: The Tipping Point
+Author: Malcolm Gladwell
+Price: ₱300 (used)
+Language: English
+--
+Title: Blink
+Author: Malcolm Gladwell
+Price: ₱300 (used)
+Language: English
+--
 Title: The Salmon of Doubt
 Author: Douglas Adams
 Price: ₱400 (used)
